@@ -45,13 +45,6 @@ class Data(
         )
         barRepository.saveAll(bares)
 
-        //Usuarios
-        val usuarios = listOf(
-                User("goiko", "goiko@gmail.com", encoder.encode("123456"), "", mutableSetOf("ADMIN"), bares[0]),
-                User("user", "user@gmail.com", encoder.encode("123456"), "", mutableSetOf("USER"))
-        )
-        userRepository.saveAll(usuarios)
-
         val platos = listOf(
                 //Goiko
                 Plato("Classic Burger", "goiko/classic.jpeg", 11.9, "Clasic: salsa 50, queso cheddar, bacon crujiente, tomate, lechuga batavia", "Hamburguesas", bares[0]),
@@ -104,5 +97,12 @@ class Data(
         )
 
         platoRepository.saveAll(platos)
+
+        //Usuarios
+        val usuarios = listOf(
+                User("goiko", "goiko@gmail.com", encoder.encode("123456"), "", mutableSetOf("ADMIN"), bares[0]),
+                User("user", "user@gmail.com", encoder.encode("123456"), "", mutableSetOf("USER"))
+        )
+        userRepository.saveAll(usuarios)
     }
 }

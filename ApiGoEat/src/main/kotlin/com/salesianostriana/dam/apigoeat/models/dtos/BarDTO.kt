@@ -46,8 +46,8 @@ data class BarDetailDTO(
         var horaCierre: LocalTime,
         var cantPedidos: Int,
         var tiempoPedidos: Int,
-        var platos: MutableList<Plato>? = null,
-        var pedidos: MutableList<Pedido>? = null
+        var platos: MutableList<Plato>? = ArrayList(),
+        var pedidos: MutableList<Pedido>? = ArrayList()
 )
 
 fun Bar.toBarDetailDTO() = BarDetailDTO(nombre, tipoComida, foto, horaApertura, horaCierre, cantPedidos, tiempoPedidos, platos, pedidos)

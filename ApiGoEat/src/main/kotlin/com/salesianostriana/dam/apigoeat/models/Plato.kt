@@ -23,7 +23,7 @@ data class Plato(
 
         @JsonManagedReference
         @OneToMany(mappedBy = "plato", fetch = FetchType.EAGER, cascade = [CascadeType.REMOVE])
-        var lineasPedido: MutableList<LineaPedido>? = null,
+        var lineasPedido: MutableList<LineaPedido>? = ArrayList(),
 
         @Id @GeneratedValue
         val id : UUID? = null

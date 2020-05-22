@@ -52,13 +52,17 @@ class AuthenticationController(
     fun me(@AuthenticationPrincipal user: User) = user.toUserDTO()
 
     @PostMapping("/signup")
-    fun signup(@RequestBody user: CreateUserDTO): UserDTO{
-        val result = userService.findByUsername(user.username)
+    fun signup(@RequestBody createUserDTO: CreateUserDTO): UserDTO{
+        val result = userService.findByUsername(createUserDTO.username)
         if(result!=null){
-            user.password= bCryptPasswordEncoder.encode(user.password)
-            return userService.save(user.toUser()).toUserDTO()
+            createUserDTO.password= bCryptPasswordEncoder.encode(createUserDTO.password)
+            var newUser = createUserDTO.toUser()
+            if(newUser.roles.isEmpty()){
+                newUser.roles = mutableSetOf("USER")
+            }
+            return userService.save(newUser).toUserDTO()
         } else {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "El nombre de usuario ${user.username} ya existe. Pruebe otro.")
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "El nombre de usuario ${createUserDTO.username} ya existe. Pruebe otro.")
         }
     }
 }

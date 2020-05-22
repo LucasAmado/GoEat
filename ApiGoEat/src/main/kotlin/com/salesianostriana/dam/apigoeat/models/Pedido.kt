@@ -17,7 +17,7 @@ data class Pedido(
 
         @JsonManagedReference
         @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER, cascade = [CascadeType.REMOVE])
-        var lineas: MutableList<LineaPedido>? = null,
+        var lineas: MutableList<LineaPedido>? = ArrayList(),
 
         @JsonBackReference
         @ManyToOne

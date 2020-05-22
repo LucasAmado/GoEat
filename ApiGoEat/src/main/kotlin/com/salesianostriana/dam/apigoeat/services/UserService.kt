@@ -15,6 +15,7 @@ class UserService(private val encoder: PasswordEncoder): BaseService<User, UUID,
 
     fun create(createUser: CreateUserDTO): Optional<User> {
         if (findByUsername(createUser.username).isPresent) return Optional.empty()
+
         return Optional.of(
                 this.save(createUser.toUser())
         )

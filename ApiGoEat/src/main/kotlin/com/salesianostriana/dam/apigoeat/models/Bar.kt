@@ -33,15 +33,11 @@ class Bar(
 
         @JsonManagedReference
         @OneToMany(mappedBy = "bar", fetch = FetchType.EAGER, cascade = [CascadeType.REMOVE])
-        var platos: MutableList<Plato>? = null,
+        var platos: MutableList<Plato>? = ArrayList(),
 
         @JsonManagedReference
-        @OneToMany(mappedBy = "bar", fetch = FetchType.LAZY, cascade = [CascadeType.REMOVE])
-        var pedidos: MutableList<Pedido>? = null,
-
-        @JsonManagedReference
-        @OneToMany(mappedBy = "bar", fetch = FetchType.LAZY)
-        var users: MutableList<User>? = null,
+        @OneToMany(mappedBy = "bar", fetch = FetchType.EAGER, cascade = [CascadeType.REMOVE])
+        var pedidos: MutableList<Pedido>? = ArrayList(),
 
         @Id @GeneratedValue
         val id : UUID? = null

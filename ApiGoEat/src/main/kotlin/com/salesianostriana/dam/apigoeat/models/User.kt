@@ -7,6 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import java.util.*
 import javax.persistence.*
+import kotlin.collections.ArrayList
 
 @Entity
 data class User(
@@ -21,7 +22,7 @@ data class User(
         var avatar: String = "",
 
         @ElementCollection(fetch = FetchType.EAGER)
-        val roles: MutableSet<String> = HashSet(),
+        var roles: MutableSet<String> = HashSet(),
 
         @JsonBackReference
         @ManyToOne
@@ -29,7 +30,7 @@ data class User(
 
         @JsonManagedReference
         @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-        var pedidos: MutableList<Pedido>? = null,
+        var pedidos: MutableList<Pedido>? = ArrayList(),
 
         private val nonExpired: Boolean = true,
 
