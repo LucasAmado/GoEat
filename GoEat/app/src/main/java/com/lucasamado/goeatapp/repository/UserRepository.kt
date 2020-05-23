@@ -16,12 +16,13 @@ import javax.inject.Singleton
 class UserRepository @Inject constructor(var goEatService: GoEatService) {
     var usuarioNuevo: MutableLiveData<SignupResponse> = MutableLiveData()
 
-    fun signupUser(createUser: SignupRequest): MutableLiveData<SignupResponse>{
-        val call: Call<SignupResponse>? = goEatService.createUser(createUser)
+    fun signupUser(signupRequest: SignupRequest): MutableLiveData<SignupResponse>{
+        val call: Call<SignupResponse>? = goEatService.createUser(signupRequest)
         call?.enqueue(object : Callback<SignupResponse> {
             override fun onResponse(call: Call<SignupResponse>, response: Response<SignupResponse>) {
                 if(response.isSuccessful) {
                     usuarioNuevo.value = response.body()
+                    Toast.makeText(MyApp.instance, "Usuario creado correctamente", Toast.LENGTH_SHORT).show()
                 }else{
                     Toast.makeText(MyApp.instance, "Error al crear el usuario", Toast.LENGTH_SHORT).show()
                 }

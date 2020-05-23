@@ -12,7 +12,5 @@ class LoginViewModel @Inject constructor(
 ): ViewModel() {
     val repo = userRepository
 
-    fun createUser(createUser: SignupRequest): LiveData<SignupResponse>{
-        return repo.signupUser(createUser)
-    }
+
 }
