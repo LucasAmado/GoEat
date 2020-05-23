@@ -1,5 +1,7 @@
 package com.lucasamado.goeatapp.api
 
+import com.lucasamado.goeatapp.models.LoginRequest
+import com.lucasamado.goeatapp.models.LoginResponse
 import com.lucasamado.goeatapp.models.SignupRequest
 import com.lucasamado.goeatapp.models.SignupResponse
 import retrofit2.Call
@@ -11,6 +13,6 @@ interface GoEatService {
     @POST("/signup")
     fun createUser(@Body newUser: SignupRequest): Call<SignupResponse>
 
-    /*@POST("auth/login")
-    fun doLogin(@Body user: LoginRequest): Call<LoginResponse>*/
+    @POST("auth/login")
+    fun doLogin(@Body loginRequest: LoginRequest): Call<LoginResponse>
 }

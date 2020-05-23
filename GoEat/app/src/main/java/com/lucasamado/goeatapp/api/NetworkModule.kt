@@ -1,7 +1,11 @@
 package com.lucasamado.goeatapp.api
 
+import android.content.Context
+import android.content.SharedPreferences
+import android.provider.Settings.Global.getString
 import androidx.navigation.Navigator
 import com.lucasamado.goeatapp.common.Constantes
+import com.lucasamado.goeatapp.common.MyApp
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -34,5 +38,13 @@ class NetworkModule {
             .build()
             .create(GoEatService::class.java)
     }
+
+    /*@Singleton
+    @Provides
+    fun provideSharedPreferences(): SharedPreferences {
+        val sharedPref = MyApp.instance.getSharedPreferences(
+            Constantes.SHARED_PREFS_FILE, Context.MODE_PRIVATE)
+        return sharedPref
+    }*/
 
 }
