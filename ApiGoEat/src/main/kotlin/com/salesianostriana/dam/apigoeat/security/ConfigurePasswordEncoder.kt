@@ -69,8 +69,8 @@ class WebSecurityConfiguration(
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/auth/login").permitAll()
                 .antMatchers("/signup").permitAll()
-                .antMatchers("/user/**").hasRole("USER")
-                .antMatchers("/bares/**").hasRole("USER")
+                .antMatchers("/user/**").hasAnyRole()
+                .antMatchers("/bares/**").hasAnyRole()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().hasRole("ADMIN")
 
