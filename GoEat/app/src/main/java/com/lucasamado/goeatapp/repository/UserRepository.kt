@@ -49,7 +49,6 @@ class UserRepository @Inject constructor(var goEatService: GoEatService) {
                     userLogin.value = response.body()
                 }else{
                     Toast.makeText(MyApp.instance, "Error al hacer el login", Toast.LENGTH_SHORT).show()
-                    Log.e("ERRROR", ""+response.errorBody())
                 }
             }
 

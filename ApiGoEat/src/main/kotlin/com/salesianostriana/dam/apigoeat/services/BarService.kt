@@ -8,4 +8,8 @@ import java.util.*
 @Service
 class BarService: BaseService<Bar, UUID, BarRepository>(){
 
+    fun getBares(){
+        for(bar in this.findAll()){
+        }
+    }
 }

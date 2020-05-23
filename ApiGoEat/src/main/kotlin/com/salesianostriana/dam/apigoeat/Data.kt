@@ -25,20 +25,20 @@ class Data(
         val bares = listOf(
                 Bar(
                         "Goiko - Albareda", "Hamburguesas",
-                        "goiko/logo.jpeg",
+                        "/files/bares/1.jpeg",
                         37.389670,-5.995405,
                         LocalTime.of( 13, 0), LocalTime.of( 23, 30),
                         20, 25
                 ),
                 Bar(
                         "Masakali Pizza", "Pizza",
-                        "malasaki/logo.jpeg",
+                        "/files/bares/2.jpeg",
                         37.392726,-5.989546,
                         LocalTime.of( 13, 0), LocalTime.of( 16, 30),
                         14, 20
                 ),
                 Bar(
-                        "La Piazza", "Pizzas", "piazza/logo.jpeg",37.397413,-5.993683,
+                        "La Piazza", "Pizzas", "/files/bares/3.jpeg",37.397413,-5.993683,
                         LocalTime.of( 13, 0), LocalTime.of( 23, 0),
                         8, 15
                 )

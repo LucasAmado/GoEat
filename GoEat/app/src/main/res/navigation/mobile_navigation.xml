@@ -3,23 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_bares">
+
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.lucasamado.goeatapp.ui.home.BarFragment"
+        android:id="@+id/navigation_bares"
+        android:name="com.lucasamado.goeatapp.ui.bares.BarFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_bar_list" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_pedidos"
         android:name="com.lucasamado.goeatapp.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_pedidos"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_perfil"
         android:name="com.lucasamado.goeatapp.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/title_perfil"
         tools:layout="@layout/fragment_notifications" />
 </navigation>

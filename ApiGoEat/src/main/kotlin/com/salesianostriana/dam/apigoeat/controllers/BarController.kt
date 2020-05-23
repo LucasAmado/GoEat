@@ -33,9 +33,8 @@ class BarController(val barService: BarService, val userService: UserService) {
     }
 
     @GetMapping("/")
-    fun listarBares() = allBares().map {
-        it.toBarDTO()
-    }
+    fun listarBares() = barService.getBares()
+
 
     @PostMapping("/")
     fun crearNota(@RequestBody nuevoBar: CreateBarDTO, @AuthenticationPrincipal owner : User): ResponseEntity<BarDTO> {
