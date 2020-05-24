@@ -3,6 +3,7 @@ package com.lucasamado.goeatapp.ui.home.bares
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.lifecycle.Observer
@@ -48,15 +49,15 @@ class DetalleBarActivity : AppCompatActivity() {
         btn_carrito = findViewById(R.id.buttonCarrito)
         lvTipoPlatos = findViewById(R.id.lvTipoPlatos)
 
-        horarios.isEnabled = false
 
         //TODO pensar en como esconder y mostrar botón
         //crear linea vacía aquí
         // al añadir platos traer el id de la linea e igualarlo
         // si el id del no es nuelo ni vacío -> mostrar boton
-        //btn_carrito.visibility = View.INVISIBLE
+        btn_carrito.visibility = View.INVISIBLE
 
         loadBarDetail(idBar)
+        loadTiposPlatos(idBar)
 
         btn_informacion.setOnClickListener {
             val mapa = Intent(this, MapaActivity::class.java).apply {
@@ -89,16 +90,17 @@ class DetalleBarActivity : AppCompatActivity() {
                 nombre.text = it.nombre
                 tipoComida.text = it.tipoComida
                 horarios.text = it.horaApertura+" - "+it.horaCierre
-
-                for(plato in it.platos){
-                    with(plato){
-                        if(!tiposList.contains(tipo)) tiposList.add(tipo)
-                    }
-                }
-
-                adapterTipos = ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tiposList)
-                lvTipoPlatos.adapter = adapterTipos
             }
         })
+    }
+
+    private fun loadTiposPlatos(idBar: String) {
+       barDetailViewModel.getTipos(idBar).observe(this, Observer {
+           if(it!=null){
+               tiposList.addAll(it)
+               adapterTipos = ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tiposList)
+               lvTipoPlatos.adapter = adapterTipos
+           }
+       })
     }
 }

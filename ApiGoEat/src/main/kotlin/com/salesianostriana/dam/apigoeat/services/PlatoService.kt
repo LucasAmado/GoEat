@@ -9,4 +9,8 @@ import java.util.*
 @Service
 class PlatoService : BaseService<Plato, UUID, PlatoRepository>(){
 
+    fun findTiposByIdBar(id: UUID): List<String> = repository.findTiposByBar(id)
+
+    fun findByTipoAndBar(tipo: String, id: UUID): List<Plato> = repository.findByTipoAndBar(tipo, id)
+
 }

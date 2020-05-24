@@ -10,4 +10,10 @@ interface PlatoRepository: JpaRepository<Plato, UUID> {
 
     fun findByBar(bar: Bar): List<Plato>
 
+    @Query("select distinct tipo from Plato p where p.bar.id = :idBar")
+    fun findTiposByBar(idBar: UUID): List<String>
+
+    @Query("select p from Plato p where p.tipo = :tipoPlato and p.bar.id = :idBar")
+    fun findByTipoAndBar(tipoPlato: String, idBar: UUID): List<Plato>
+
 }

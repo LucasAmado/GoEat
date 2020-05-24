@@ -4,16 +4,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lucasamado.goeatapp.models.bar.Bar
 import com.lucasamado.goeatapp.repository.BarRepository
+import com.lucasamado.goeatapp.repository.PlatoRepository
 import javax.inject.Inject
 
 class BarDetailViewModel @Inject constructor(
-    barRepository: BarRepository
+    barRepository: BarRepository,
+    platoRepository: PlatoRepository
 ) : ViewModel() {
 
-    val repo = barRepository
+    val barRepo = barRepository
+    val platosRepo = platoRepository
 
     fun getDetailBar(id: String): MutableLiveData<Bar> {
-        return repo.getBar(id)
+        return barRepo.getBar(id)
     }
+
+    fun getTipos(id: String): MutableLiveData<List<String>> = platosRepo.findTiposByBar(id)
 
 }
