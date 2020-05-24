@@ -1,4 +1,4 @@
-package com.lucasamado.goeatapp.models
+package com.lucasamado.goeatapp.models.user
 
 data class LoginRequest(
     val password: String,

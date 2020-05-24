@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.lucasamado.goeatapp.api.GoEatService
 import com.lucasamado.goeatapp.common.MyApp
-import com.lucasamado.goeatapp.models.bar.Bar
+import com.lucasamado.goeatapp.models.bar.BarDto
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -14,14 +14,14 @@ import javax.inject.Singleton
 
 @Singleton
 class BarRepository @Inject constructor(var goEatService: GoEatService) {
-    var barList: MutableLiveData<List<Bar>> = MutableLiveData()
-    var bar: MutableLiveData<Bar> = MutableLiveData()
-    var barMapa: MutableLiveData<Bar> = MutableLiveData()
+    var barList: MutableLiveData<List<BarDto>> = MutableLiveData()
+    var bar: MutableLiveData<BarDto> = MutableLiveData()
+    var barMapa: MutableLiveData<BarDto> = MutableLiveData()
 
-    fun getBaresList(): MutableLiveData<List<Bar>> {
-        val call: Call<List<Bar>>? = goEatService.getBaresList()
-        call?.enqueue(object : Callback<List<Bar>> {
-            override fun onResponse(call: Call<List<Bar>>, response: Response<List<Bar>>) {
+    fun getBaresList(): MutableLiveData<List<BarDto>> {
+        val call: Call<List<BarDto>>? = goEatService.getBaresList()
+        call?.enqueue(object : Callback<List<BarDto>> {
+            override fun onResponse(call: Call<List<BarDto>>, response: Response<List<BarDto>>) {
                 if (response.isSuccessful) {
                     barList.value = response.body()
                 } else {
@@ -32,7 +32,7 @@ class BarRepository @Inject constructor(var goEatService: GoEatService) {
                 Log.e("RESPONSE BARES", ""+response.body())
             }
 
-            override fun onFailure(call: Call<List<Bar>>, t: Throwable) {
+            override fun onFailure(call: Call<List<BarDto>>, t: Throwable) {
                 Toast.makeText(MyApp.instance, "Error. Can't connect to server", Toast.LENGTH_SHORT).show()
             }
         })
@@ -41,10 +41,10 @@ class BarRepository @Inject constructor(var goEatService: GoEatService) {
     }
 
 
-    fun getBar(id: String): MutableLiveData<Bar>{
-        val call: Call<Bar>? = goEatService.getBarById(id)
-        call?.enqueue(object : Callback<Bar> {
-            override fun onResponse(call: Call<Bar>, response: Response<Bar>) {
+    fun getBar(id: String): MutableLiveData<BarDto>{
+        val call: Call<BarDto>? = goEatService.getBarById(id)
+        call?.enqueue(object : Callback<BarDto> {
+            override fun onResponse(call: Call<BarDto>, response: Response<BarDto>) {
                 if (response.isSuccessful) {
                     bar.value = response.body()
                 } else {
@@ -52,7 +52,7 @@ class BarRepository @Inject constructor(var goEatService: GoEatService) {
                 }
             }
 
-            override fun onFailure(call: Call<Bar>, t: Throwable) {
+            override fun onFailure(call: Call<BarDto>, t: Throwable) {
                 Toast.makeText(MyApp.instance, "Error. Can't connect to server", Toast.LENGTH_SHORT).show()
             }
         })

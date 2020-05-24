@@ -21,10 +21,10 @@ class MyPlatoRecyclerViewAdapter() : RecyclerView.Adapter<MyPlatoRecyclerViewAda
     init {
         mOnClickListener = View.OnClickListener { v ->
             val item = v.tag as Plato
-            val idBar = item.id
+            val idPlato = item.id
 
             val intent = Intent(MyApp.instance, DetallePlatoActivity::class.java).apply {
-                putExtra(Constantes.PLATO_ID, idBar)
+                putExtra(Constantes.PLATO_ID, idPlato)
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
             MyApp.instance.startActivity(intent)

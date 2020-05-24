@@ -14,6 +14,7 @@ class PlatoRepository  @Inject constructor(var goEatService: GoEatService) {
 
     var tiposList: MutableLiveData<List<String>> = MutableLiveData()
     var platoList: MutableLiveData<List<Plato>> = MutableLiveData()
+    var plato: MutableLiveData<Plato> = MutableLiveData()
 
     fun findTiposByBar(id: String): MutableLiveData<List<String>> {
         val call: Call<List<String>>? = goEatService.getTiposPlatosByBar(id)
@@ -28,7 +29,7 @@ class PlatoRepository  @Inject constructor(var goEatService: GoEatService) {
             }
 
             override fun onFailure(call: Call<List<String>>, t: Throwable) {
-                Toast.makeText(MyApp.instance, "Error. Can't connect to server", Toast.LENGTH_SHORT).show()
+                Toast.makeText(MyApp.instance, t.message, Toast.LENGTH_LONG).show()
             }
         })
 
@@ -42,17 +43,35 @@ class PlatoRepository  @Inject constructor(var goEatService: GoEatService) {
                 if (response.isSuccessful) {
                     platoList.value = response.body()
                 } else {
-                    Toast.makeText(MyApp.instance, "Error al cargar los tipos de platos", Toast.LENGTH_SHORT)
+                    Toast.makeText(MyApp.instance, "Error al cargar los tipos de platos", Toast.LENGTH_LONG)
                         .show()
                 }
             }
 
             override fun onFailure(call: Call<List<Plato>>, t: Throwable) {
-                Toast.makeText(MyApp.instance, "Error. Can't connect to server", Toast.LENGTH_SHORT).show()
+                Toast.makeText(MyApp.instance, t.message, Toast.LENGTH_LONG).show()
             }
         })
 
         return platoList
+    }
+
+    fun getPlato(id: String): MutableLiveData<Plato>{
+        val call: Call<Plato> = goEatService.getPlato(id)
+        call.enqueue(object : Callback<Plato>{
+            override fun onResponse(call: Call<Plato>, response: Response<Plato>) {
+                if(response.isSuccessful){
+                    plato.value = response.body()
+                }else{
+                    Toast.makeText(MyApp.instance, "Error al cargar el plato", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<Plato>, t: Throwable) {
+                Toast.makeText(MyApp.instance, t.message, Toast.LENGTH_LONG).show()
+            }
+        })
+        return plato
     }
 
 }

@@ -2,7 +2,6 @@ package com.lucasamado.goeatapp.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +12,7 @@ import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
 import com.lucasamado.goeatapp.common.SharedPreferencesManager
-import com.lucasamado.goeatapp.models.LoginRequest
+import com.lucasamado.goeatapp.models.user.LoginRequest
 import com.lucasamado.goeatapp.viewmodels.LoginViewModel
 import javax.inject.Inject
 

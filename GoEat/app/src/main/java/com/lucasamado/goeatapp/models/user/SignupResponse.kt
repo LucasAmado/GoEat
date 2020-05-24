@@ -1,6 +1,6 @@
-package com.lucasamado.goeatapp.models
+package com.lucasamado.goeatapp.models.user
 
-data class User(
+data class SignupResponse(
     val avatar: String,
     val bar: Any,
     val email: String,

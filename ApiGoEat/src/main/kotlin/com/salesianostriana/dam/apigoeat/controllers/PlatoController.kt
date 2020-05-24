@@ -7,11 +7,14 @@ import java.util.*
 
 @RestController
 @RequestMapping("/platos")
-class PlatoController(val platoService: PlatoService, val barService: BarService) {
+class PlatoController(val platoService: PlatoService) {
 
     @GetMapping("/tipos/{id}")
     fun finTiposByIdBar(@PathVariable id : UUID): List<String> = platoService.findTiposByIdBar(id)
 
     @GetMapping("/{tipo}/bar/{id}")
     fun findByTipoAndBar(@PathVariable tipo : String, @PathVariable id : UUID) = platoService.findByTipoAndBar(tipo, id)
+
+    @GetMapping("{id}")
+    fun findById(@PathVariable id: UUID) = platoService.findById(id)
 }

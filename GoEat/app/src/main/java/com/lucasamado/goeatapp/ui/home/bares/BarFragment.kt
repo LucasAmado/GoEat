@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.MyApp
-import com.lucasamado.goeatapp.models.bar.Bar
+import com.lucasamado.goeatapp.models.bar.BarDto
 import com.lucasamado.goeatapp.viewmodels.BarViewModel
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ class BarFragment : Fragment() {
     @Inject lateinit var barViewModel: BarViewModel
 
     private lateinit var barAdapter: MyBarRecyclerViewAdapter
-    private var barList: List<Bar> = ArrayList()
+    private var barList: List<BarDto> = ArrayList()
 
     private var columnCount = 1
 

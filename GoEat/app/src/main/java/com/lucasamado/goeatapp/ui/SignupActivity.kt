@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import com.google.android.material.textfield.TextInputEditText
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.MyApp
-import com.lucasamado.goeatapp.models.SignupRequest
+import com.lucasamado.goeatapp.models.user.SignupRequest
 import com.lucasamado.goeatapp.viewmodels.SignupViewModel
 import java.util.regex.Matcher
 import java.util.regex.Pattern

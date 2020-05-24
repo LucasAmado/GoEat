@@ -13,18 +13,18 @@ import coil.transform.CircleCropTransformation
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
-import com.lucasamado.goeatapp.models.bar.Bar
+import com.lucasamado.goeatapp.models.bar.BarDto
 import kotlinx.android.synthetic.main.fragment_bar.view.*
 
 
 class MyBarRecyclerViewAdapter() : RecyclerView.Adapter<MyBarRecyclerViewAdapter.ViewHolder>() {
 
     private val mOnClickListener: View.OnClickListener
-    private var baresList: List<Bar> = ArrayList()
+    private var baresList: List<BarDto> = ArrayList()
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as Bar
+            val item = v.tag as BarDto
             val idBar = item.id
 
             val intent = Intent(MyApp.instance, DetalleBarActivity::class.java).apply {
@@ -60,7 +60,7 @@ class MyBarRecyclerViewAdapter() : RecyclerView.Adapter<MyBarRecyclerViewAdapter
 
     override fun getItemCount(): Int = baresList.size
 
-    fun setData(popularMovies: List<Bar>?) {
+    fun setData(popularMovies: List<BarDto>?) {
         baresList = popularMovies!!
         notifyDataSetChanged()
     }
