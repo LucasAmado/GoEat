@@ -57,8 +57,6 @@ class MapaActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
         mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
 
-        mMap.isMyLocationEnabled = true
-
         val bar = LatLng(latitud, longitud)
         mMap.addMarker(MarkerOptions().position(bar).title(nombre))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(bar))
