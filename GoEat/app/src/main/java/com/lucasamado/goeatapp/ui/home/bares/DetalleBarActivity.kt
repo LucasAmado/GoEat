@@ -53,9 +53,18 @@ class DetalleBarActivity : AppCompatActivity() {
 
         loadBarDetail(idBar)
 
+        btn_informacion.setOnClickListener {
+            val mapa = Intent(this, MapaActivity::class.java).apply {
+                putExtra(Constantes.BAR_ID, idBar)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            startActivity(mapa)
+            finish()
+        }
+
         lvTipoPlatos.setOnItemClickListener { parent, view, position, id ->
             var tipoSelect = tiposList.get(position)
-            val intent= Intent(this, ListaPlatosActivity::class.java).apply {
+            val intent = Intent(this, ListaPlatosActivity::class.java).apply {
                 putExtra(Constantes.BAR_ID, idBar)
                 putExtra(Constantes.TIPO_PLATO, tipoSelect)
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
