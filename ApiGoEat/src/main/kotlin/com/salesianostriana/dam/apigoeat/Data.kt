@@ -24,8 +24,8 @@ class Data(
         //Bares
         val bares = listOf(
                 Bar(
-                        "Goiko - Albareda", "Hamburguesas", "/files/bares/1.jpeg", 37.389670,-5.995405,
-                        LocalTime.of( 13, 0), LocalTime.of( 23, 30), 20, 25
+                        "Goiko Grill", "Hamburguesas", "https://www.goiko.com/wp-content/uploads/2017/12/JL171223GOIKO-7.jpg",
+                        37.389670,-5.995405, LocalTime.of( 13, 0), LocalTime.of( 23, 30), 20, 25
                 ),
                 Bar(
                         "Masakali Pizza", "Pizzas", "/files/bares/2.jpeg", 37.392726,-5.989546,

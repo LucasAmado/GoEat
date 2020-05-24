@@ -10,6 +10,7 @@ import coil.api.load
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
+import com.lucasamado.goeatapp.ui.home.mapa.MapaActivity
 import com.lucasamado.goeatapp.ui.home.platos.ListaPlatosActivity
 import com.lucasamado.goeatapp.viewmodels.BarDetailViewModel
 import javax.inject.Inject
@@ -22,6 +23,7 @@ class DetalleBarActivity : AppCompatActivity() {
     lateinit var image: ImageView
     lateinit var nombre: TextView
     lateinit var tipoComida: TextView
+    lateinit var horarios: TextView
     lateinit var lvTipoPlatos: ListView
     lateinit var btn_informacion: Button
     lateinit var btn_carrito: Button
@@ -40,16 +42,19 @@ class DetalleBarActivity : AppCompatActivity() {
 
         image = findViewById(R.id.imageViewFoto)
         nombre = findViewById(R.id.textViewNombre)
+        horarios = findViewById(R.id.textViewHorario)
         tipoComida = findViewById(R.id.textViewTipoComida)
         btn_informacion = findViewById(R.id.buttonInformacion)
         btn_carrito = findViewById(R.id.buttonCarrito)
         lvTipoPlatos = findViewById(R.id.lvTipoPlatos)
 
+        horarios.isEnabled = false
+
         //TODO pensar en como esconder y mostrar botón
         //crear linea vacía aquí
         // al añadir platos traer el id de la linea e igualarlo
         // si el id del no es nuelo ni vacío -> mostrar boton
-        btn_carrito.visibility = View.INVISIBLE
+        //btn_carrito.visibility = View.INVISIBLE
 
         loadBarDetail(idBar)
 
@@ -83,6 +88,7 @@ class DetalleBarActivity : AppCompatActivity() {
                 }
                 nombre.text = it.nombre
                 tipoComida.text = it.tipoComida
+                horarios.text = it.horaApertura+" - "+it.horaCierre
 
                 for(plato in it.platos){
                     with(plato){

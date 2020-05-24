@@ -2,7 +2,6 @@ package com.lucasamado.goeatapp.api
 
 import com.lucasamado.goeatapp.models.*
 import com.lucasamado.goeatapp.models.bar.Bar
-import com.lucasamado.goeatapp.models.bar.BarDetail
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -21,8 +20,5 @@ interface GoEatService {
     fun getBaresList(): Call<List<Bar>>
 
     @GET("bares/{id}")
-    fun getBarById(@Path("id") id: String): Call<BarDetail>
-
-    @GET("platos/bar")
-    fun getTiposPlatosByBar(@Body barDetail: BarDetail): Call<List<String>>
+    fun getBarById(@Path("id") id: String): Call<Bar>
 }

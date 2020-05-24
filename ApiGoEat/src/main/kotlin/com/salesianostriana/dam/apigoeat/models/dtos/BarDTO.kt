@@ -42,20 +42,12 @@ data class BarDetailDTO(
         var nombre : String,
         var tipoComida: String,
         var foto: String,
-        var platos: MutableList<Plato>? = ArrayList(),
-        var id: UUID? = null
-)
-
-fun Bar.toBarDetailDTO() = BarDetailDTO(nombre, tipoComida, foto, platos, id)
-fun BarDetailDTO.toBar() = Bar(nombre, tipoComida, foto, platos, id)
-
-data class MapaBarDTO(
-        var nombre : String,
         var latitud: Double,
         var longitud: Double,
         var horaApertura: LocalTime,
         var horaCierre: LocalTime,
+        var platos: MutableList<Plato>? = ArrayList(),
         var id: UUID? = null
 )
 
-fun Bar.toMapaBarDto() = MapaBarDTO(nombre, latitud, longitud, horaApertura, horaCierre)
+fun Bar.toBarDetailDTO() = BarDetailDTO(nombre, tipoComida, foto, latitud, longitud, horaApertura, horaCierre,platos, id)

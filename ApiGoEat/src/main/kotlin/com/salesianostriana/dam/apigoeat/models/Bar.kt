@@ -44,6 +44,4 @@ class Bar(
         val id : UUID? = null
 ) {
 
-        constructor(nombre: String, tipoComida: String, foto: String, platos: MutableList<Plato>?, id: UUID?):
-                this(nombre, tipoComida, foto, 0.0, 0.0, LocalTime.now(), LocalTime.now(), 0, 0,platos, ArrayList(), id)
 }

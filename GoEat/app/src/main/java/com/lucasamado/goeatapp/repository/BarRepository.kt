@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import com.lucasamado.goeatapp.api.GoEatService
 import com.lucasamado.goeatapp.common.MyApp
 import com.lucasamado.goeatapp.models.bar.Bar
-import com.lucasamado.goeatapp.models.bar.BarDetail
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,7 +15,8 @@ import javax.inject.Singleton
 @Singleton
 class BarRepository @Inject constructor(var goEatService: GoEatService) {
     var barList: MutableLiveData<List<Bar>> = MutableLiveData()
-    var barDetail: MutableLiveData<BarDetail> = MutableLiveData()
+    var bar: MutableLiveData<Bar> = MutableLiveData()
+    var barMapa: MutableLiveData<Bar> = MutableLiveData()
 
     fun getBaresList(): MutableLiveData<List<Bar>> {
         val call: Call<List<Bar>>? = goEatService.getBaresList()
@@ -41,23 +41,23 @@ class BarRepository @Inject constructor(var goEatService: GoEatService) {
     }
 
 
-    fun getBar(id: String): MutableLiveData<BarDetail>{
-        val call: Call<BarDetail>? = goEatService.getBarById(id)
-        call?.enqueue(object : Callback<BarDetail> {
-            override fun onResponse(call: Call<BarDetail>, response: Response<BarDetail>) {
+    fun getBar(id: String): MutableLiveData<Bar>{
+        val call: Call<Bar>? = goEatService.getBarById(id)
+        call?.enqueue(object : Callback<Bar> {
+            override fun onResponse(call: Call<Bar>, response: Response<Bar>) {
                 if (response.isSuccessful) {
-                    barDetail.value = response.body()
+                    bar.value = response.body()
                 } else {
                     Toast.makeText(MyApp.instance, "Error al cargar el bar", Toast.LENGTH_SHORT).show()
                 }
             }
 
-            override fun onFailure(call: Call<BarDetail>, t: Throwable) {
+            override fun onFailure(call: Call<Bar>, t: Throwable) {
                 Toast.makeText(MyApp.instance, "Error. Can't connect to server", Toast.LENGTH_SHORT).show()
             }
         })
 
-        return barDetail
+        return bar
     }
 
 }
