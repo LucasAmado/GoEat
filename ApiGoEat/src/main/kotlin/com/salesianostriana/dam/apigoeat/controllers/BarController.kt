@@ -8,7 +8,6 @@ import com.salesianostriana.dam.apigoeat.services.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import java.util.*
@@ -32,14 +31,28 @@ class BarController(val barService: BarService, val userService: UserService) {
         else throw  ResponseStatusException(HttpStatus.NOT_FOUND, "No se ha encontrado el bar con id $id")
     }
 
+    private fun findTipos(): List<String> {
+        var result: List<String> = barService.findAllTiposComida()
+
+        if (result.isEmpty())
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, "No hay tipos de comidas")
+        return result
+    }
+
     @GetMapping("/")
-    fun listarBares() = barService.getBares()
+    fun listarBares() = allBares().map {
+        it.toBarDTO()
+    }
+
+    @GetMapping("/tipos")
+    fun tiposComida() = findTipos()
 
 
     @PostMapping("/")
-    fun crearNota(@RequestBody nuevoBar: CreateBarDTO, @AuthenticationPrincipal owner : User): ResponseEntity<BarDTO> {
-        owner.bar = nuevoBar.toBar()
-        //TODO guardar bar
-        return ResponseEntity.status(HttpStatus.CREATED).body(barService.save(nuevoBar.toBar()).toBarDTO())
-    }
+    fun crearBar(@RequestBody nuevoBar: CreateBarDTO, @AuthenticationPrincipal owner : User): ResponseEntity<BarDTO> =
+            ResponseEntity.status(HttpStatus.CREATED).body(barService.save(nuevoBar.toBar()).toBarDTO())
+
+    @GetMapping("/{id}")
+    fun detailBar(@PathVariable id : UUID) = oneBar(id)
+
 }

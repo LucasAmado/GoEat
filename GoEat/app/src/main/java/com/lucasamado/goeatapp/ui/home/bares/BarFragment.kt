@@ -1,6 +1,5 @@
-package com.lucasamado.goeatapp.ui.bares
+package com.lucasamado.goeatapp.ui.home.bares
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.MyApp
-import com.lucasamado.goeatapp.models.Bar
+import com.lucasamado.goeatapp.models.bar.Bar
 import com.lucasamado.goeatapp.viewmodels.BarViewModel
 import javax.inject.Inject
 
@@ -36,7 +35,8 @@ class BarFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_bar_list, container, false)
 
-        barAdapter = MyBarRecyclerViewAdapter()
+        barAdapter =
+            MyBarRecyclerViewAdapter()
 
         // Set the adapter
         if (view is RecyclerView) {

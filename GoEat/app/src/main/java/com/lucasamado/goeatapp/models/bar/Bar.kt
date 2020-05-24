@@ -1,4 +1,4 @@
-package com.lucasamado.goeatapp.models
+package com.lucasamado.goeatapp.models.bar
 
 data class Bar(
     val foto: String,

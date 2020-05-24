@@ -9,5 +9,6 @@ class Constantes {
         const val USER_ROLES = "USER_ROLES"
         const val SHARED_PREFS_FILE = "SHARED_PREFERENCES_FILE"
         const val TOKEN = "TOKEN"
+        const val TIPO_PLATO = "TIPO_PLATO"
     }
 }

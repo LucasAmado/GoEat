@@ -1,5 +1,6 @@
-package com.lucasamado.goeatapp.ui.bares
+package com.lucasamado.goeatapp.ui.home.bares
 
+import android.content.Intent
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -10,7 +11,9 @@ import android.widget.TextView
 import coil.api.load
 import coil.transform.CircleCropTransformation
 import com.lucasamado.goeatapp.R
-import com.lucasamado.goeatapp.models.Bar
+import com.lucasamado.goeatapp.common.Constantes
+import com.lucasamado.goeatapp.common.MyApp
+import com.lucasamado.goeatapp.models.bar.Bar
 import kotlinx.android.synthetic.main.fragment_bar.view.*
 
 
@@ -21,7 +24,15 @@ class MyBarRecyclerViewAdapter() : RecyclerView.Adapter<MyBarRecyclerViewAdapter
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-           val item = v.tag as Bar
+            val item = v.tag as Bar
+            val idBar = item.id
+
+            val intent = Intent(MyApp.instance, DetalleBarActivity::class.java).apply {
+                putExtra(Constantes.BAR_ID, idBar)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                Log.e("BAR SELECT: ", ""+item)
+            }
+            MyApp.instance.startActivity(intent)
         }
     }
 

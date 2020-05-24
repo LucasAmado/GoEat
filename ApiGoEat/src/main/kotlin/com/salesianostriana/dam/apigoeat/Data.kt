@@ -24,23 +24,16 @@ class Data(
         //Bares
         val bares = listOf(
                 Bar(
-                        "Goiko - Albareda", "Hamburguesas",
-                        "/files/bares/1.jpeg",
-                        37.389670,-5.995405,
-                        LocalTime.of( 13, 0), LocalTime.of( 23, 30),
-                        20, 25
+                        "Goiko - Albareda", "Hamburguesas", "/files/bares/1.jpeg", 37.389670,-5.995405,
+                        LocalTime.of( 13, 0), LocalTime.of( 23, 30), 20, 25
                 ),
                 Bar(
-                        "Masakali Pizza", "Pizza",
-                        "/files/bares/2.jpeg",
-                        37.392726,-5.989546,
-                        LocalTime.of( 13, 0), LocalTime.of( 16, 30),
-                        14, 20
+                        "Masakali Pizza", "Pizzas", "/files/bares/2.jpeg", 37.392726,-5.989546,
+                        LocalTime.of( 13, 0), LocalTime.of( 16, 30), 14, 20
                 ),
                 Bar(
                         "La Piazza", "Pizzas", "/files/bares/3.jpeg",37.397413,-5.993683,
-                        LocalTime.of( 13, 0), LocalTime.of( 23, 0),
-                        8, 15
+                        LocalTime.of( 13, 0), LocalTime.of( 23, 0), 8, 15
                 )
         )
         barRepository.saveAll(bares)
@@ -63,15 +56,15 @@ class Data(
                 Plato("Fanta de naranja", "bebidas/fanta.jpeg", 2.00, "33cl.", "Bebidas", bares[0]),
 
                 //Masakali
-                Plato("Pizza Duquesa", "masakali/duquesa.jpeg", 9.00, "Pollo, calabacín, cebolla morada y orégano. Base de tomate y mozzarella. Nuestras pizzas están hechas con masa madre y aceite de oliva virgen extra. Contiene: Gluten.", "Especiales", bares[1]),
-                Plato("Pizza York", "masakali/york.jpeg", 8.00, "Base de tomate y mozzarella. Nuestras pizzas están hechas con masa madre y aceite de oliva virgen extra. Contiene: Gluten.", "Tradicionales", bares[1]),
-                Plato("Pizza Margarita con Orégano", "masakali/margarita.jpeg", 8.00, "Base de tomate y mozzarella. Nuestras pizzas están hechas con masa madre y aceite de oliva virgen extra. Contiene: Gluten.", "Tradicionales", bares[1]),
-                Plato("Pizza Serranito Alioli", "masakali/serranito-alioli.jpeg", 9.00, "Pollo, jamón serrano, pimiento verde y alioli casero. Base de tomate y mozzarella. Nuestras pizzas están hechas con masa madre y aceite de oliva virgen extra. Contiene: Lactosa y gluten.", "Especiales", bares[1]),
-                Plato("Pizza Vegetal", "masakali/vegetal.jpeg", 9.00, "Berenjena, calabacín, pimiento rojo y orégano. Base de tomate y mozzarella. Nuestras pizzas están hechas con masa madre y aceite de oliva virgen extra. Contiene: Gluten.", "Especiales", bares[1]),
+                Plato("Pizza Duquesa", "masakali/duquesa.jpeg", 9.00, "Pollo, calabacín, cebolla morada y orégano. Base de tomate y mozzarella. Nuestras pizzas están hechas con masa madre y aceite de oliva virgen extra. Contiene: Gluten.", "Pizzas Especiales", bares[1]),
+                Plato("Pizza York", "masakali/york.jpeg", 8.00, "Base de tomate y mozzarella. Nuestras pizzas están hechas con masa madre y aceite de oliva virgen extra. Contiene: Gluten.", "Pizzas Tradicionales", bares[1]),
+                Plato("Pizza Margarita con Orégano", "masakali/margarita.jpeg", 8.00, "Base de tomate y mozzarella. Nuestras pizzas están hechas con masa madre y aceite de oliva virgen extra. Contiene: Gluten.", "Pizzas Tradicionales", bares[1]),
+                Plato("Pizza Serranito Alioli", "masakali/serranito-alioli.jpeg", 9.00, "Pollo, jamón serrano, pimiento verde y alioli casero. Base de tomate y mozzarella. Nuestras pizzas están hechas con masa madre y aceite de oliva virgen extra. Contiene: Lactosa y gluten.", "Pizzas Especiales", bares[1]),
+                Plato("Pizza Vegetal", "masakali/vegetal.jpeg", 9.00, "Berenjena, calabacín, pimiento rojo y orégano. Base de tomate y mozzarella. Nuestras pizzas están hechas con masa madre y aceite de oliva virgen extra. Contiene: Gluten.", "Pizzas Especiales", bares[1]),
                 Plato("Postre de galleta con chocolate blanco", "masakali/galleta-cholate.jpeg", 4.50, "Tarta de chocolate blanco con galleta", "Postres", bares[1]),
                 Plato("Postre de Kinder", "masakali/kinder.jpeg", 8.00, "Tarta de galleta kinder", "Postres", bares[1]),
                 Plato("Postre de 3 Chocolates Belgas", "masakali/belga.jpeg", 4.50, "Tarta casera", "Postres", bares[1]),
-                Plato("Pizza Cinco Quesos", "masakali/margarita.jpeg", 9.00, "Mozzarella, cheddar, queso azul, cabra, grana padano y orégano. Base de tomate y mozzarella. Nuestras pizzas están hechas con masa madre y aceite de oliva virgen extra. Contiene: Lactosa, gluten y huevo.", "Especiales", bares[1]),
+                Plato("Pizza Cinco Quesos", "masakali/margarita.jpeg", 9.00, "Mozzarella, cheddar, queso azul, cabra, grana padano y orégano. Base de tomate y mozzarella. Nuestras pizzas están hechas con masa madre y aceite de oliva virgen extra. Contiene: Lactosa, gluten y huevo.", "Pizzas Especiales", bares[1]),
                 Plato("Lata Coca Cola", "bebidas/cola.jpeg", 1.40, "33cl.", "Bebidas", bares[1]),
                 Plato("Lata Coca Cola Light", "bebidas/cola-light.jpeg", 1.40, "33cl.", "Bebidas", bares[1]),
                 Plato("Lata Coca Cola Zero", "bebidas/cola-cero.jpeg", 1.40, "33cl.", "Bebidas", bares[1]),

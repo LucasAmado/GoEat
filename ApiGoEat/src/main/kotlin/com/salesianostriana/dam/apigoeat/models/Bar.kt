@@ -7,6 +7,7 @@ import java.time.LocalTime
 import java.util.*
 import javax.persistence.*
 import javax.validation.constraints.NotEmpty
+import kotlin.collections.ArrayList
 
 @Entity
 class Bar(
@@ -42,4 +43,7 @@ class Bar(
         @Id @GeneratedValue
         val id : UUID? = null
 ) {
+
+        constructor(nombre: String, tipoComida: String, foto: String, platos: MutableList<Plato>?, id: UUID?):
+                this(nombre, tipoComida, foto, 0.0, 0.0, LocalTime.now(), LocalTime.now(), 0, 0,platos, ArrayList(), id)
 }
