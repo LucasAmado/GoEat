@@ -5,7 +5,10 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import coil.api.load
+import coil.transform.CircleCropTransformation
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
@@ -41,6 +44,11 @@ class MyPlatoRecyclerViewAdapter() : RecyclerView.Adapter<MyPlatoRecyclerViewAda
         val item = platosList[position]
         holder.tvNombre.text = item.nombre
         holder.tvPrecio.text = item.precioU.toString()+" €"
+        holder.ivFoto.load(item.foto){
+            crossfade(true)
+            transformations(CircleCropTransformation())
+            placeholder(R.drawable.ic_food)
+        }
 
         with(holder.mView) {
             tag = item
@@ -58,5 +66,6 @@ class MyPlatoRecyclerViewAdapter() : RecyclerView.Adapter<MyPlatoRecyclerViewAda
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val tvNombre: TextView = mView.textViewNombre
         val tvPrecio: TextView = mView.textViewPrecio
+        val ivFoto:ImageView = mView.imageViewFoto
     }
 }
