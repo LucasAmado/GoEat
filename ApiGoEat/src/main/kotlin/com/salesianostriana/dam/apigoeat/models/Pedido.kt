@@ -3,6 +3,7 @@ package com.salesianostriana.dam.apigoeat.models
 import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import java.time.LocalDate
+import java.time.LocalTime
 import java.util.*
 import javax.persistence.*
 
@@ -14,6 +15,9 @@ data class Pedido(
         var totalPedido: Double,
 
         var favorito: Boolean = false,
+
+        //TODO pasarselo al controller con un @Body
+        var horaRegodida: LocalTime? = null,
 
         @JsonManagedReference
         @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER, cascade = [CascadeType.REMOVE])

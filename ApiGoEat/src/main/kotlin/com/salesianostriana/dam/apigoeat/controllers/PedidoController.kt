@@ -35,6 +35,7 @@ class PedidoController(val pedidoService: PedidoService, val platoService: Plato
         return total
     }
 
+    //TODO pasar por el body LocalTime hora recogida y bar?
     @GetMapping("/pedido/pagar")
     fun pagarPedido(@AuthenticationPrincipal usuario: User): Boolean {
         val carrito: List<LineaPedido> = carritoService.lineasCarrito

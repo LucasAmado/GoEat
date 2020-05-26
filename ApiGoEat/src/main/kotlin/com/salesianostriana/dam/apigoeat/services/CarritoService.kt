@@ -2,9 +2,11 @@ package com.salesianostriana.dam.apigoeat.services
 
 import com.salesianostriana.dam.apigoeat.models.LineaPedido
 import com.salesianostriana.dam.apigoeat.models.Plato
+import org.springframework.stereotype.Service
 import java.util.*
 import kotlin.collections.ArrayList
 
+@Service
 class CarritoService {
     var platoService: PlatoService = PlatoService()
     var lineasCarrito: MutableList<LineaPedido> = ArrayList()
@@ -15,7 +17,7 @@ class CarritoService {
         for (lp in lineasCarrito) {
             if (lp.plato?.id == p.id) {
                 lp.cantidad = cantidad
-                lp.totalLinea = lp.calcularPrecioLinea(cantidad)
+                lp.totalLinea = lp.calcularPrecioLinea()
                 lineaExist = true
             }
         }
@@ -38,6 +40,7 @@ class CarritoService {
      * si al recorre la lista delete=true entonces se borrra la lineaPedido
      * Si por el contrario la LineaPedido no existe y !delete entonces se crea la LineaPedido, con los datos correspondientes
      */
+    //TODO crear pedido y asociarle el usuario
     fun actualizarCarrito(cantidad: Int, id: UUID) {
         var delete = false
         var lineaExist = false
@@ -46,7 +49,7 @@ class CarritoService {
         loop@ for (lp in lineasCarrito) {
             if (lp.plato?.id == id) {
                 lp.cantidad = cantidad
-                lp.totalLinea = lp.calcularPrecioLinea(cantidad)
+                lp.totalLinea = lp.calcularPrecioLinea()
                 lineaExist = true
 
                 if (delete) {
@@ -66,7 +69,7 @@ class CarritoService {
     fun calcularTotalCompra(): Double {
         var total = 0.0
         for (lp in lineasCarrito) {
-            total += lp.calcularPrecioLinea(lp.cantidad)
+            total += lp.calcularPrecioLinea()
         }
         return total
     }

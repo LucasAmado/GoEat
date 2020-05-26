@@ -25,7 +25,7 @@ data class LineaPedido(
         @Id @GeneratedValue
         val id : UUID? = null
 ) {
-    fun calcularPrecioLinea(cant: Int): Double {
-        return plato?.precioU!!*cant
+    fun calcularPrecioLinea(): Double {
+        return plato?.precioU!!*cantidad
     }
 }
