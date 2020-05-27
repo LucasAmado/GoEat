@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/carritoIcon"
+        android:icon="@drawable/ic_carrito"
+        android:title="@string/carrito"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/perfilIcon"
+        android:icon="@drawable/ic_user"
+        android:title="@string/title_perfil"
+        app:showAsAction="ifRoom" />
+</menu>

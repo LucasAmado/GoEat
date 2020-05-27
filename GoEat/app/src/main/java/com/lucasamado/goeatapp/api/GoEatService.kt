@@ -1,5 +1,6 @@
 package com.lucasamado.goeatapp.api
 
+import com.lucasamado.goeatapp.models.bar.BarDetailDto
 import com.lucasamado.goeatapp.models.bar.BarDto
 import com.lucasamado.goeatapp.models.pedido.LineaPedidoDto
 import com.lucasamado.goeatapp.models.plato.Plato
@@ -27,7 +28,7 @@ interface GoEatService {
     fun getBaresList(): Call<List<BarDto>>
 
     @GET("bares/{id}")
-    fun getBarById(@Path("id") id: String): Call<BarDto>
+    fun getBarById(@Path("id") id: String): Call<BarDetailDto>
 
     //Platos
 
@@ -52,8 +53,8 @@ interface GoEatService {
     @GET("pedidos/tamanyo-carrito")
     fun consultarTamanyoCarrito(): Call<Int>
 
-    @GET("pedidos/bar-carrito")
-    fun getFirstPlatoCarrito(): Call<PlatoDto>
+    @GET("pedidos/ver-carrito")
+    fun getCarrito(): Call<List<LineaPedidoDto>>
 
 
 }

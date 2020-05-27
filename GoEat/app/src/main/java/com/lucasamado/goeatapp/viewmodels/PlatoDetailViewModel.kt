@@ -28,8 +28,6 @@ class PlatoDetailViewModel @Inject constructor(
 
     fun tamanyoCarrito(): MutableLiveData<Int> = pedidoRepo.consultarTamanyoCarrito()
 
-    fun consultarBarCarrito(): MutableLiveData<PlatoDto> = platoRepo.consultarBarCarrito()
-
     fun deletePlato(id: String): MutableLiveData<Boolean> = pedidoRepo.deletePlato(id)
 
 }

@@ -10,13 +10,15 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
+import java.time.LocalTime
 import java.util.*
+import kotlin.collections.ArrayList
 
 @RestController
 @RequestMapping("/bares")
 class BarController(val barService: BarService, val userService: UserService) {
 
-    private fun allBares() : List<Bar> {
+    private fun allBares(): List<Bar> {
         var result: List<Bar> = barService.findAll()
 
         if (result.isEmpty())
@@ -27,7 +29,7 @@ class BarController(val barService: BarService, val userService: UserService) {
     private fun oneBar(id: UUID): BarDetailDTO {
         var result: Optional<Bar> = barService.findById(id)
 
-        if(result.isPresent) return result.get().toBarDetailDTO()
+        if (result.isPresent) return result.get().toBarDetailDTO()
         else throw  ResponseStatusException(HttpStatus.NOT_FOUND, "No se ha encontrado el bar con id $id")
     }
 
@@ -49,10 +51,40 @@ class BarController(val barService: BarService, val userService: UserService) {
 
 
     @PostMapping("/")
-    fun crearBar(@RequestBody nuevoBar: CreateBarDTO, @AuthenticationPrincipal owner : User): ResponseEntity<BarDTO> =
+    fun crearBar(@RequestBody nuevoBar: CreateBarDTO, @AuthenticationPrincipal owner: User): ResponseEntity<BarDTO> =
             ResponseEntity.status(HttpStatus.CREATED).body(barService.save(nuevoBar.toBar()).toBarDTO())
 
     @GetMapping("/{id}")
-    fun detailBar(@PathVariable id : UUID) = oneBar(id)
+    fun detailBar(@PathVariable id: UUID) = oneBar(id)
+
+
+    @GetMapping("/actualizar/horarios-recogida")
+    fun disponibilidad(): List<Bar> {
+        var hourMin: LocalTime? = null
+        var horas: MutableList<LocalTime>? = null
+
+        for (bar in allBares()) {
+            horas = ArrayList()
+            if (hourMin == null) {
+                hourMin = bar.horaApertura
+            }
+            while (hourMin?.isBefore(bar.horaCierre)!!) {
+                if (hourMin.isBefore(bar.horaCierre.minusMinutes(bar.tiempoPedido))) {
+                    hourMin = hourMin.plusMinutes(bar.tiempoPedido)
+                    horas?.add(hourMin)
+                } else {
+                    hourMin = bar.horaCierre
+                }
+            }
+
+            bar.horasDisponibles = horas
+            println("\nHORAS DISPONIBLES: ${bar.horasDisponibles}\n")
+            barService.save(bar)
+            hourMin = null
+        }
+
+        return allBares()
+    }
+
 
 }

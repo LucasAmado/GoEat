@@ -1,6 +1,7 @@
 package com.lucasamado.goeatapp.ui.home.platos
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -9,14 +10,15 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import coil.api.load
+import com.lucasamado.goeatapp.MainActivity
 import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
 import com.lucasamado.goeatapp.viewmodels.PlatoDetailViewModel
 import java.text.DecimalFormat
 import javax.inject.Inject
 
-import androidx.appcompat.app.AlertDialog;
 import com.lucasamado.goeatapp.R
+import com.lucasamado.goeatapp.ui.home.carrito.CarritoActivity
 
 
 class DetallePlatoActivity : AppCompatActivity() {
@@ -37,6 +39,8 @@ class DetallePlatoActivity : AppCompatActivity() {
     var df = DecimalFormat("#.00")
     lateinit var idBar: String
     lateinit var tipoPlato: String
+    var carrito: Boolean? = false
+    var cant: Int? = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,9 +54,15 @@ class DetallePlatoActivity : AppCompatActivity() {
         cantidad = findViewById(R.id.textViewCantidad)
         add = findViewById(R.id.imageViewAdd)
         less = findViewById(R.id.imageViewLess)
-        btn_carrito = findViewById(R.id.buttonCarrito)
+        btn_carrito = findViewById(R.id.buttonPagar)
 
         var idPlato = intent.extras?.getString(Constantes.PLATO_ID).toString()
+        carrito = intent.extras?.getBoolean(Constantes.LUGAR_CARRITO)
+        cant = intent.extras?.getInt(Constantes.CANTIDAD)
+
+        if (cant != null && cant!! >= 1) {
+            num = cant as Int
+        }
 
         loadPlato(idPlato)
 
@@ -62,7 +72,8 @@ class DetallePlatoActivity : AppCompatActivity() {
         }
 
         less.setOnClickListener {
-            if (num >= 2) num--
+            if (carrito == false && num >= 2) num--
+            else if (carrito == true && num >= 1) num--
             actualizarDatos()
         }
 
@@ -82,16 +93,16 @@ class DetallePlatoActivity : AppCompatActivity() {
                 })
 
             } else {
-                Log.e("bar", "borrar plato")
                 platoDetailViewModel.deletePlato(idPlato).observe(this, Observer {
-                    //TODO crear activity del carrito y descomentar
-                    /*val intent = Intent(this, CarritoActivity::class.java).apply {
-                        putExtra(Constantes.BAR_ID, idBar)
-                        putExtra(Constantes.TIPO_PLATO, tipoPlato)
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    }*/
-                    startActivity(intent)
-                    finish()
+                    if (it != null) {
+                        val intent = Intent(this, ListaPlatosActivity::class.java).apply {
+                            putExtra(Constantes.BAR_ID, idBar)
+                            putExtra(Constantes.TIPO_PLATO, tipoPlato)
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        }
+                        startActivity(intent)
+                        finish()
+                    }
                 })
             }
         }
@@ -122,9 +133,16 @@ class DetallePlatoActivity : AppCompatActivity() {
 
 
     private fun actualizarDatos() {
+        if (num < 1 && carrito == true) {
+            mensajeCarrito = "BORRAR DEL CARRITO"
+            btn_carrito.text = mensajeCarrito
+            btn_carrito.setBackgroundColor(Color.parseColor("#cf1e1b"))
+        } else {
+            precioTotal = (df.format(num * precioU)).toString()
+            mensajeCarrito = "AÑADIR $num AL CARRITO"
+            btn_carrito.text = mensajeCarrito + "\t\t\t\t\t\t" + precioTotal + "€"
+            btn_carrito.setBackgroundColor(Color.parseColor("#FF424242"))
+        }
         cantidad.text = num.toString()
-        precioTotal = (df.format(num * precioU)).toString()
-        mensajeCarrito = "AÑADIR $num AL CARRITO"
-        btn_carrito.text = mensajeCarrito + "\t\t\t\t\t\t" + precioTotal + "€"
     }
 }

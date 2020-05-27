@@ -12,8 +12,8 @@
         android:title="@string/title_pedidos" />
 
     <item
-        android:id="@+id/navigation_perfil"
-        android:icon="@drawable/ic_user"
-        android:title="@string/title_perfil" />
+        android:id="@+id/navigation_gestion"
+        android:icon="@drawable/ic_gestion"
+        android:title="@string/title_gestion" />
 
 </menu>

@@ -27,11 +27,8 @@ class DetalleBarActivity : AppCompatActivity() {
     lateinit var horarios: TextView
     lateinit var lvTipoPlatos: ListView
     lateinit var btn_informacion: Button
-    lateinit var btn_carrito: Button
     var tiposList: MutableList<String> = ArrayList()
     lateinit var adapterTipos: ArrayAdapter<String>
-    // TODO comprobar linea de pedido
-    // lateinit var idLineaPedido: LineaPedido? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,15 +43,7 @@ class DetalleBarActivity : AppCompatActivity() {
         horarios = findViewById(R.id.textViewHorario)
         tipoComida = findViewById(R.id.textViewTipoComida)
         btn_informacion = findViewById(R.id.buttonInformacion)
-        btn_carrito = findViewById(R.id.buttonCarrito)
         lvTipoPlatos = findViewById(R.id.lvTipoPlatos)
-
-
-        //TODO pensar en como esconder y mostrar botón
-        //crear linea vacía aquí
-        // al añadir platos traer el id de la linea e igualarlo
-        // si el id del no es nuelo ni vacío -> mostrar boton
-        btn_carrito.visibility = View.INVISIBLE
 
         loadBarDetail(idBar)
         loadTiposPlatos(idBar)

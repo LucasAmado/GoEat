@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.MyApp
+import com.lucasamado.goeatapp.models.bar.BarDetailDto
 import com.lucasamado.goeatapp.models.bar.BarDto
 import com.lucasamado.goeatapp.viewmodels.BarViewModel
 import javax.inject.Inject

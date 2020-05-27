@@ -2,6 +2,8 @@ package com.salesianostriana.dam.apigoeat.models
 
 import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonManagedReference
+import org.hibernate.annotations.Fetch
+import org.hibernate.annotations.FetchMode
 import java.util.*
 import javax.persistence.*
 
@@ -24,6 +26,7 @@ data class Plato(
 
         @JsonManagedReference
         @OneToMany(mappedBy = "plato", fetch = FetchType.EAGER, cascade = [CascadeType.REMOVE])
+        @Fetch(value = FetchMode.SUBSELECT)
         var lineasPedido: MutableList<LineaPedido>? = ArrayList(),
 
         @Id @GeneratedValue

@@ -11,5 +11,7 @@ class Constantes {
         const val TOKEN = "TOKEN"
         const val TIPO_PLATO = "TIPO_PLATO"
         const val PLATO_ID = "PLATO_ID"
+        const val LUGAR_CARRITO: String = "LUGAR_CARRITO"
+        const val CANTIDAD: String = "CANTIDAD"
     }
 }

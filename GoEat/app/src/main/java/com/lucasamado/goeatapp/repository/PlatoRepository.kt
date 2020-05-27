@@ -76,21 +76,4 @@ class PlatoRepository  @Inject constructor(var goEatService: GoEatService) {
         })
         return platoDto
     }
-
-    fun consultarBarCarrito(): MutableLiveData<PlatoDto>{
-        val call: Call<PlatoDto> = goEatService.getFirstPlatoCarrito()
-        call.enqueue(object : Callback<PlatoDto>{
-            override fun onResponse(call: Call<PlatoDto>, response: Response<PlatoDto>) {
-                if(response.isSuccessful){
-                    platoDto.value = response.body()
-                }
-            }
-
-            override fun onFailure(call: Call<PlatoDto>, t: Throwable) {
-                Toast.makeText(MyApp.instance, t.message, Toast.LENGTH_LONG).show()
-            }
-        })
-
-        return platoDto
-    }
 }

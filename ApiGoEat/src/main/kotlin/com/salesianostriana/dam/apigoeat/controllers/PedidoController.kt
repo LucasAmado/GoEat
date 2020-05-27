@@ -2,12 +2,9 @@ package com.salesianostriana.dam.apigoeat.controllers
 
 import com.salesianostriana.dam.apigoeat.models.LineaPedido
 import com.salesianostriana.dam.apigoeat.models.Pedido
-import com.salesianostriana.dam.apigoeat.models.Plato
 import com.salesianostriana.dam.apigoeat.models.User
 import com.salesianostriana.dam.apigoeat.models.dtos.LineaPedidoDTO
-import com.salesianostriana.dam.apigoeat.models.dtos.PlatoDTO
 import com.salesianostriana.dam.apigoeat.models.dtos.toLineaPedidoDto
-import com.salesianostriana.dam.apigoeat.models.dtos.toPlatoDTO
 import com.salesianostriana.dam.apigoeat.services.CarritoService
 import com.salesianostriana.dam.apigoeat.services.LineaPedidoService
 import com.salesianostriana.dam.apigoeat.services.PedidoService
@@ -29,10 +26,7 @@ class PedidoController(val pedidoService: PedidoService, val platoService: Plato
     }
 
     @DeleteMapping("/borrar-plato/{id}")
-    fun borrarPlatoCarrito(@PathVariable("id") id: UUID): Boolean{
-        var platoFind = platoService.findById(id)
-        return carritoService.deletePlato(platoFind.get())
-    }
+    fun borrarPlatoCarrito(@PathVariable("id") id: UUID): Boolean = carritoService.borrarPlato(id)
 
     @GetMapping("/ver-carrito")
     fun verCarrito(): List<LineaPedidoDTO> = carritoService.lineasCarrito.map { it.toLineaPedidoDto() }
@@ -40,20 +34,11 @@ class PedidoController(val pedidoService: PedidoService, val platoService: Plato
     @GetMapping("/tamanyo-carrito")
     fun consultarTamanyo(): Int = carritoService.lineasCarrito.size
 
-    @GetMapping("/limpiar-carrito")
-    fun limpiarCarrito() = carritoService.cleanCarrito()
+    @PostMapping("/limpiar-carrito")
+    fun limpiarCarrito() = carritoService.lineasCarrito.clear()
 
-    @ModelAttribute("/total-carrito")
-    fun CalcularTotalCarrito(): Double {
-        val carrito: List<LineaPedido> = carritoService.lineasCarrito
-        var total = 0.0
-        if (carrito != null && carrito.isNotEmpty()) {
-            for (lp in carrito) {
-                total += lp.plato?.precioU!! * lp.cantidad
-            }
-        }
-        return total
-    }
+    @GetMapping("/calcular/total-carrito")
+    fun CalcularTotalCarrito(): Double = carritoService.calcularTotalCompra()
 
     //TODO pasar por el body LocalTime hora recogida y bar?
     @GetMapping("/pagar")

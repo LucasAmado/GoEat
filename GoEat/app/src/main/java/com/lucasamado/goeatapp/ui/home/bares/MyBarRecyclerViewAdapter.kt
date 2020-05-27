@@ -1,7 +1,6 @@
 package com.lucasamado.goeatapp.ui.home.bares
 
 import android.content.Intent
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -59,8 +58,8 @@ class MyBarRecyclerViewAdapter() : RecyclerView.Adapter<MyBarRecyclerViewAdapter
 
     override fun getItemCount(): Int = baresList.size
 
-    fun setData(popularMovies: List<BarDto>?) {
-        baresList = popularMovies!!
+    fun setData(bares: List<BarDto>?) {
+        baresList = bares!!
         notifyDataSetChanged()
     }
 

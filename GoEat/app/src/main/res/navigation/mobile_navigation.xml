@@ -19,8 +19,8 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_perfil"
+        android:id="@+id/navigation_gestion"
         android:name="com.lucasamado.goeatapp.ui.notifications.NotificationsFragment"
-        android:label="@string/title_perfil"
+        android:label="@string/title_gestion"
         tools:layout="@layout/fragment_notifications" />
 </navigation>

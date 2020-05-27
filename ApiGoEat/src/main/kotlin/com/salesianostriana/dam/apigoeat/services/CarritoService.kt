@@ -3,9 +3,11 @@ package com.salesianostriana.dam.apigoeat.services
 import com.salesianostriana.dam.apigoeat.models.*
 import com.salesianostriana.dam.apigoeat.models.dtos.LineaPedidoDTO
 import org.springframework.stereotype.Service
+import java.util.*
+import kotlin.collections.ArrayList
 
 @Service
-class CarritoService{
+class CarritoService {
     var lineasCarrito: MutableList<LineaPedido> = ArrayList()
 
 
@@ -17,22 +19,19 @@ class CarritoService{
         return total
     }
 
-    fun cleanCarrito() {
-        lineasCarrito.clear()
-    }
-
     /**
      * se recorre la lista de productos, y si se encuentra con una lineaPedido existente entonces actualiza los datos
-     * Si por el contrario la LineaPedido no existe se crea la LineaPedido, con los datos correspondientes
+     * Si por el contrario la LineaPedido no existe se crea la LineaPedido, con los datos correspondientes.
+     * Y si se pide comida a otro bar el carrito se vacía
      */
     fun actualizarCarrito(cantidad: Int, plato: Plato): LineaPedido {
         var lineaExist = false
         lateinit var lineaPedido: LineaPedido
 
-        loop@for (lp in lineasCarrito) {
+        loop@ for (lp in lineasCarrito) {
             //Si se pide comida a otro bar
-            if(lp.plato?.bar?.id != plato.bar?.id){
-                cleanCarrito()
+            if (lp.plato?.bar?.id != plato.bar?.id) {
+                lineasCarrito.clear()
                 break@loop
             }
 
@@ -55,12 +54,12 @@ class CarritoService{
     }
 
 
-    fun deletePlato(p: Plato): Boolean {
+    fun borrarPlato(id: UUID): Boolean {
         var delete = false
         for (lp in lineasCarrito) {
-            if (lp.plato == p) {
+            if (lp.plato?.id == id) {
                 lineasCarrito.remove(lp)
-                delete=true
+                delete = true
             }
         }
         return delete

@@ -2,7 +2,7 @@ package com.lucasamado.goeatapp.models.bar
 
 import com.lucasamado.goeatapp.models.plato.Plato
 
-data class Bar(
+data class BarDetailDto(
     val foto: String,
     val horaApertura: String,
     val horaCierre: String,
@@ -11,8 +11,6 @@ data class Bar(
     val latitud: Double,
     val longitud: Double,
     val nombre: String,
-    val pedidos: List<Any>,
     val platos: List<Plato>,
-    val tiempoPedido: Int,
     val tipoComida: String
 )

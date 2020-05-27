@@ -13,7 +13,6 @@ data class LineaPedidoDTO(
         var totalLinea: Double,
         var plato: Plato? = null,
         var pedido: Pedido? = null,
-        @Id @GeneratedValue
         val id : UUID? = null
 )
 

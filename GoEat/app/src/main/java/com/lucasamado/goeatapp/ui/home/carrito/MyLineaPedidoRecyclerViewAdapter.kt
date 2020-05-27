@@ -1,4 +1,4 @@
-package com.lucasamado.goeatapp.ui.home.platos
+package com.lucasamado.goeatapp.ui.home.carrito
 
 import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView
@@ -12,24 +12,27 @@ import coil.transform.CircleCropTransformation
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
-import com.lucasamado.goeatapp.models.plato.Plato
+import com.lucasamado.goeatapp.models.bar.BarDto
+import com.lucasamado.goeatapp.models.pedido.LineaPedidoDto
+import com.lucasamado.goeatapp.ui.home.platos.DetallePlatoActivity
+import kotlinx.android.synthetic.main.fragment_linea_pedido.view.*
+import java.text.DecimalFormat
 
-import kotlinx.android.synthetic.main.fragment_plato.view.*
 
-class MyPlatoRecyclerViewAdapter() : RecyclerView.Adapter<MyPlatoRecyclerViewAdapter.ViewHolder>() {
+class MyLineaPedidoRecyclerViewAdapter() : RecyclerView.Adapter<MyLineaPedidoRecyclerViewAdapter.ViewHolder>() {
 
     private val mOnClickListener: View.OnClickListener
-    private var platosList: List<Plato> = ArrayList()
+    private var lpList: List<LineaPedidoDto> = ArrayList()
+    var df = DecimalFormat("#.00")
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as Plato
-            val idPlato = item.id
-
+            val item = v.tag as LineaPedidoDto
+            val idPlato = item.plato.id
             val intent = Intent(MyApp.instance, DetallePlatoActivity::class.java).apply {
                 putExtra(Constantes.PLATO_ID, idPlato)
-                putExtra(Constantes.LUGAR_CARRITO, false)
-                putExtra(Constantes.CANTIDAD, 0)
+                putExtra(Constantes.LUGAR_CARRITO, true)
+                putExtra(Constantes.CANTIDAD, item.cantidad)
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
             MyApp.instance.startActivity(intent)
@@ -38,18 +41,20 @@ class MyPlatoRecyclerViewAdapter() : RecyclerView.Adapter<MyPlatoRecyclerViewAda
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_plato, parent, false)
+            .inflate(R.layout.fragment_linea_pedido, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = platosList[position]
-        holder.tvNombre.text = item.nombre
-        holder.tvPrecio.text = item.precioU.toString()+" €"
-        holder.ivFoto.load(item.foto){
+        val item = lpList[position]
+        holder.tvNombre.text = item.plato.nombre
+        holder.tvCantidad.text = "Cantidad: ${item.cantidad}"
+        holder.tvPrecio.text = df.format(item.totalLinea)+"€"
+
+        holder.ivFoto.load(item.plato.foto) {
             crossfade(true)
-            transformations(CircleCropTransformation())
             placeholder(R.drawable.ic_food)
+            transformations(CircleCropTransformation())
         }
 
         with(holder.mView) {
@@ -58,16 +63,17 @@ class MyPlatoRecyclerViewAdapter() : RecyclerView.Adapter<MyPlatoRecyclerViewAda
         }
     }
 
-    override fun getItemCount(): Int = platosList.size
+    override fun getItemCount(): Int = lpList.size
 
-    fun setData(platos: List<Plato>?) {
-        platosList = platos!!
+    fun setData(lineasPedido: List<LineaPedidoDto>) {
+        lpList = lineasPedido
         notifyDataSetChanged()
     }
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val tvNombre: TextView = mView.textViewNombre
         val tvPrecio: TextView = mView.textViewPrecio
-        val ivFoto:ImageView = mView.imageViewFoto
+        val tvCantidad: TextView = mView.textViewCantidad
+        val ivFoto: ImageView = mView.imageViewFoto
     }
 }
