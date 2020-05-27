@@ -1,13 +1,10 @@
 package com.salesianostriana.dam.apigoeat
 
-import com.salesianostriana.dam.apigoeat.models.Bar
-import com.salesianostriana.dam.apigoeat.models.Plato
-import com.salesianostriana.dam.apigoeat.models.User
-import com.salesianostriana.dam.apigoeat.repos.BarRepository
-import com.salesianostriana.dam.apigoeat.repos.PlatoRepository
-import com.salesianostriana.dam.apigoeat.repos.UserRepository
+import com.salesianostriana.dam.apigoeat.models.*
+import com.salesianostriana.dam.apigoeat.repos.*
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
+import java.time.LocalDate
 import java.time.LocalTime
 import javax.annotation.PostConstruct
 
@@ -16,6 +13,8 @@ class Data(
         val userRepository: UserRepository,
         val barRepository: BarRepository,
         val platoRepository: PlatoRepository,
+        val pedidoRepository: PedidoRepository,
+        val lineaPedidoRepository: LineaPedidoRepository,
         private val encoder: PasswordEncoder
 ) {
     @PostConstruct
@@ -78,7 +77,7 @@ class Data(
                 Plato("FANTA DE NARANJA", "http://euw1.posios.com/posimages/ggmmls@goikogrill.com_36172/images/products/3157768db5ec4a3aa3ba8ab018ac1b93.jpg", 2.00, "Lata de 33cl", "BEBIDAS", bares[1]),
                 Plato("RED BULL", "http://euw1.posios.com/posimages/ggmmls@goikogrill.com_36172/images/products/e8e9fa21930a466998def230d2d7ce95.jpg", 3.20, "", "BEBIDAS", bares[1]),
                 Plato("RED BULL SUGARFREE", "http://euw1.posios.com/posimages/ggmmls@goikogrill.com_36172/images/products/45a03d41df544c61974a9b397573680a.jpg", 3.20, "", "BEBIDAS", bares[1]),
-                Plato("RED BULL AçAÍ", "http://euw1.posios.com/posimages/ggmmls@goikogrill.com_36172/images/products/008c9f09b3e546b99d5f6cd13cbdd99b.jpg", 3.00, "", "BEBIDAS", bares[1]),
+                Plato("RED BULL AÇAÍ", "http://euw1.posios.com/posimages/ggmmls@goikogrill.com_36172/images/products/008c9f09b3e546b99d5f6cd13cbdd99b.jpg", 3.00, "", "BEBIDAS", bares[1]),
                 Plato("ENSALADA QUINOA", "", 10.90, "Mix verde, pollo plancha, manzana, quinoa, piñones, aguacate y mango y vinagreta balsámica", "ENSALADAS", bares[1]),
                 Plato("ENSALADA NO PIQUI", "https://media-cdn.tripadvisor.com/media/photo-s/13/d0/1a/7a/ensalada-en-no-piqui.jpg", 10.90, "Canónigos, mix de lechuga, pollo empanado, parmesano, manzana, aguacate, nueces, vinagreta de mostaza y miel", "ENSALADAS", bares[1]),
                 Plato("ENSALADA CAPRESE BURRATTA", "https://res.cloudinary.com/glovoapp/w_680,h_240,c_fit,f_auto,q_auto/Products/fmqwpmlc1m15zf5umdfg", 10.90, "Selección de tomates de temporada, rúcula, burrata de búfala, reducción de vinagre de módena", "ENSALADAS", bares[1]),

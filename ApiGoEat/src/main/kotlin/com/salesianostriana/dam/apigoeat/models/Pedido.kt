@@ -19,10 +19,6 @@ data class Pedido(
         //TODO pasarselo al controller con un @Body
         var horaRegodida: LocalTime? = null,
 
-        @JsonManagedReference
-        @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER, cascade = [CascadeType.REMOVE])
-        var lineas: MutableList<LineaPedido>? = ArrayList(),
-
         @JsonBackReference
         @ManyToOne
         var user: User? = null,
@@ -30,6 +26,10 @@ data class Pedido(
         @JsonBackReference
         @ManyToOne
         var bar: Bar? = null,
+
+        @JsonManagedReference
+        @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER, cascade = [CascadeType.REMOVE])
+        var lineasPedido: MutableList<LineaPedido>? = ArrayList(),
 
         @Id @GeneratedValue
         val id : UUID? = null

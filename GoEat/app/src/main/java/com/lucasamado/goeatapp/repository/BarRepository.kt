@@ -28,8 +28,6 @@ class BarRepository @Inject constructor(var goEatService: GoEatService) {
                     Toast.makeText(MyApp.instance, "Error al cargar los bares", Toast.LENGTH_SHORT)
                         .show()
                 }
-
-                Log.e("RESPONSE BARES", ""+response.body())
             }
 
             override fun onFailure(call: Call<List<BarDto>>, t: Throwable) {

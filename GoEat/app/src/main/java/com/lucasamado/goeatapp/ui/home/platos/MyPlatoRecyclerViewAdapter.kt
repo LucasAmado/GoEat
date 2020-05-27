@@ -12,7 +12,7 @@ import coil.transform.CircleCropTransformation
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
-import com.lucasamado.goeatapp.models.bar.Plato
+import com.lucasamado.goeatapp.models.plato.Plato
 
 import kotlinx.android.synthetic.main.fragment_plato.view.*
 

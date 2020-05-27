@@ -1,5 +1,7 @@
 package com.lucasamado.goeatapp.models.bar
 
+import com.lucasamado.goeatapp.models.plato.Plato
+
 data class BarDto(
     val foto: String,
     val horaApertura: String,

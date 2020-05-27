@@ -1,69 +1,12 @@
 package com.salesianostriana.dam.apigoeat.services
 
-import com.salesianostriana.dam.apigoeat.models.LineaPedido
-import com.salesianostriana.dam.apigoeat.models.Plato
+import com.salesianostriana.dam.apigoeat.models.*
+import com.salesianostriana.dam.apigoeat.models.dtos.LineaPedidoDTO
 import org.springframework.stereotype.Service
-import java.util.*
-import kotlin.collections.ArrayList
 
 @Service
-class CarritoService {
-    var platoService: PlatoService = PlatoService()
+class CarritoService{
     var lineasCarrito: MutableList<LineaPedido> = ArrayList()
-
-    //TODO plato o id plato?
-    fun addModificarPlato(cantidad: Int, p: Plato) {
-        var lineaExist = false
-        for (lp in lineasCarrito) {
-            if (lp.plato?.id == p.id) {
-                lp.cantidad = cantidad
-                lp.totalLinea = lp.calcularPrecioLinea()
-                lineaExist = true
-            }
-        }
-        if (!lineaExist) {
-            lineasCarrito.add(LineaPedido(1, p.precioU, p))
-        }
-    }
-
-    fun deletePlato(p: Plato) {
-        for (lp in lineasCarrito) {
-            if (lp.plato == p) {
-                lineasCarrito.remove(lp)
-            }
-        }
-    }
-
-    /**
-     * si la cantidad es cero entonces delete=true
-     * se recorre la lista de productos, y si se encuentra con una lineaPedido existente entonces actualiza los datos
-     * si al recorre la lista delete=true entonces se borrra la lineaPedido
-     * Si por el contrario la LineaPedido no existe y !delete entonces se crea la LineaPedido, con los datos correspondientes
-     */
-    //TODO crear pedido y asociarle el usuario
-    fun actualizarCarrito(cantidad: Int, id: UUID) {
-        var delete = false
-        var lineaExist = false
-
-        if (cantidad == 0) delete = true
-        loop@ for (lp in lineasCarrito) {
-            if (lp.plato?.id == id) {
-                lp.cantidad = cantidad
-                lp.totalLinea = lp.calcularPrecioLinea()
-                lineaExist = true
-
-                if (delete) {
-                    lineasCarrito.remove(lp)
-                }
-                break@loop
-            }
-        }
-        if (!lineaExist && !delete) {
-            var p = platoService.findById(id)
-            lineasCarrito.add(LineaPedido(cantidad, p.get().precioU * cantidad, p.get()))
-        }
-
-    }
 
 
     fun calcularTotalCompra(): Double {
@@ -76,5 +19,50 @@ class CarritoService {
 
     fun cleanCarrito() {
         lineasCarrito.clear()
+    }
+
+    /**
+     * se recorre la lista de productos, y si se encuentra con una lineaPedido existente entonces actualiza los datos
+     * Si por el contrario la LineaPedido no existe se crea la LineaPedido, con los datos correspondientes
+     */
+    fun actualizarCarrito(cantidad: Int, plato: Plato): LineaPedido {
+        var lineaExist = false
+        lateinit var lineaPedido: LineaPedido
+
+        loop@for (lp in lineasCarrito) {
+            //Si se pide comida a otro bar
+            if(lp.plato?.bar?.id != plato.bar?.id){
+                cleanCarrito()
+                break@loop
+            }
+
+            if (lp.plato?.id == plato.id) {
+                lp.cantidad = cantidad
+                lp.totalLinea = lp.calcularPrecioLinea()
+                lineaExist = true
+
+                lineaPedido = lp
+                break@loop
+            }
+        }
+        if (!lineaExist) {
+            var lp = LineaPedido(cantidad, plato.precioU * cantidad, plato)
+            lineasCarrito.add(lp)
+            lineaPedido = lp
+        }
+
+        return lineaPedido
+    }
+
+
+    fun deletePlato(p: Plato): Boolean {
+        var delete = false
+        for (lp in lineasCarrito) {
+            if (lp.plato == p) {
+                lineasCarrito.remove(lp)
+                delete=true
+            }
+        }
+        return delete
     }
 }

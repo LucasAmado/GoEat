@@ -8,7 +8,8 @@ import java.util.*
 
 interface PlatoRepository: JpaRepository<Plato, UUID> {
 
-    fun findByBar(bar: Bar): List<Plato>
+    @Query("select p from Plato p where p.bar.id = :idBar")
+    fun findByBar(idBar: UUID): List<Plato>
 
     @Query("select distinct tipo from Plato p where p.bar.id = :idBar")
     fun findTiposByBar(idBar: UUID): List<String>

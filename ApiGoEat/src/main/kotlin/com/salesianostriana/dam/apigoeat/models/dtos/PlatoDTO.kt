@@ -1,32 +1,21 @@
-package com.salesianostriana.dam.apigoeat.models
+package com.salesianostriana.dam.apigoeat.models.dtos
 
 import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonManagedReference
+import com.salesianostriana.dam.apigoeat.models.Bar
+import com.salesianostriana.dam.apigoeat.models.LineaPedido
+import com.salesianostriana.dam.apigoeat.models.Plato
 import java.util.*
 import javax.persistence.*
 
-@Entity
-data class Plato(
-
+data class PlatoDTO(
         var nombre: String,
-
         var foto: String,
-
         var precioU: Double,
-
         var descripcion: String,
-
         var tipo: String,
-
-        @JsonBackReference
-        @ManyToOne
         var bar: Bar? = null,
-
-        @JsonManagedReference
-        @OneToMany(mappedBy = "plato", fetch = FetchType.EAGER, cascade = [CascadeType.REMOVE])
-        var lineasPedido: MutableList<LineaPedido>? = ArrayList(),
-
-        @Id @GeneratedValue
         val id : UUID? = null
-) {
-}
+)
+
+fun Plato.toPlatoDTO() = PlatoDTO(nombre, foto, precioU, descripcion, tipo, bar, id)

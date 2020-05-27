@@ -1,16 +1,15 @@
 package com.lucasamado.goeatapp.api
 
 import com.lucasamado.goeatapp.models.bar.BarDto
-import com.lucasamado.goeatapp.models.bar.Plato
+import com.lucasamado.goeatapp.models.pedido.LineaPedidoDto
+import com.lucasamado.goeatapp.models.plato.Plato
+import com.lucasamado.goeatapp.models.plato.PlatoDto
 import com.lucasamado.goeatapp.models.user.LoginRequest
 import com.lucasamado.goeatapp.models.user.LoginResponse
 import com.lucasamado.goeatapp.models.user.SignupRequest
 import com.lucasamado.goeatapp.models.user.SignupResponse
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface GoEatService {
 
@@ -35,9 +34,26 @@ interface GoEatService {
     @GET("platos/tipos/{id}")
     fun getTiposPlatosByBar(@Path("id") id: String): Call<List<String>>
 
-    @GET("platos/{tipo}/bar/{id}")
+    @GET("platos/tipo/{tipo}/bar/{id}")
     fun getPlatosByBarAndTipo(@Path("tipo") tipo: String, @Path("id") id: String): Call<List<Plato>>
 
     @GET("platos/{id}")
-    fun getPlato(@Path("id") id: String): Call<Plato>
+    fun getPlato(@Path("id") id: String): Call<PlatoDto>
+
+
+    //Carrito
+
+    @POST("pedidos/actualizar-carrito/{cantidad}/{id}")
+    fun actualizarCarrito(@Path("cantidad") cantidad:Int, @Path("id") id: String): Call<LineaPedidoDto>
+
+    @DELETE("pedidos/borrar-plato/{id}")
+    fun borrarPlato(@Path("id") id: String): Call<Boolean>
+
+    @GET("pedidos/tamanyo-carrito")
+    fun consultarTamanyoCarrito(): Call<Int>
+
+    @GET("pedidos/bar-carrito")
+    fun getFirstPlatoCarrito(): Call<PlatoDto>
+
+
 }

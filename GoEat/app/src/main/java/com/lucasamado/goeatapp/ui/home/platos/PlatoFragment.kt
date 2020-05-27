@@ -1,6 +1,7 @@
 package com.lucasamado.goeatapp.ui.home.platos
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,7 +13,7 @@ import androidx.lifecycle.Observer
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
-import com.lucasamado.goeatapp.models.bar.Plato
+import com.lucasamado.goeatapp.models.plato.Plato
 import com.lucasamado.goeatapp.viewmodels.PlatoViewModel
 import javax.inject.Inject
 
@@ -26,6 +27,7 @@ class PlatoFragment : Fragment() {
     private var platoList: List<Plato> = ArrayList()
     var idBar: String? = null
     var tipoPlato: String? = null
+    var tamCarrito = 0
 
     private var columnCount = 1
 

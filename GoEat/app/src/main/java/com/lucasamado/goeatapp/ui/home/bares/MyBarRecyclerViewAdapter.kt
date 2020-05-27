@@ -30,7 +30,6 @@ class MyBarRecyclerViewAdapter() : RecyclerView.Adapter<MyBarRecyclerViewAdapter
             val intent = Intent(MyApp.instance, DetalleBarActivity::class.java).apply {
                 putExtra(Constantes.BAR_ID, idBar)
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                Log.e("BAR SELECT: ", ""+item)
             }
             MyApp.instance.startActivity(intent)
         }

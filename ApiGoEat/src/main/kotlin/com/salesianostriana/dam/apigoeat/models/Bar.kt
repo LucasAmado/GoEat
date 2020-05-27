@@ -36,9 +36,6 @@ class Bar(
         @OneToMany(mappedBy = "bar", fetch = FetchType.EAGER, cascade = [CascadeType.REMOVE])
         var platos: MutableList<Plato>? = ArrayList(),
 
-        @JsonManagedReference
-        @OneToMany(mappedBy = "bar", fetch = FetchType.EAGER, cascade = [CascadeType.REMOVE])
-        var pedidos: MutableList<Pedido>? = ArrayList(),
 
         @Id @GeneratedValue
         val id : UUID? = null

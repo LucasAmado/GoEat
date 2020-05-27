@@ -1,10 +1,12 @@
-package com.lucasamado.goeatapp.models.bar
+package com.lucasamado.goeatapp.models.plato
 
-data class Plato(
+import com.lucasamado.goeatapp.models.bar.Bar
+
+data class PlatoDto(
+    val bar: Bar,
     val descripcion: String,
     val foto: String,
     val id: String,
-    val lineasPedido: List<Any>,
     val nombre: String,
     val precioU: Double,
     val tipo: String

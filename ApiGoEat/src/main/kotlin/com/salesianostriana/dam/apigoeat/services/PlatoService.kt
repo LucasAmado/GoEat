@@ -13,4 +13,6 @@ class PlatoService : BaseService<Plato, UUID, PlatoRepository>(){
 
     fun findByTipoAndBar(tipo: String, id: UUID): List<Plato> = repository.findByTipoAndBar(tipo, id)
 
+    fun findByIdBar(id: UUID): List<Plato> = repository.findByBar(id)
+
 }

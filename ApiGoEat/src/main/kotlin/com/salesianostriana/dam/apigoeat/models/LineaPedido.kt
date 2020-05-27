@@ -2,10 +2,7 @@ package com.salesianostriana.dam.apigoeat.models
 
 import com.fasterxml.jackson.annotation.JsonBackReference
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.ManyToOne
+import javax.persistence.*
 
 @Entity
 data class LineaPedido(
@@ -15,7 +12,7 @@ data class LineaPedido(
         var totalLinea: Double,
 
         @JsonBackReference
-        @ManyToOne
+        @ManyToOne(fetch = FetchType.LAZY)
         var plato: Plato? = null,
 
         @JsonBackReference
