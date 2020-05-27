@@ -10,6 +10,6 @@ class CarritoViewModel @Inject constructor(
 ) : ViewModel() {
     var repo = pedidoRepository
 
-    fun tamanyoCarrito(): MutableLiveData<Int> = repo.consultarTamanyoCarrito()
+    fun totalCarrito(): MutableLiveData<Double> = repo.calcularTotalCarrito()
 
 }

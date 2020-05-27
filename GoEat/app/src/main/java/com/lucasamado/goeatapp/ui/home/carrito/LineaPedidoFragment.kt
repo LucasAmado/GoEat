@@ -1,6 +1,7 @@
 package com.lucasamado.goeatapp.ui.home.carrito
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -11,8 +12,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.lucasamado.goeatapp.R
+import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
 import com.lucasamado.goeatapp.models.pedido.LineaPedidoDto
+import com.lucasamado.goeatapp.ui.home.platos.DetallePlatoActivity
 import com.lucasamado.goeatapp.viewmodels.LineaPedidoViewModel
 
 import javax.inject.Inject

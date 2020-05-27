@@ -50,8 +50,8 @@ interface GoEatService {
     @DELETE("pedidos/borrar-plato/{id}")
     fun borrarPlato(@Path("id") id: String): Call<Boolean>
 
-    @GET("pedidos/tamanyo-carrito")
-    fun consultarTamanyoCarrito(): Call<Int>
+    @GET("pedidos/calcular/total-carrito")
+    fun consultarTamanyoCarrito(): Call<Double>
 
     @GET("pedidos/ver-carrito")
     fun getCarrito(): Call<List<LineaPedidoDto>>

@@ -3,11 +3,9 @@ package com.lucasamado.goeatapp.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lucasamado.goeatapp.models.pedido.LineaPedidoDto
-import com.lucasamado.goeatapp.models.plato.Plato
 import com.lucasamado.goeatapp.models.plato.PlatoDto
 import com.lucasamado.goeatapp.repository.PedidoRepository
 import com.lucasamado.goeatapp.repository.PlatoRepository
-import java.util.*
 import javax.inject.Inject
 
 class PlatoDetailViewModel @Inject constructor(
@@ -26,7 +24,6 @@ class PlatoDetailViewModel @Inject constructor(
         return pedidoRepo.actualizarCarrito(cantidad, id)
     }
 
-    fun tamanyoCarrito(): MutableLiveData<Int> = pedidoRepo.consultarTamanyoCarrito()
 
     fun deletePlato(id: String): MutableLiveData<Boolean> = pedidoRepo.deletePlato(id)
 

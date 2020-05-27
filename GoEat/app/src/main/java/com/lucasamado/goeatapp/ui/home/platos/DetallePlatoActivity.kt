@@ -82,7 +82,7 @@ class DetallePlatoActivity : AppCompatActivity() {
             if (num >= 1) {
                 platoDetailViewModel.actualizarCarrito(num, idPlato).observe(this, Observer {
                     if (it != null) {
-                        val intent = Intent(this, ListaPlatosActivity::class.java).apply {
+                        val intent = Intent(this, CarritoActivity::class.java).apply {
                             putExtra(Constantes.BAR_ID, idBar)
                             putExtra(Constantes.TIPO_PLATO, tipoPlato)
                             flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -95,7 +95,7 @@ class DetallePlatoActivity : AppCompatActivity() {
             } else {
                 platoDetailViewModel.deletePlato(idPlato).observe(this, Observer {
                     if (it != null) {
-                        val intent = Intent(this, ListaPlatosActivity::class.java).apply {
+                        val intent = Intent(this, CarritoActivity::class.java).apply {
                             putExtra(Constantes.BAR_ID, idBar)
                             putExtra(Constantes.TIPO_PLATO, tipoPlato)
                             flags = Intent.FLAG_ACTIVITY_NEW_TASK

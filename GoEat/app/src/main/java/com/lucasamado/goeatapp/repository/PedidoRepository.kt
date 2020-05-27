@@ -1,12 +1,10 @@
 package com.lucasamado.goeatapp.repository
 
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.lucasamado.goeatapp.api.GoEatService
 import com.lucasamado.goeatapp.common.MyApp
 import com.lucasamado.goeatapp.models.pedido.LineaPedidoDto
-import com.lucasamado.goeatapp.models.plato.PlatoDto
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,7 +16,7 @@ class PedidoRepository @Inject constructor(var goEatService: GoEatService) {
 
     var lineaPedidoDto: MutableLiveData<LineaPedidoDto> = MutableLiveData()
     var delete: MutableLiveData<Boolean> = MutableLiveData()
-    var tamanyo: MutableLiveData<Int> = MutableLiveData()
+    var total: MutableLiveData<Double> = MutableLiveData()
     var carrito: MutableLiveData<List<LineaPedidoDto>> = MutableLiveData()
 
     fun actualizarCarrito(cantidad: Int, id: String): MutableLiveData<LineaPedidoDto> {
@@ -62,23 +60,23 @@ class PedidoRepository @Inject constructor(var goEatService: GoEatService) {
         return delete
     }
 
-    fun consultarTamanyoCarrito(): MutableLiveData<Int>{
-        val call: Call<Int> = goEatService.consultarTamanyoCarrito()
-        call.enqueue(object : Callback<Int>{
-            override fun onResponse(call: Call<Int>, response: Response<Int>) {
+    fun calcularTotalCarrito(): MutableLiveData<Double>{
+        val call: Call<Double> = goEatService.consultarTamanyoCarrito()
+        call.enqueue(object : Callback<Double>{
+            override fun onResponse(call: Call<Double>, response: Response<Double>) {
                 if(response.isSuccessful){
-                    tamanyo.value = response.body()
+                    total.value = response.body()
                 }else{
-                    Toast.makeText(MyApp.instance, "Error al consultar el tamaño del carrito", Toast.LENGTH_LONG).show()
+                    Toast.makeText(MyApp.instance, "Error al cargar el total del carrito", Toast.LENGTH_LONG).show()
                 }
             }
 
-            override fun onFailure(call: Call<Int>, t: Throwable) {
+            override fun onFailure(call: Call<Double>, t: Throwable) {
                 Toast.makeText(MyApp.instance, t.message, Toast.LENGTH_LONG).show()
             }
         })
 
-        return tamanyo
+        return total
     }
 
     fun verCarrito(): MutableLiveData<List<LineaPedidoDto>>{

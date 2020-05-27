@@ -27,7 +27,6 @@ class PlatoFragment : Fragment() {
     private var platoList: List<Plato> = ArrayList()
     var idBar: String? = null
     var tipoPlato: String? = null
-    var tamCarrito = 0
 
     private var columnCount = 1
 
