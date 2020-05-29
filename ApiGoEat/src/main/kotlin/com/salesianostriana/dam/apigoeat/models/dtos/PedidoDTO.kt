@@ -24,3 +24,16 @@ data class PedidoDTO(
 )
 
 fun Pedido.toPedidoDTO() = PedidoDTO(fechaPedido, totalPedido, favorito, horaRecogida, user, bar?.toBarDTO(), comentario, lineasPedido!!.map { it.toLineaPedidoPagoDto() }, id)
+
+data class PedidoDetalleDTO(
+        var fechaPedido: LocalDate,
+        var totalPedido: Double,
+        var favorito: Boolean = false,
+        var horaRecogida: LocalTime? = null,
+        var user: User? = null,
+        var bar: BarDTO? = null,
+        var comentario: String? = null,
+        val id: UUID? = null
+)
+
+fun Pedido.toPedidoDetalleDTO() = PedidoDetalleDTO(fechaPedido, totalPedido, favorito, horaRecogida, user, bar?.toBarDTO(), comentario, id)

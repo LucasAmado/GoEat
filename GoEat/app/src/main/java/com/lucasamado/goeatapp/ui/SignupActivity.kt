@@ -102,7 +102,7 @@ class SignupActivity : AppCompatActivity() {
                 )
             ).observe(this, Observer {
                 if(it != null){
-                    val login: Intent = Intent(MyApp.instance, LoginActivity::class.java).apply {
+                    val login = Intent(MyApp.instance, LoginActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     }
                     startActivity(login)

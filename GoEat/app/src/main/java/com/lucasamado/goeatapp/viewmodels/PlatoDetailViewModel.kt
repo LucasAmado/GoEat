@@ -2,7 +2,7 @@ package com.lucasamado.goeatapp.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.lucasamado.goeatapp.models.pedido.LineaPedidoDto
+import com.lucasamado.goeatapp.models.lineasPedido.LineaPedidoDto
 import com.lucasamado.goeatapp.models.plato.PlatoDto
 import com.lucasamado.goeatapp.repository.PedidoRepository
 import com.lucasamado.goeatapp.repository.PlatoRepository

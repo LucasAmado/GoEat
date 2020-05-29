@@ -9,9 +9,7 @@ import com.salesianostriana.dam.apigoeat.services.*
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
-import java.time.LocalTime
 import java.util.*
-import kotlin.collections.ArrayList
 
 @RestController
 @RequestMapping("/pedidos")
@@ -64,8 +62,14 @@ class PedidoController(val pedidoService: PedidoService, val platoService: Plato
     }
 
     @GetMapping("/ver/mis-pedidos")
-    fun misPedidos(@AuthenticationPrincipal user: User): List<PedidoDTO> = pedidoService.findByUser(user).map { it.toPedidoDTO() }
+    fun misPedidos(@AuthenticationPrincipal user: User): List<PedidoDetalleDTO> = pedidoService.findByUser(user).map { it.toPedidoDetalleDTO() }
 
     @GetMapping("/{id}")
     fun getPedido(@PathVariable("id") id: UUID): PedidoDTO = pedidoService.findById(id).get().toPedidoDTO()
+
+    @GetMapping("/lineas/{id}")
+    fun getLineasPedidoByPedido(@PathVariable("id") id:UUID): List<LineaPedidoDetalleDTO> = lineaPedidoService.findByPedidoId(id).map { it.toLineaPedidoDetalleDTO() }
+
+    @PutMapping("/{id}")
+    fun editarPedido(@PathVariable("id") id: UUID): Boolean = pedidoService.editFavorito(id)
 }

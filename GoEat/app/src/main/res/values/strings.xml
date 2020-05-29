@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">GoEatApp</string>
-    <string name="title_home">Home</string>
     <string name="title_gestion">Gestión</string>
     <string name="title_bares">Bares</string>
     <string name="title_pedidos">Mis pedidos</string>

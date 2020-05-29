@@ -1,4 +1,4 @@
-package com.lucasamado.goeatapp.models.pedido
+package com.lucasamado.goeatapp.models.lineasPedido
 
 import com.lucasamado.goeatapp.models.plato.Plato
 

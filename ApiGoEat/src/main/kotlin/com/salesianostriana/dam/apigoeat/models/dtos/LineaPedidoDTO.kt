@@ -4,9 +4,6 @@ import com.salesianostriana.dam.apigoeat.models.LineaPedido
 import com.salesianostriana.dam.apigoeat.models.Pedido
 import com.salesianostriana.dam.apigoeat.models.Plato
 import java.util.*
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.ManyToOne
 
 data class LineaPedidoDTO(
         var cantidad: Int,
@@ -26,3 +23,13 @@ data class LineaPedidoPagoDTO(
 )
 
 fun LineaPedido.toLineaPedidoPagoDto() = LineaPedidoPagoDTO(cantidad, totalLinea, plato, id)
+
+data class LineaPedidoDetalleDTO(
+        var cantidad: Int,
+        var totalLinea: Double,
+        var plato: PlatoPedidoDTO? = null,
+        var pedido: PedidoDetalleDTO? = null,
+        val id : UUID? = null
+)
+
+fun LineaPedido.toLineaPedidoDetalleDTO() = LineaPedidoDetalleDTO(cantidad, totalLinea, plato?.toPlatoPedidoDTO(), pedido?.toPedidoDetalleDTO(), id)

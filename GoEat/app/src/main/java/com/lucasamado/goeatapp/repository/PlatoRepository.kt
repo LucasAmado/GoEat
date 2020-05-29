@@ -1,11 +1,9 @@
 package com.lucasamado.goeatapp.repository
 
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.lucasamado.goeatapp.api.GoEatService
 import com.lucasamado.goeatapp.common.MyApp
-import com.lucasamado.goeatapp.models.pedido.LineaPedidoDto
 import com.lucasamado.goeatapp.models.plato.Plato
 import com.lucasamado.goeatapp.models.plato.PlatoDto
 import retrofit2.Call

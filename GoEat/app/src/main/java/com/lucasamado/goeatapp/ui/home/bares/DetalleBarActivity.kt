@@ -3,10 +3,8 @@ package com.lucasamado.goeatapp.ui.home.bares
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.*
 import androidx.lifecycle.Observer
 import coil.api.load
@@ -43,7 +41,7 @@ class DetalleBarActivity : AppCompatActivity() {
 
         image = findViewById(R.id.imageViewFoto)
         nombre = findViewById(R.id.textViewNombre)
-        horarios = findViewById(R.id.textViewHorario)
+        horarios = findViewById(R.id.textViewHora)
         tipoComida = findViewById(R.id.textViewTipoComida)
         btn_informacion = findViewById(R.id.buttonInformacion)
         lvTipoPlatos = findViewById(R.id.lvTipoPlatos)

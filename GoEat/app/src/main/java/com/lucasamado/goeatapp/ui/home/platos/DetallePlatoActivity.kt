@@ -87,7 +87,7 @@ class DetallePlatoActivity : AppCompatActivity() {
                             //putExtra(Constantes.TIPO_PLATO, tipoPlato)
                             flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         }
-                        SharedPreferencesManager().setSomeStringValue(Constantes.BAR_PEDIDO, it.plato.bar.id)
+                        SharedPreferencesManager().setSomeStringValue(Constantes.BAR_ID_PEDIDO, it.plato.bar.id)
                         startActivity(intent)
                         finish()
                     }

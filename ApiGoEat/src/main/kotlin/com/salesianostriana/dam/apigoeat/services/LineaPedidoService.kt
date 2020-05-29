@@ -10,7 +10,7 @@ import java.util.*
 @Service
 class LineaPedidoService : BaseService<LineaPedido, UUID, LineaPedidoRepository>(){
 
-    fun saveAll(lineas: List<LineaPedido>){
-        this.repository.saveAll(lineas)
-    }
+    fun saveAll(lineas: List<LineaPedido>) = this.repository.saveAll(lineas)
+
+    fun findByPedidoId(id:UUID):List<LineaPedido> = this.repository.findByPedidoId(id)
 }

@@ -1,5 +1,6 @@
 package com.lucasamado.goeatapp.models.pedido
 
+import com.lucasamado.goeatapp.models.lineasPedido.LineaPedido
 import com.lucasamado.goeatapp.models.user.UserDto
 
 data class Pedido(

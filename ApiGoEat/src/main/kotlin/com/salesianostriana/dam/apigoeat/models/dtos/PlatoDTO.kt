@@ -19,3 +19,14 @@ data class PlatoDTO(
 )
 
 fun Plato.toPlatoDTO() = PlatoDTO(nombre, foto, precioU, descripcion, tipo, bar?.toBarDTO(), id)
+
+data class PlatoPedidoDTO(
+        var nombre: String,
+        var foto: String,
+        var precioU: Double,
+        var descripcion: String,
+        var tipo: String,
+        val id : UUID? = null
+)
+
+fun Plato.toPlatoPedidoDTO() = PlatoPedidoDTO(nombre, foto, precioU, descripcion, tipo, id)

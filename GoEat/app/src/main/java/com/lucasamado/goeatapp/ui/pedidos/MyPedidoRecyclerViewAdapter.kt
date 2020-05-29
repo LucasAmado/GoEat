@@ -1,5 +1,6 @@
 package com.lucasamado.goeatapp.ui.pedidos
 
+import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,11 @@ import android.widget.TextView
 import coil.api.load
 import coil.transform.CircleCropTransformation
 import com.lucasamado.goeatapp.R
+import com.lucasamado.goeatapp.common.Constantes
+import com.lucasamado.goeatapp.common.MyApp
 import com.lucasamado.goeatapp.models.pedido.PedidoDto
+import com.lucasamado.goeatapp.ui.home.bares.DetalleBarActivity
+import com.lucasamado.goeatapp.ui.pedidos.detalle.DetallePedidoActivity
 
 import kotlinx.android.synthetic.main.fragment_pedido.view.*
 import kotlinx.android.synthetic.main.fragment_pedido.view.imageViewFoto
@@ -27,6 +32,11 @@ class MyPedidoRecyclerViewAdapter() : RecyclerView.Adapter<MyPedidoRecyclerViewA
         mOnClickListener = View.OnClickListener { v ->
             val item = v.tag as PedidoDto
             //TODO onclick detalle
+            val detalle = Intent(MyApp.instance, DetallePedidoActivity::class.java).apply {
+                putExtra(Constantes.PEDIDO_ID, item.id)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            MyApp.instance.startActivity(detalle)
         }
     }
 

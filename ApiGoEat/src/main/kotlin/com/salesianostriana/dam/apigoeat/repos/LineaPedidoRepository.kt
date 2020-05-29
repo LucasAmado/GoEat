@@ -7,5 +7,5 @@ import java.util.*
 
 interface LineaPedidoRepository: JpaRepository<LineaPedido, UUID> {
 
-    fun findByPedido(pedido: Pedido): List<LineaPedido>
+    fun findByPedidoId(id: UUID): List<LineaPedido>
 }

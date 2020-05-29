@@ -1,6 +1,7 @@
 package com.lucasamado.goeatapp.ui.home.carrito
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,9 +15,9 @@ import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
 import com.lucasamado.goeatapp.common.SharedPreferencesManager
 import com.lucasamado.goeatapp.models.pedido.CreatePedido
+import com.lucasamado.goeatapp.ui.pedidos.detalle.DetallePedidoActivity
 import com.lucasamado.goeatapp.viewmodels.CarritoViewModel
 import java.text.DecimalFormat
-import java.time.LocalTime
 import javax.inject.Inject
 
 class CarritoActivity : AppCompatActivity() {
@@ -45,7 +46,7 @@ class CarritoActivity : AppCompatActivity() {
         btn_horaRecogida = findViewById(R.id.buttonHoraRecogida)
         tituloHoraRecogida = findViewById(R.id.textView2)
         tituloComentarios = findViewById(R.id.textView3)
-        comentarios = findViewById(R.id.editTextComentario)
+        comentarios = findViewById(R.id.textViewComentario)
         total = findViewById(R.id.textViewTotal)
 
         btn_pagar.visibility = View.INVISIBLE
@@ -115,7 +116,12 @@ class CarritoActivity : AppCompatActivity() {
                )
                carritoViewModel.pagarPedido(pedidoNuevo).observe(this, Observer {
                    if(it!=null){
-                       //TODO intent al detalle del pedido
+                       val detalle = Intent(this, DetallePedidoActivity::class.java).apply {
+                           putExtra(Constantes.PEDIDO_ID, it.id)
+                           flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                       }
+                       startActivity(detalle)
+                       finish()
                    }
                })
            }else{
@@ -125,7 +131,7 @@ class CarritoActivity : AppCompatActivity() {
     }
 
     private fun verHorasDisponibles() {
-        var idBar = SharedPreferencesManager().getSomeStringValue(Constantes.BAR_PEDIDO)
+        var idBar = SharedPreferencesManager().getSomeStringValue(Constantes.BAR_ID_PEDIDO)
         if (idBar != null) {
             carritoViewModel.horasRecogida(idBar!!).observe(this, Observer {
                 if (it != null) {

@@ -70,7 +70,7 @@ class WebSecurityConfiguration(
                 .antMatchers("/auth/login").permitAll()
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/user/**", "/bares/**", "/platos/**", "/pedidos/**").authenticated()
-                .antMatchers("/admin/**", "/lineas/**").hasRole("ADMIN")
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().hasRole("ADMIN")
 
         http.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter::class.java)

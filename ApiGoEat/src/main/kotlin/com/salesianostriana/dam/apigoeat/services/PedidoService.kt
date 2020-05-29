@@ -12,4 +12,15 @@ class PedidoService : BaseService<Pedido, UUID, PedidoRepository>() {
     fun findByUser(user: User) = this.repository.findByUserOrderByFechaPedidoDesc(user)
 
     fun findByBarAndToday(id: UUID) = this.repository.findByBarAndToday(id)
+
+    fun editFavorito(id: UUID): Boolean{
+        var pedido = this.repository.findById(id).get()
+
+        with(pedido){
+            favorito = !favorito
+            repository.save(this)
+        }
+
+        return pedido.favorito
+    }
 }

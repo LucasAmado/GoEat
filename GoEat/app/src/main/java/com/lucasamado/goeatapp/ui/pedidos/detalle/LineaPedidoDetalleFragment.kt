@@ -1,7 +1,7 @@
-package com.lucasamado.goeatapp.ui.home.platos
+package com.lucasamado.goeatapp.ui.pedidos.detalle
 
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,25 +13,25 @@ import androidx.lifecycle.Observer
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
-import com.lucasamado.goeatapp.models.plato.Plato
-import com.lucasamado.goeatapp.viewmodels.PlatoViewModel
+import com.lucasamado.goeatapp.models.lineasPedido.LineaPedidoDetalle
+
+import com.lucasamado.goeatapp.viewmodels.LineaPedidoViewModel
 import javax.inject.Inject
 
 
-class PlatoFragment : Fragment() {
-
+class LineaPedidoDetalleFragment : Fragment() {
     @Inject
-    lateinit var platoViewModel: PlatoViewModel
+    lateinit var lineaPedidoViewModel: LineaPedidoViewModel
 
-    private lateinit var platoAdapter: MyPlatoRecyclerViewAdapter
-    private var platoList: List<Plato> = ArrayList()
-    var idBar: String? = null
-    var tipoPlato: String? = null
+    private lateinit var lineaPedidoAdapter: MyLineaPedidoDetalleRecyclerViewAdapter
+    private var lpList: List<LineaPedidoDetalle> = ArrayList()
+    var idPedido: String? = null
 
     private var columnCount = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         (activity?.applicationContext as MyApp).appComponent.inject(this)
     }
 
@@ -39,13 +39,11 @@ class PlatoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_plato_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_linea_pedido_detalle_list, container, false)
 
-        tipoPlato = activity?.intent?.extras?.getString(Constantes.TIPO_PLATO)
-        idBar = activity?.intent?.extras?.getString(Constantes.BAR_ID)
+        idPedido = activity?.intent?.extras?.getString(Constantes.PEDIDO_ID).toString()
 
-        platoAdapter =
-            MyPlatoRecyclerViewAdapter()
+        lineaPedidoAdapter = MyLineaPedidoDetalleRecyclerViewAdapter()
 
         // Set the adapter
         if (view is RecyclerView) {
@@ -54,14 +52,15 @@ class PlatoFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = platoAdapter
+                adapter = lineaPedidoAdapter
             }
         }
 
-
-        platoViewModel.getListaPlatosByTipo(tipoPlato!!, idBar!!).observe(viewLifecycleOwner, Observer {
-            platoList = it
-            platoAdapter.setData(platoList)
+        lineaPedidoViewModel.lineasPedidoByIdPedido(idPedido!!).observe(viewLifecycleOwner, Observer {
+            if(it!=null){
+                lpList = it
+                lineaPedidoAdapter.setData(lpList)
+            }
         })
 
         return view

@@ -1,10 +1,9 @@
-package com.lucasamado.goeatapp.models.pedido.prueba
+package com.lucasamado.goeatapp.models.plato
 
-data class Plato(
+data class PlatoPedidoDto(
     val descripcion: String,
     val foto: String,
     val id: String,
-    val lineasPedido: List<Any>,
     val nombre: String,
     val precioU: Double,
     val tipo: String

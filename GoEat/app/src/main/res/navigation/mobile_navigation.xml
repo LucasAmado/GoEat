@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/navigation_bares"
         android:name="com.lucasamado.goeatapp.ui.home.bares.BarFragment"
-        android:label="@string/title_home"
+        android:label="@string/title_bares"
         tools:layout="@layout/fragment_bar_list" />
 
     <fragment

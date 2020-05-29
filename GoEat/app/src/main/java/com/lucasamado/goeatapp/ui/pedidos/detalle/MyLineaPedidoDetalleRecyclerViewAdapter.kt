@@ -1,6 +1,5 @@
-package com.lucasamado.goeatapp.ui.home.carrito
+package com.lucasamado.goeatapp.ui.pedidos.detalle
 
-import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,37 +9,27 @@ import android.widget.TextView
 import coil.api.load
 import coil.transform.CircleCropTransformation
 import com.lucasamado.goeatapp.R
-import com.lucasamado.goeatapp.common.Constantes
-import com.lucasamado.goeatapp.common.MyApp
+import com.lucasamado.goeatapp.models.lineasPedido.LineaPedidoDetalle
 import com.lucasamado.goeatapp.models.lineasPedido.LineaPedidoDto
-import com.lucasamado.goeatapp.ui.home.platos.DetallePlatoActivity
 import kotlinx.android.synthetic.main.fragment_linea_pedido.view.*
 import java.text.DecimalFormat
 
-
-class MyLineaPedidoRecyclerViewAdapter() : RecyclerView.Adapter<MyLineaPedidoRecyclerViewAdapter.ViewHolder>() {
+class MyLineaPedidoDetalleRecyclerViewAdapter() : RecyclerView.Adapter<MyLineaPedidoDetalleRecyclerViewAdapter.ViewHolder>() {
 
     private val mOnClickListener: View.OnClickListener
-    private var lpList: List<LineaPedidoDto> = ArrayList()
+    private var lpList: List<LineaPedidoDetalle> = ArrayList()
     var df = DecimalFormat("#.00")
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as LineaPedidoDto
-            val idPlato = item.plato.id
-            val intent = Intent(MyApp.instance, DetallePlatoActivity::class.java).apply {
-                putExtra(Constantes.PLATO_ID, idPlato)
-                putExtra(Constantes.LUGAR_CARRITO, true)
-                putExtra(Constantes.CANTIDAD, item.cantidad)
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            }
-            MyApp.instance.startActivity(intent)
+            val item = v.tag as LineaPedidoDetalle
+            //TODO intent al detalle del plato? (pasando false)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_linea_pedido, parent, false)
+            .inflate(R.layout.fragment_linea_pedido_detalle, parent, false)
         return ViewHolder(view)
     }
 
@@ -64,7 +53,7 @@ class MyLineaPedidoRecyclerViewAdapter() : RecyclerView.Adapter<MyLineaPedidoRec
 
     override fun getItemCount(): Int = lpList.size
 
-    fun setData(lineasPedido: List<LineaPedidoDto>) {
+    fun setData(lineasPedido: List<LineaPedidoDetalle>) {
         lpList = lineasPedido
         notifyDataSetChanged()
     }

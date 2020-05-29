@@ -2,9 +2,10 @@ package com.lucasamado.goeatapp.api
 
 import com.lucasamado.goeatapp.models.bar.BarDetailDto
 import com.lucasamado.goeatapp.models.bar.BarDto
+import com.lucasamado.goeatapp.models.lineasPedido.LineaPedidoDetalle
 import com.lucasamado.goeatapp.models.pedido.CreatePedido
-import com.lucasamado.goeatapp.models.pedido.LineaPedidoDto
-import com.lucasamado.goeatapp.models.pedido.Pedido
+import com.lucasamado.goeatapp.models.lineasPedido.LineaPedidoDto
+import com.lucasamado.goeatapp.models.pedido.PedidoDetalleDto
 import com.lucasamado.goeatapp.models.pedido.PedidoDto
 import com.lucasamado.goeatapp.models.plato.Plato
 import com.lucasamado.goeatapp.models.plato.PlatoDto
@@ -14,7 +15,6 @@ import com.lucasamado.goeatapp.models.user.SignupRequest
 import com.lucasamado.goeatapp.models.user.SignupResponse
 import retrofit2.Call
 import retrofit2.http.*
-import java.time.LocalTime
 
 interface GoEatService {
 
@@ -33,6 +33,9 @@ interface GoEatService {
 
     @GET("bares/{id}")
     fun getBarById(@Path("id") id: String): Call<BarDetailDto>
+
+    @GET("bares/consultar/horarios-recogida/{id}")
+    fun consultarHorariosRecogidaBar(@Path("id") id: String): Call<List<String>>
 
     //Platos
 
@@ -60,12 +63,18 @@ interface GoEatService {
     @GET("pedidos/ver-carrito")
     fun getCarrito(): Call<List<LineaPedidoDto>>
 
-    @GET("bares/consultar/horarios-recogida/{id}")
-    fun consultarHorariosRecogidaBar(@Path("id") id: String): Call<List<String>>
-
     @POST("pedidos/pagar")
     fun pagar(@Body createPedido: CreatePedido): Call<PedidoDto>
 
     @GET("pedidos/ver/mis-pedidos")
     fun misPedidos(): Call<List<PedidoDto>>
+
+    @GET("pedidos/lineas/{id}")
+    fun lineasPedidoByPedidoId(@Path("id") id: String): Call<List<LineaPedidoDetalle>>
+
+    @GET("pedidos/{id}")
+    fun getPedidoDetalle(@Path("id") id: String): Call<PedidoDetalleDto>
+
+    @PUT("pedidos/{id}")
+    fun editPedidoBoolean(@Path("id") id: String): Call<Boolean>
 }
