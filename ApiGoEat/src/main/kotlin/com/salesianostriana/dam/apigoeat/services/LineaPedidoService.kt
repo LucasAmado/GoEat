@@ -10,5 +10,7 @@ import java.util.*
 @Service
 class LineaPedidoService : BaseService<LineaPedido, UUID, LineaPedidoRepository>(){
 
-
+    fun saveAll(lineas: List<LineaPedido>){
+        this.repository.saveAll(lineas)
+    }
 }

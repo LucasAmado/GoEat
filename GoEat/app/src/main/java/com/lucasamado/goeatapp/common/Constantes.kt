@@ -13,6 +13,6 @@ class Constantes {
         const val PLATO_ID = "PLATO_ID"
         const val LUGAR_CARRITO: String = "LUGAR_CARRITO"
         const val CANTIDAD: String = "CANTIDAD"
-        const val TAM_CARRITO: String = "TAM_CARRITO"
+        const val BAR_PEDIDO: String = "BAR_ID_PEDIDO"
     }
 }

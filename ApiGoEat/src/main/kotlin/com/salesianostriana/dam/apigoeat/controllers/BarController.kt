@@ -1,10 +1,11 @@
 package com.salesianostriana.dam.apigoeat.controllers
 
 import com.salesianostriana.dam.apigoeat.models.Bar
+import com.salesianostriana.dam.apigoeat.models.Pedido
 import com.salesianostriana.dam.apigoeat.models.User
 import com.salesianostriana.dam.apigoeat.models.dtos.*
 import com.salesianostriana.dam.apigoeat.services.BarService
-import com.salesianostriana.dam.apigoeat.services.UserService
+import com.salesianostriana.dam.apigoeat.services.PedidoService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -12,11 +13,10 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import java.time.LocalTime
 import java.util.*
-import kotlin.collections.ArrayList
 
 @RestController
 @RequestMapping("/bares")
-class BarController(val barService: BarService, val userService: UserService) {
+class BarController(val barService: BarService, val pedidoService: PedidoService) {
 
     private fun allBares(): List<Bar> {
         var result: List<Bar> = barService.findAll()
@@ -41,10 +41,31 @@ class BarController(val barService: BarService, val userService: UserService) {
         return result
     }
 
-    @GetMapping("/")
-    fun listarBares() = allBares().map {
-        it.toBarDTO()
+
+    @GetMapping("/consultar/horarios-recogida/{id}")
+    fun consultarHorarios(@PathVariable id: UUID): List<LocalTime> {
+        var bar:Bar = barService.findById(id).get()
+        var pedidos: List<Pedido> = pedidoService.findByBarAndToday(id)
+        var horas: MutableList<LocalTime> = mutableListOf()
+        horas.addAll(bar.horasDisponibles!!)
+
+        for(h in bar.horasDisponibles!!){
+            for(p in pedidos){
+                if(p.horaRecogida == h || h.isBefore(LocalTime.now().plusMinutes(bar.tiempoPedido))){
+                    horas.remove(h)
+                }
+            }
+        }
+
+        bar.horasDisponibles = horas
+        barService.save(bar)
+
+        return horas
     }
+
+
+    @GetMapping("/")
+    fun listarBares() = barService.findAbiertos()
 
     @GetMapping("/tipos")
     fun tiposComida() = findTipos()
@@ -56,35 +77,6 @@ class BarController(val barService: BarService, val userService: UserService) {
 
     @GetMapping("/{id}")
     fun detailBar(@PathVariable id: UUID) = oneBar(id)
-
-
-    @GetMapping("/actualizar/horarios-recogida")
-    fun disponibilidad(): List<Bar> {
-        var hourMin: LocalTime? = null
-        var horas: MutableList<LocalTime>? = null
-
-        for (bar in allBares()) {
-            horas = ArrayList()
-            if (hourMin == null) {
-                hourMin = bar.horaApertura
-            }
-            while (hourMin?.isBefore(bar.horaCierre)!!) {
-                if (hourMin.isBefore(bar.horaCierre.minusMinutes(bar.tiempoPedido))) {
-                    hourMin = hourMin.plusMinutes(bar.tiempoPedido)
-                    horas?.add(hourMin)
-                } else {
-                    hourMin = bar.horaCierre
-                }
-            }
-
-            bar.horasDisponibles = horas
-            println("\nHORAS DISPONIBLES: ${bar.horasDisponibles}\n")
-            barService.save(bar)
-            hourMin = null
-        }
-
-        return allBares()
-    }
 
 
 }

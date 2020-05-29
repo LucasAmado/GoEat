@@ -2,14 +2,20 @@ package com.lucasamado.goeatapp.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.lucasamado.goeatapp.repository.BarRepository
 import com.lucasamado.goeatapp.repository.PedidoRepository
+import java.time.LocalTime
 import javax.inject.Inject
 
 class CarritoViewModel @Inject constructor(
-    pedidoRepository: PedidoRepository
+    pedidoRepository: PedidoRepository,
+    barRepository: BarRepository
 ) : ViewModel() {
-    var repo = pedidoRepository
+    var pedidoRepo = pedidoRepository
+    var barRepo = barRepository
 
-    fun totalCarrito(): MutableLiveData<Double> = repo.calcularTotalCarrito()
+    fun totalCarrito(): MutableLiveData<Double> = pedidoRepo.calcularTotalCarrito()
+
+    fun horasRecogida(id: String): MutableLiveData<List<String>> = barRepo.consultarHorasRecogida(id)
 
 }

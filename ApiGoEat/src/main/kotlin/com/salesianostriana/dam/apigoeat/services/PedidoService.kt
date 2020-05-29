@@ -11,4 +11,6 @@ import java.util.*
 class PedidoService : BaseService<Pedido, UUID, PedidoRepository>() {
 
     fun findByUser(user: User) = this.repository.findByUser(user)
+
+    fun findByBarAndToday(id: UUID) = this.repository.findByBarAndToday(id)
 }

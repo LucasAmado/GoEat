@@ -14,8 +14,8 @@ data class PlatoDTO(
         var precioU: Double,
         var descripcion: String,
         var tipo: String,
-        var bar: Bar? = null,
+        var bar: BarDTO? = null,
         val id : UUID? = null
 )
 
-fun Plato.toPlatoDTO() = PlatoDTO(nombre, foto, precioU, descripcion, tipo, bar, id)
+fun Plato.toPlatoDTO() = PlatoDTO(nombre, foto, precioU, descripcion, tipo, bar?.toBarDTO(), id)

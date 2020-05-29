@@ -10,14 +10,13 @@ data class UserDTO(
         var username : String,
         var email: String,
         var avatar: String,
-        var pedidos: List<Pedido>? = ArrayList(),
         var roles: String,
         val id: UUID? = null,
         var bar: Bar? = null
 
 )
 
-fun User.toUserDTO() = UserDTO(username, email, avatar, pedidos, roles.joinToString(), id, bar)
+fun User.toUserDTO() = UserDTO(username, email, avatar, roles.joinToString(), id, bar)
 
 data class CreateUserDTO(
         var username: String,

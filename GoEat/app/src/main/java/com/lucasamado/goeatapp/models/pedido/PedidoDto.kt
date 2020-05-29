@@ -1,13 +1,15 @@
 package com.lucasamado.goeatapp.models.pedido
 
-import com.lucasamado.goeatapp.models.user.UserDto
+import com.lucasamado.goeatapp.models.bar.BarDto
+import com.lucasamado.goeatapp.models.user.User
 
-data class Pedido(
+data class PedidoDto(
+    val bar: BarDto,
     val favorito: Boolean,
     val fechaPedido: String,
-    val horaRegodida: String,
+    val horaRecogida: String,
     val id: String,
     val lineasPedido: List<LineaPedido>,
     val totalPedido: Double,
-    val user: UserDto
+    val user: User
 )

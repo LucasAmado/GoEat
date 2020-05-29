@@ -28,10 +28,6 @@ data class User(
         @ManyToOne
         var bar: Bar? = null,
 
-        @JsonManagedReference
-        @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-        var pedidos: MutableList<Pedido>? = ArrayList(),
-
         private val nonExpired: Boolean = true,
 
         private val nonLocked: Boolean = true,
@@ -46,8 +42,8 @@ data class User(
 
 ): UserDetails {
 
-        constructor(username: String, email: String, password: String, avatar: String, role: String, bar: Bar?, pedidos: MutableList<Pedido>?):
-                this(username, email, password, avatar, mutableSetOf(role), bar, pedidos, true, true, true, true)
+        constructor(username: String, email: String, password: String, avatar: String, role: String, bar: Bar?):
+                this(username, email, password, avatar, mutableSetOf(role), bar, true, true, true, true)
 
         override fun getAuthorities(): MutableCollection<out GrantedAuthority> =
                 roles.map { SimpleGrantedAuthority("ROLE_$it") }.toMutableList()

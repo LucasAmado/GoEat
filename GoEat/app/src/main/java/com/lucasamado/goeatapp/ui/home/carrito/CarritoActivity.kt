@@ -1,21 +1,23 @@
 package com.lucasamado.goeatapp.ui.home.carrito
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import com.lucasamado.goeatapp.R
+import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
+import com.lucasamado.goeatapp.common.SharedPreferencesManager
 import com.lucasamado.goeatapp.viewmodels.CarritoViewModel
 import java.text.DecimalFormat
 import javax.inject.Inject
 
 class CarritoActivity : AppCompatActivity() {
-    @Inject lateinit var carritoViewModel: CarritoViewModel
+    @Inject
+    lateinit var carritoViewModel: CarritoViewModel
 
     lateinit var btn_pagar: Button
     lateinit var btn_horaRecogida: Button
@@ -24,6 +26,9 @@ class CarritoActivity : AppCompatActivity() {
     lateinit var comentarios: EditText
     lateinit var total: TextView
     var df = DecimalFormat("#.00")
+    lateinit var horasList: List<String>
+    lateinit var adapterHoras: ArrayAdapter<String>
+    var horaSelect: String?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,25 +48,82 @@ class CarritoActivity : AppCompatActivity() {
         tituloHoraRecogida.visibility = View.INVISIBLE
         tituloComentarios.visibility = View.INVISIBLE
         comentarios.visibility = View.INVISIBLE
-        total.text="TOTAL: 0€"
+        total.text = "TOTAL: 0€"
 
         carritoViewModel.totalCarrito().observe(this, Observer {
-            if(it!=null && it>0.0){
+            if (it != null && it > 0.0) {
                 btn_pagar.visibility = View.VISIBLE
                 btn_horaRecogida.visibility = View.VISIBLE
                 tituloHoraRecogida.visibility = View.VISIBLE
                 tituloComentarios.visibility = View.VISIBLE
                 comentarios.visibility = View.VISIBLE
-                total.text="TOTAL: ${df.format(it)}€"
+                total.text = "TOTAL: ${df.format(it)}€"
+
+                verHorasDisponibles()
             }
         })
 
         btn_horaRecogida.setOnClickListener {
-            //TODO hacer fragment con las horas disponibles del bar (quitando las que ya tienen reservas para hoy)
+            val builder = AlertDialog.Builder(this)
+            val title = TextView(this)
+            title.text = "Elija una hora"
+            title.setPadding(20, 30, 20, 30)
+            title.textSize = 20F
+            title.setTextColor(resources.getColor(R.color.colorAccent))
+            title.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+            builder.setCustomTitle(title)
+
+            val lvHoras = ListView(this)
+            lvHoras.adapter = adapterHoras
+            lvHoras.setOnItemClickListener { parent, view, position, id ->
+                horaSelect = horasList.get(position)
+            }
+
+            val dialog = builder
+                .setView(lvHoras)
+                .setPositiveButton("CONFIRMAR") { dialog, which ->
+                }
+                .setNegativeButton("CANCELAR"){dialog, which ->
+                    dialog.dismiss()
+                }
+                .create()
+
+            dialog.setOnShowListener(DialogInterface.OnShowListener {
+                val theButton: Button =
+                    dialog.getButton(DialogInterface.BUTTON_POSITIVE)
+                theButton.setOnClickListener(View.OnClickListener {
+                    if (horaSelect?.isNotEmpty()!!) {
+                        tituloHoraRecogida.text = "Hora de recogida: $horaSelect"
+                        dialog.dismiss()
+                    }
+                })
+            })
+            
+            dialog.show()
         }
 
         btn_pagar.setOnClickListener {
-            //TODO crear pedido y mandar al main
+           if(horaSelect!=null){
+
+           }else{
+               Toast.makeText(this, "Debe elegir primero una hora", Toast.LENGTH_LONG).show()
+           }
+        }
+    }
+
+    private fun verHorasDisponibles() {
+        var idBar = SharedPreferencesManager().getSomeStringValue(Constantes.BAR_PEDIDO)
+        if (idBar != null) {
+            carritoViewModel.horasRecogida(idBar!!).observe(this, Observer {
+                if (it != null) {
+                    horasList = it
+                    adapterHoras = ArrayAdapter<String>(
+                        this,
+                        android.R.layout.simple_expandable_list_item_1,
+                        horasList
+                    )
+                }
+            })
         }
     }
 }

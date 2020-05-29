@@ -11,9 +11,18 @@ import javax.persistence.ManyToOne
 data class LineaPedidoDTO(
         var cantidad: Int,
         var totalLinea: Double,
-        var plato: Plato? = null,
+        var plato: PlatoDTO? = null,
         var pedido: Pedido? = null,
         val id : UUID? = null
 )
 
-fun LineaPedido.toLineaPedidoDto() = LineaPedidoDTO(cantidad, totalLinea, plato, pedido, id)
+fun LineaPedido.toLineaPedidoDto() = LineaPedidoDTO(cantidad, totalLinea, plato?.toPlatoDTO(), pedido, id)
+
+data class LineaPedidoPagoDTO(
+        var cantidad: Int,
+        var totalLinea: Double,
+        var plato: Plato? = null,
+        val id : UUID? = null
+)
+
+fun LineaPedido.toLineaPedidoPagoDto() = LineaPedidoPagoDTO(cantidad, totalLinea, plato, id)

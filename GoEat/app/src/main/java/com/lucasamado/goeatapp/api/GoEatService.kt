@@ -11,6 +11,7 @@ import com.lucasamado.goeatapp.models.user.SignupRequest
 import com.lucasamado.goeatapp.models.user.SignupResponse
 import retrofit2.Call
 import retrofit2.http.*
+import java.time.LocalTime
 
 interface GoEatService {
 
@@ -56,5 +57,6 @@ interface GoEatService {
     @GET("pedidos/ver-carrito")
     fun getCarrito(): Call<List<LineaPedidoDto>>
 
-
+    @GET("bares/consultar/horarios-recogida/{id}")
+    fun consultarHorariosRecogidaBar(@Path("id") id: String): Call<List<String>>
 }

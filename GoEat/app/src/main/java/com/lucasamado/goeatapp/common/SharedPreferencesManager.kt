@@ -2,6 +2,7 @@ package com.lucasamado.goeatapp.common
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.lucasamado.goeatapp.models.bar.BarDto
 import javax.inject.Inject
 
 open class SharedPreferencesManager {

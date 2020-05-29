@@ -16,11 +16,9 @@ data class Pedido(
 
         var favorito: Boolean = false,
 
-        //TODO pasarselo al controller con un @Body
-        var horaRegodida: LocalTime? = null,
+        var horaRecogida: LocalTime? = null,
 
-        @JsonBackReference
-        @ManyToOne
+        @ManyToOne(fetch = FetchType.LAZY)
         var user: User? = null,
 
         @JsonBackReference

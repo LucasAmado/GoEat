@@ -24,15 +24,15 @@ class Data(
         val bares = listOf(
                 Bar(
                         "Goiko Grill", "Hamburguesas", "https://www.goiko.com/wp-content/uploads/2017/12/JL171223GOIKO-7.jpg",
-                        37.389670, -5.995405, LocalTime.of(11, 0), LocalTime.of(20, 45), 10, null, ArrayList()
+                        37.389670, -5.995405, LocalTime.of(11, 0), LocalTime.of(23, 50), 20
                 ),
                 Bar(
                         "No Piqui", "Hamburguesas", "https://cenados.com/wp-content/uploads/2017/05/fachada-no-piqui-min.jpg",
-                        37.400541, -5.993118, LocalTime.of(13, 0), LocalTime.of(16, 30), 15
+                        37.400541, -5.993118, LocalTime.of(12, 0), LocalTime.of(16, 30), 15
                 ),
                 Bar(
                         "Masakali", "Pizzas", "https://www.srperro.com/media/negocio/7d6cc913-3aa5-47fb-a2b2-f25359f96903.original.jpeg",
-                        37.392726, -5.989546, LocalTime.of(17, 30), LocalTime.of(23, 55), 11
+                        37.392726, -5.989546, LocalTime.of(9, 30), LocalTime.of(11, 0), 11
                 )
         )
         barRepository.saveAll(bares)
@@ -108,8 +108,45 @@ class Data(
         //Usuarios
         val usuarios = listOf(
                 User("goiko", "goiko@gmail.com", encoder.encode("123456"), "", mutableSetOf("ADMIN"), bares[0]),
-                User("user", "user@gmail.com", encoder.encode("123456"), "", mutableSetOf("USER"))
+                User("user", "user@gmail.com", encoder.encode("123456"), "", mutableSetOf("USER")),
+                User("Juan", "juanito@gmail.com", encoder.encode("123456"), "", mutableSetOf("USER")),
+                User("Bosquito", "bosco@gmail.com", encoder.encode("123456"), "", mutableSetOf("USER"))
         )
         userRepository.saveAll(usuarios)
+
+        val pedidos = listOf(
+                Pedido(LocalDate.now(), 12.50, false, LocalTime.of(20,40), usuarios[1], bares[0]),
+                Pedido(LocalDate.now(), 20.55, false, LocalTime.of(14,30), usuarios[3], bares[0]),
+                Pedido(LocalDate.now(), 12.50, false, LocalTime.of(12, 10), usuarios[2], bares[0]),
+                Pedido(LocalDate.of(2020, 5, 27), 12.50, false, LocalTime.of(20,10), usuarios[2], bares[0]),
+                Pedido(LocalDate.of(2020, 5, 23), 24.90, false, LocalTime.of(11,30), usuarios[3], bares[1]),
+                Pedido(LocalDate.now(), 24.90, false, LocalTime.of(13,15), usuarios[3], bares[1])
+        )
+        pedidoRepository.saveAll(pedidos)
+    }
+
+    @PostConstruct
+    fun disponibilidad() {
+        var hourMin: LocalTime? = null
+        var horas: MutableList<LocalTime>? = null
+
+        for (bar in barRepository.findAll()) {
+            horas = ArrayList()
+            if (hourMin == null) {
+                hourMin = bar.horaApertura
+            }
+            while (hourMin?.isBefore(bar.horaCierre)!!) {
+                if (hourMin.isBefore(bar.horaCierre.minusMinutes(bar.tiempoPedido))) {
+                    hourMin = hourMin.plusMinutes(bar.tiempoPedido)
+                    horas.add(hourMin)
+                } else {
+                    hourMin = bar.horaCierre
+                }
+            }
+
+            bar.horasDisponibles = horas
+            barRepository.save(bar)
+            hourMin = null
+        }
     }
 }
