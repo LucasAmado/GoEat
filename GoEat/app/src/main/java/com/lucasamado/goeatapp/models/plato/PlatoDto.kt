@@ -1,6 +1,5 @@
 package com.lucasamado.goeatapp.models.plato
 
-import com.lucasamado.goeatapp.models.bar.Bar
 import com.lucasamado.goeatapp.models.bar.BarDto
 
 data class PlatoDto(

@@ -7,8 +7,8 @@ import java.time.LocalTime
 import java.util.*
 
 data class CreatePedidoDTO(
-        var horaRecogida: LocalTime/*,
-        var bar: Bar? = null*/
+        var horaRecogida: LocalTime,
+        var comentario: String
 )
 
 data class PedidoDTO(
@@ -18,8 +18,9 @@ data class PedidoDTO(
         var horaRecogida: LocalTime? = null,
         var user: User? = null,
         var bar: BarDTO? = null,
+        var comentario: String? = null,
         var lineasPedido: List<LineaPedidoPagoDTO> = ArrayList(),
         val id: UUID? = null
 )
 
-fun Pedido.toPedidoDTO() = PedidoDTO(fechaPedido, totalPedido, favorito, horaRecogida, user, bar?.toBarDTO(), lineasPedido!!.map { it.toLineaPedidoPagoDto() }, id)
+fun Pedido.toPedidoDTO() = PedidoDTO(fechaPedido, totalPedido, favorito, horaRecogida, user, bar?.toBarDTO(), comentario, lineasPedido!!.map { it.toLineaPedidoPagoDto() }, id)

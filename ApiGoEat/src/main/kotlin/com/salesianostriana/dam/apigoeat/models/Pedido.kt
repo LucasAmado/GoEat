@@ -25,6 +25,8 @@ data class Pedido(
         @ManyToOne
         var bar: Bar? = null,
 
+        var comentario: String? = null,
+
         @JsonManagedReference
         @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER, cascade = [CascadeType.REMOVE])
         var lineasPedido: MutableList<LineaPedido>? = ArrayList(),

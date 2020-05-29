@@ -42,12 +42,14 @@ class PedidoController(val pedidoService: PedidoService, val platoService: Plato
         val carrito: List<LineaPedido> = carritoService.lineasCarrito
         var pedidoNuevo: Pedido? = null
 
+        println("hora: ${createPedidoDTO.horaRecogida}")
+        println("comentario: ${createPedidoDTO.comentario}")
+
         if (carrito.isNotEmpty()) {
-            println("\n\n\nNo vacío")
             var barId: UUID = carrito[0].plato?.bar!!.id!!
             var barFind: Bar = barService.findById(barId).get()
 
-            pedidoNuevo = Pedido(LocalDate.now(), carritoService.calcularTotalCompra(), false, createPedidoDTO.horaRecogida, usuario, barFind, ArrayList())
+            pedidoNuevo = Pedido(LocalDate.now(), carritoService.calcularTotalCompra(), false, createPedidoDTO.horaRecogida, usuario, barFind, createPedidoDTO.comentario)
             for (lp in carrito) {
                 lp.pedido = pedidoNuevo
             }
@@ -60,4 +62,10 @@ class PedidoController(val pedidoService: PedidoService, val platoService: Plato
 
         return pedidoNuevo?.toPedidoDTO()
     }
+
+    @GetMapping("/ver/mis-pedidos")
+    fun misPedidos(@AuthenticationPrincipal user: User): List<PedidoDTO> = pedidoService.findByUser(user).map { it.toPedidoDTO() }
+
+    @GetMapping("/{id}")
+    fun getPedido(@PathVariable("id") id: UUID): PedidoDTO = pedidoService.findById(id).get().toPedidoDTO()
 }

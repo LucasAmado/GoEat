@@ -17,6 +17,7 @@ import javax.inject.Inject
 
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.SharedPreferencesManager
+import com.lucasamado.goeatapp.ui.home.bares.DetalleBarActivity
 import com.lucasamado.goeatapp.ui.home.carrito.CarritoActivity
 
 
@@ -81,9 +82,9 @@ class DetallePlatoActivity : AppCompatActivity() {
             if (num >= 1) {
                 platoDetailViewModel.actualizarCarrito(num, idPlato).observe(this, Observer {
                     if (it != null) {
-                        val intent = Intent(this, CarritoActivity::class.java).apply {
+                        val intent = Intent(this, DetalleBarActivity::class.java).apply {
                             putExtra(Constantes.BAR_ID, idBar)
-                            putExtra(Constantes.TIPO_PLATO, tipoPlato)
+                            //putExtra(Constantes.TIPO_PLATO, tipoPlato)
                             flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         }
                         SharedPreferencesManager().setSomeStringValue(Constantes.BAR_PEDIDO, it.plato.bar.id)

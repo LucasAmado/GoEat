@@ -5,7 +5,9 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.lucasamado.goeatapp.api.GoEatService
 import com.lucasamado.goeatapp.common.MyApp
+import com.lucasamado.goeatapp.models.pedido.CreatePedido
 import com.lucasamado.goeatapp.models.pedido.LineaPedidoDto
+import com.lucasamado.goeatapp.models.pedido.PedidoDto
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,6 +22,7 @@ class PedidoRepository @Inject constructor(var goEatService: GoEatService) {
     var delete: MutableLiveData<Boolean> = MutableLiveData()
     var total: MutableLiveData<Double> = MutableLiveData()
     var carrito: MutableLiveData<List<LineaPedidoDto>> = MutableLiveData()
+    var pedidoDto: MutableLiveData<PedidoDto> = MutableLiveData()
 
     fun actualizarCarrito(cantidad: Int, id: String): MutableLiveData<LineaPedidoDto> {
         val call: Call<LineaPedidoDto> = goEatService.actualizarCarrito(cantidad, id)
@@ -100,5 +103,24 @@ class PedidoRepository @Inject constructor(var goEatService: GoEatService) {
             }
         })
         return carrito
+    }
+
+    fun pagar(createPedido: CreatePedido): MutableLiveData<PedidoDto>{
+        val call: Call<PedidoDto> = goEatService.pagar(createPedido)
+        call.enqueue(object : Callback<PedidoDto>{
+            override fun onResponse(call: Call<PedidoDto>, response: Response<PedidoDto>) {
+                if(response.isSuccessful){
+                    pedidoDto.value = response.body()
+                    Toast.makeText(MyApp.instance, "Pago realizado con éxito", Toast.LENGTH_LONG).show()
+                }else{
+                    Toast.makeText(MyApp.instance, "Error al pagar", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<PedidoDto>, t: Throwable) {
+                Toast.makeText(MyApp.instance, "Error pagando: $t.message", Toast.LENGTH_LONG).show()
+            }
+        })
+        return pedidoDto
     }
 }

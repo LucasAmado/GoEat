@@ -1,18 +1,22 @@
 package com.lucasamado.goeatapp.ui.home.carrito
 
 import android.content.DialogInterface
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
 import com.lucasamado.goeatapp.common.SharedPreferencesManager
+import com.lucasamado.goeatapp.models.pedido.CreatePedido
 import com.lucasamado.goeatapp.viewmodels.CarritoViewModel
 import java.text.DecimalFormat
+import java.time.LocalTime
 import javax.inject.Inject
 
 class CarritoActivity : AppCompatActivity() {
@@ -30,6 +34,7 @@ class CarritoActivity : AppCompatActivity() {
     lateinit var adapterHoras: ArrayAdapter<String>
     var horaSelect: String?=null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_carrito)
@@ -104,7 +109,15 @@ class CarritoActivity : AppCompatActivity() {
 
         btn_pagar.setOnClickListener {
            if(horaSelect!=null){
-
+               var pedidoNuevo = CreatePedido(
+                   comentario = comentarios.text.toString(),
+                   horaRecogida = horaSelect!!
+               )
+               carritoViewModel.pagarPedido(pedidoNuevo).observe(this, Observer {
+                   if(it!=null){
+                       //TODO intent al detalle del pedido
+                   }
+               })
            }else{
                Toast.makeText(this, "Debe elegir primero una hora", Toast.LENGTH_LONG).show()
            }

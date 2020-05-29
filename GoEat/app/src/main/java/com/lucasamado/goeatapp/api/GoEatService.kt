@@ -2,7 +2,10 @@ package com.lucasamado.goeatapp.api
 
 import com.lucasamado.goeatapp.models.bar.BarDetailDto
 import com.lucasamado.goeatapp.models.bar.BarDto
+import com.lucasamado.goeatapp.models.pedido.CreatePedido
 import com.lucasamado.goeatapp.models.pedido.LineaPedidoDto
+import com.lucasamado.goeatapp.models.pedido.Pedido
+import com.lucasamado.goeatapp.models.pedido.PedidoDto
 import com.lucasamado.goeatapp.models.plato.Plato
 import com.lucasamado.goeatapp.models.plato.PlatoDto
 import com.lucasamado.goeatapp.models.user.LoginRequest
@@ -59,4 +62,7 @@ interface GoEatService {
 
     @GET("bares/consultar/horarios-recogida/{id}")
     fun consultarHorariosRecogidaBar(@Path("id") id: String): Call<List<String>>
+
+    @POST("pedidos/pagar")
+    fun pagar(@Body createPedido: CreatePedido): Call<PedidoDto>
 }
