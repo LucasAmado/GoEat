@@ -46,7 +46,7 @@ interface GoEatService {
     fun getPlato(@Path("id") id: String): Call<PlatoDto>
 
 
-    //Carrito
+    //Pedidos
 
     @POST("pedidos/actualizar-carrito/{cantidad}/{id}")
     fun actualizarCarrito(@Path("cantidad") cantidad:Int, @Path("id") id: String): Call<LineaPedidoDto>
@@ -55,7 +55,7 @@ interface GoEatService {
     fun borrarPlato(@Path("id") id: String): Call<Boolean>
 
     @GET("pedidos/calcular/total-carrito")
-    fun consultarTamanyoCarrito(): Call<Double>
+    fun calcularPrcioTotal(): Call<Double>
 
     @GET("pedidos/ver-carrito")
     fun getCarrito(): Call<List<LineaPedidoDto>>
@@ -65,4 +65,7 @@ interface GoEatService {
 
     @POST("pedidos/pagar")
     fun pagar(@Body createPedido: CreatePedido): Call<PedidoDto>
+
+    @GET("pedidos/ver/mis-pedidos")
+    fun misPedidos(): Call<List<PedidoDto>>
 }

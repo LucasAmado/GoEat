@@ -14,9 +14,9 @@
 
     <fragment
         android:id="@+id/navigation_pedidos"
-        android:name="com.lucasamado.goeatapp.ui.dashboard.DashboardFragment"
+        android:name="com.lucasamado.goeatapp.ui.pedidos.PedidoFragment"
         android:label="@string/title_pedidos"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_pedido_list" />
 
     <fragment
         android:id="@+id/navigation_gestion"

@@ -8,7 +8,7 @@ import java.util.*
 
 interface PedidoRepository: JpaRepository<Pedido, UUID> {
 
-    fun findByUser(user: User): List<Pedido>
+    fun findByUserOrderByFechaPedidoDesc(user: User): List<Pedido>
 
     @Query("select p from Pedido p where p.bar.id = :idBar and p.fechaPedido >= CURRENT_DATE")
     fun findByBarAndToday(idBar: UUID): List<Pedido>

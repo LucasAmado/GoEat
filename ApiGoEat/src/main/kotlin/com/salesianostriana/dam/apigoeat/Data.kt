@@ -115,12 +115,15 @@ class Data(
         userRepository.saveAll(usuarios)
 
         val pedidos = listOf(
-                Pedido(LocalDate.now(), 12.50, false, LocalTime.of(20,40), usuarios[1], bares[0]),
-                Pedido(LocalDate.now(), 20.55, false, LocalTime.of(14,30), usuarios[3], bares[0]),
-                Pedido(LocalDate.now(), 12.50, false, LocalTime.of(12, 10), usuarios[2], bares[0]),
+                Pedido(LocalDate.of(2020, 3, 5), 35.10, true, LocalTime.of(20,0), usuarios[1], bares[0]),
                 Pedido(LocalDate.of(2020, 5, 27), 12.50, false, LocalTime.of(20,10), usuarios[2], bares[0]),
                 Pedido(LocalDate.of(2020, 5, 23), 24.90, false, LocalTime.of(11,30), usuarios[3], bares[1]),
+                Pedido(LocalDate.of(2020, 3, 14), 45.50, true, LocalTime.of(17,40), usuarios[1], bares[2]),
+                Pedido(LocalDate.of(2020, 5, 23), 12.50, false, LocalTime.of(20,40), usuarios[1], bares[1]),
+                Pedido(LocalDate.now(), 20.55, false, LocalTime.of(14,30), usuarios[3], bares[0]),
+                Pedido(LocalDate.now(), 12.50, false, LocalTime.of(12, 10), usuarios[2], bares[0]),
                 Pedido(LocalDate.now(), 24.90, false, LocalTime.of(13,15), usuarios[3], bares[1])
+
         )
         pedidoRepository.saveAll(pedidos)
     }

@@ -6,7 +6,6 @@ import com.lucasamado.goeatapp.models.pedido.CreatePedido
 import com.lucasamado.goeatapp.models.pedido.PedidoDto
 import com.lucasamado.goeatapp.repository.BarRepository
 import com.lucasamado.goeatapp.repository.PedidoRepository
-import java.time.LocalTime
 import javax.inject.Inject
 
 class CarritoViewModel @Inject constructor(

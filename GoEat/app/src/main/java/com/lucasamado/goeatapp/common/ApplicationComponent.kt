@@ -11,6 +11,7 @@ import com.lucasamado.goeatapp.ui.home.mapa.MapaActivity
 import com.lucasamado.goeatapp.ui.home.platos.DetallePlatoActivity
 import com.lucasamado.goeatapp.ui.home.platos.ListaPlatosActivity
 import com.lucasamado.goeatapp.ui.home.platos.PlatoFragment
+import com.lucasamado.goeatapp.ui.pedidos.PedidoFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -26,4 +27,5 @@ interface ApplicationComponent {
     fun inject(detallePlatoActivity: DetallePlatoActivity)
     fun inject(lineaPedidoFragment: LineaPedidoFragment)
     fun inject(carritoActivity: CarritoActivity)
+    fun inject(pedidoFragment: PedidoFragment)
 }

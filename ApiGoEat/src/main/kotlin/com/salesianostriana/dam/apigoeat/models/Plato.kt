@@ -24,11 +24,6 @@ data class Plato(
         @ManyToOne
         var bar: Bar? = null,
 
-        @JsonManagedReference
-        @OneToMany(mappedBy = "plato", fetch = FetchType.EAGER, cascade = [CascadeType.REMOVE])
-        @Fetch(value = FetchMode.SUBSELECT)
-        var lineasPedido: MutableList<LineaPedido>? = ArrayList(),
-
         @Id @GeneratedValue
         val id : UUID? = null
 ) {

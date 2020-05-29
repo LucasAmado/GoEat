@@ -1,6 +1,5 @@
 package com.lucasamado.goeatapp.repository
 
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.lucasamado.goeatapp.api.GoEatService
@@ -11,7 +10,6 @@ import com.lucasamado.goeatapp.models.pedido.PedidoDto
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.LocalTime
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -23,6 +21,7 @@ class PedidoRepository @Inject constructor(var goEatService: GoEatService) {
     var total: MutableLiveData<Double> = MutableLiveData()
     var carrito: MutableLiveData<List<LineaPedidoDto>> = MutableLiveData()
     var pedidoDto: MutableLiveData<PedidoDto> = MutableLiveData()
+    var pedidosDtoList: MutableLiveData<List<PedidoDto>> = MutableLiveData()
 
     fun actualizarCarrito(cantidad: Int, id: String): MutableLiveData<LineaPedidoDto> {
         val call: Call<LineaPedidoDto> = goEatService.actualizarCarrito(cantidad, id)
@@ -66,7 +65,7 @@ class PedidoRepository @Inject constructor(var goEatService: GoEatService) {
     }
 
     fun calcularTotalCarrito(): MutableLiveData<Double>{
-        val call: Call<Double> = goEatService.consultarTamanyoCarrito()
+        val call: Call<Double> = goEatService.calcularPrcioTotal()
         call.enqueue(object : Callback<Double>{
             override fun onResponse(call: Call<Double>, response: Response<Double>) {
                 if(response.isSuccessful){
@@ -122,5 +121,27 @@ class PedidoRepository @Inject constructor(var goEatService: GoEatService) {
             }
         })
         return pedidoDto
+    }
+
+    fun loadMisPedidos(): MutableLiveData<List<PedidoDto>>{
+        val call: Call<List<PedidoDto>> = goEatService.misPedidos()
+        call.enqueue(object : Callback<List<PedidoDto>>{
+            override fun onResponse(
+                call: Call<List<PedidoDto>>,
+                response: Response<List<PedidoDto>>
+            ) {
+                if(response.isSuccessful){
+                    pedidosDtoList.value = response.body()
+                }else{
+                    Toast.makeText(MyApp.instance, "Error al cargar mis pedidos", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<List<PedidoDto>>, t: Throwable) {
+                Toast.makeText(MyApp.instance, "Error en el carrito: ${t.message}", Toast.LENGTH_LONG).show()
+            }
+        })
+
+        return pedidosDtoList
     }
 }

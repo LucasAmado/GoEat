@@ -15,7 +15,7 @@ data class LineaPedido(
         @ManyToOne(fetch = FetchType.LAZY)
         var plato: Plato? = null,
 
-        @JsonBackReference
+        //@JsonBackReference
         @ManyToOne
         var pedido: Pedido? = null,
 
