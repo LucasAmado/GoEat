@@ -19,7 +19,6 @@ import javax.inject.Singleton
 @Singleton
 class PedidoRepository @Inject constructor(var goEatService: GoEatService) {
 
-    var lineaPedidoDto: MutableLiveData<LineaPedidoDto> = MutableLiveData()
     var boolean: MutableLiveData<Boolean> = MutableLiveData()
     var total: MutableLiveData<Double> = MutableLiveData()
     var carrito: MutableLiveData<List<LineaPedidoDto>> = MutableLiveData()
@@ -28,27 +27,7 @@ class PedidoRepository @Inject constructor(var goEatService: GoEatService) {
     var lineasPedidoDetalle: MutableLiveData<List<LineaPedidoDetalle>> = MutableLiveData()
     var pedidoDetalle: MutableLiveData<PedidoDetalleDto> = MutableLiveData()
 
-    fun actualizarCarrito(cantidad: Int, id: String): MutableLiveData<LineaPedidoDto> {
-        val call: Call<LineaPedidoDto> = goEatService.actualizarCarrito(cantidad, id)
-        call.enqueue(object : Callback<LineaPedidoDto> {
-            override fun onResponse(call: Call<LineaPedidoDto>, response: Response<LineaPedidoDto>) {
-                if (response.isSuccessful) {
-                    lineaPedidoDto.value = response.body()
-                    Toast.makeText(MyApp.instance, "Carrito actualizado", Toast.LENGTH_SHORT)
-                        .show()
-                } else {
-                    Toast.makeText(MyApp.instance, "Error al actualizar el carrito", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-
-            override fun onFailure(call: Call<LineaPedidoDto>, t: Throwable) {
-                Toast.makeText(MyApp.instance, t.message, Toast.LENGTH_LONG).show()
-            }
-        })
-
-        return lineaPedidoDto
-    }
+    suspend fun actualizarCarrito(cantidad: Int, id: String) = goEatService.actualizarCarrito(cantidad, id)
 
     fun deletePlato(id: String): MutableLiveData<Boolean>{
         val call: Call<Boolean> = goEatService.borrarPlato(id)

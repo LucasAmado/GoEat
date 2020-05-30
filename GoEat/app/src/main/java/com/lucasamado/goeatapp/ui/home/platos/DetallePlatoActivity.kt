@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import coil.api.load
@@ -16,6 +17,7 @@ import java.text.DecimalFormat
 import javax.inject.Inject
 
 import com.lucasamado.goeatapp.R
+import com.lucasamado.goeatapp.common.Resource
 import com.lucasamado.goeatapp.common.SharedPreferencesManager
 import com.lucasamado.goeatapp.ui.home.bares.DetalleBarActivity
 import com.lucasamado.goeatapp.ui.home.carrito.CarritoActivity
@@ -80,16 +82,28 @@ class DetallePlatoActivity : AppCompatActivity() {
 
         btn_carrito.setOnClickListener {
             if (num >= 1) {
-                platoDetailViewModel.actualizarCarrito(num, idPlato).observe(this, Observer {
-                    if (it != null) {
-                        val intent = Intent(this, DetalleBarActivity::class.java).apply {
-                            putExtra(Constantes.BAR_ID, idBar)
-                            //putExtra(Constantes.TIPO_PLATO, tipoPlato)
-                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                platoDetailViewModel.actualizarCarrito(num, idPlato)
+                platoDetailViewModel.lineasCarrito.observe(this, Observer {response ->
+                    when(response) {
+                        is Resource.Success ->  {
+                            Toast.makeText(MyApp.instance,"Carrito actualizado", Toast.LENGTH_LONG).show()
+                            var it = response.data!!
+                            val intent = Intent(this, DetalleBarActivity::class.java).apply {
+                                putExtra(Constantes.BAR_ID, idBar)
+                                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            }
+                            SharedPreferencesManager().setSomeStringValue(Constantes.BAR_ID_PEDIDO, it.plato.bar.id)
+                            startActivity(intent)
+                            finish()
                         }
-                        SharedPreferencesManager().setSomeStringValue(Constantes.BAR_ID_PEDIDO, it.plato.bar.id)
-                        startActivity(intent)
-                        finish()
+
+                        is Resource.Loading -> {
+                            //CARGANDO
+                        }
+
+                        is Resource.Error -> {
+                            Toast.makeText(MyApp.instance,"Error, ${response.message}", Toast.LENGTH_LONG).show()
+                        }
                     }
                 })
 
@@ -113,21 +127,33 @@ class DetallePlatoActivity : AppCompatActivity() {
      * cargar los datos del platoDto
      */
     private fun loadPlato(idPlato: String) {
-        platoDetailViewModel.getPlato(idPlato).observe(this, Observer {
-            if (it != null) {
-                idBar = it.bar.id
-                tipoPlato = it.tipo
+        platoDetailViewModel.getPlato(idPlato)
+        platoDetailViewModel.platoSelect.observe(this, Observer {response ->
+            when(response) {
+                is Resource.Success ->  {
+                    var it = response.data!!
+                    idBar = it.bar.id
+                    tipoPlato = it.tipo
 
-                imagen.load(it.foto) {
-                    crossfade(true)
-                    placeholder(R.drawable.ic_food)
+                    imagen.load(it.foto) {
+                        crossfade(true)
+                        placeholder(R.drawable.ic_food)
+                    }
+                    nombre.text = it.nombre
+                    descripcion.text = it.descripcion
+                    precioTotal = it.precioU.toString()
+                    precioU = it.precioU
+
+                    actualizarDatos()
                 }
-                nombre.text = it.nombre
-                descripcion.text = it.descripcion
-                precioTotal = it.precioU.toString()
-                precioU = it.precioU
 
-                actualizarDatos()
+                is Resource.Loading -> {
+                    //CARGANDO
+                }
+
+                is Resource.Error -> {
+                    Toast.makeText(MyApp.instance,"Error, ${response.message}", Toast.LENGTH_LONG).show()
+                }
             }
         })
     }

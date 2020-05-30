@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
+import com.lucasamado.goeatapp.common.Resource
 import com.lucasamado.goeatapp.models.plato.Plato
 import com.lucasamado.goeatapp.viewmodels.PlatoViewModel
 import javax.inject.Inject
@@ -24,7 +26,6 @@ class PlatoFragment : Fragment() {
     lateinit var platoViewModel: PlatoViewModel
 
     private lateinit var platoAdapter: MyPlatoRecyclerViewAdapter
-    private var platoList: List<Plato> = ArrayList()
     var idBar: String? = null
     var tipoPlato: String? = null
 
@@ -59,9 +60,20 @@ class PlatoFragment : Fragment() {
         }
 
 
-        platoViewModel.getListaPlatosByTipo(tipoPlato!!, idBar!!).observe(viewLifecycleOwner, Observer {
-            platoList = it
-            platoAdapter.setData(platoList)
+        platoViewModel.getListaPlatosByTipo(tipoPlato!!, idBar!!)
+        platoViewModel.platosList.observe(viewLifecycleOwner, Observer {response ->
+            when(response){
+                is Resource.Success -> {
+                    platoAdapter.setData(response.data)
+                }
+
+                is Resource.Loading -> {
+                }
+
+                is Resource.Error ->{
+                    Toast.makeText(activity,"Error, ${response.message}", Toast.LENGTH_LONG).show()
+                }
+            }
         })
 
         return view

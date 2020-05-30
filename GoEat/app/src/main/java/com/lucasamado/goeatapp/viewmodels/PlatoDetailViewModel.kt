@@ -2,29 +2,61 @@ package com.lucasamado.goeatapp.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.lucasamado.goeatapp.common.Resource
 import com.lucasamado.goeatapp.models.lineasPedido.LineaPedidoDto
 import com.lucasamado.goeatapp.models.plato.PlatoDto
 import com.lucasamado.goeatapp.repository.PedidoRepository
 import com.lucasamado.goeatapp.repository.PlatoRepository
+import kotlinx.coroutines.launch
+import retrofit2.Response
 import javax.inject.Inject
 
 class PlatoDetailViewModel @Inject constructor(
-    platoRepository: PlatoRepository,
-    pedidoRepository: PedidoRepository
+    var platoRepository: PlatoRepository,
+    var pedidoRepository: PedidoRepository
 ) : ViewModel() {
 
-    val platoRepo = platoRepository
-    val pedidoRepo = pedidoRepository
+    var platoSelect: MutableLiveData<Resource<PlatoDto>> = MutableLiveData()
+    var lineasCarrito: MutableLiveData<Resource<LineaPedidoDto>> = MutableLiveData()
 
-    fun getPlato(id: String): MutableLiveData<PlatoDto> {
-        return platoRepo.getPlato(id)
+    /**
+     * Get plato
+     */
+
+    fun getPlato(id: String) = viewModelScope.launch {
+        platoSelect.value = Resource.Loading()
+        val response = platoRepository.getPlato(id)
+        platoSelect.value = handleGetPlato(response)
     }
 
-    fun actualizarCarrito(cantidad: Int, id: String): MutableLiveData<LineaPedidoDto>{
-        return pedidoRepo.actualizarCarrito(cantidad, id)
+    private fun handleGetPlato(response: Response<PlatoDto>): Resource<PlatoDto>? {
+        if (response.isSuccessful) {
+            response.body()?.let {
+                return Resource.Success(it)
+            }
+        }
+        return Resource.Error(response.message())
     }
 
+    /**
+     * Actualizar los datos del carrito
+     */
+    fun actualizarCarrito(cantidad: Int, id: String) = viewModelScope.launch {
+        lineasCarrito.value = Resource.Loading()
+        val response = pedidoRepository.actualizarCarrito(cantidad, id)
+        lineasCarrito.value = handleLoadingCarrito(response)
+    }
 
-    fun deletePlato(id: String): MutableLiveData<Boolean> = pedidoRepo.deletePlato(id)
+    private fun handleLoadingCarrito(response: Response<LineaPedidoDto>): Resource<LineaPedidoDto>? {
+        if (response.isSuccessful) {
+            response.body()?.let {
+                return Resource.Success(it)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    fun deletePlato(id: String): MutableLiveData<Boolean> = pedidoRepository.deletePlato(id)
 
 }
