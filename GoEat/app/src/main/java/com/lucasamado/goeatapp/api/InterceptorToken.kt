@@ -14,7 +14,7 @@ class InterceptorToken @Inject constructor(): Interceptor {
         val original: Request = chain.request()
         val request: Request
         //val token = SharedPreferencesManager().getSomeStringValue(Constantes.TOKEN)
-        val token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2NTc5ZWZiOC0zZWE5LTRhYTgtYTY5Zi1kY2ZkZThjY2Y1MTkiLCJleHAiOjE1OTE3MjE0NjcsImlhdCI6MTU5MDg1NzQ2NywidXNlcm5hbWUiOiJ1c2VyIiwicm9sZXMiOiJVU0VSIn0.--HsTJYT4EF6ld6uqdhT79XwAt1YWvHm6ETfK3FbKttVvsQQ6MNcI674yuRvno7omnKjOWJOmlr8xoeHnPwwqQ"
+        val token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyMzAyM2JlNS04YmU5LTRjNWUtODBhMy0zOWUzMjBhMjUxY2EiLCJleHAiOjE1OTE3Mjc0MzMsImlhdCI6MTU5MDg2MzQzMywidXNlcm5hbWUiOiJnb2lrbyIsInJvbGVzIjoiQURNSU4ifQ.BGvNvo3aAPc6xJGbwlKZnf0HfFkma-y1OVMXj_BfpXEBB4wME566ljL1xeTsS8Tst_Jx7pFb_qAy4pfmUtzzTg"
 
         val requestBuilder = original.newBuilder()
             .header("Authorization", "Bearer "+token)

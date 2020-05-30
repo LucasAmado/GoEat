@@ -28,7 +28,7 @@ class Data(
                 ),
                 Bar(
                         "No Piqui", "Hamburguesas", "https://cenados.com/wp-content/uploads/2017/05/fachada-no-piqui-min.jpg",
-                        37.400541, -5.993118, LocalTime.of(12, 0), LocalTime.of(20, 30), 15
+                        37.400541, -5.993118, LocalTime.of(12, 0), LocalTime.of(23, 30), 15
                 ),
                 Bar(
                         "Masakali", "Pizzas", "https://www.srperro.com/media/negocio/7d6cc913-3aa5-47fb-a2b2-f25359f96903.original.jpeg",

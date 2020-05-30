@@ -36,7 +36,7 @@ interface GoEatService {
     suspend fun getBarById(@Path("id") id: String): Response<BarDetailDto>
 
     @GET("bares/consultar/horarios-recogida/{id}")
-    fun consultarHorariosRecogidaBar(@Path("id") id: String): Call<List<String>>
+    suspend fun consultarHorariosRecogidaBar(@Path("id") id: String): Response<List<String>>
 
     //Platos
 
@@ -59,23 +59,23 @@ interface GoEatService {
     fun borrarPlato(@Path("id") id: String): Call<Boolean>
 
     @GET("pedidos/calcular/total-carrito")
-    fun calcularPrcioTotal(): Call<Double>
+    suspend fun calcularPrcioTotal(): Response<Double>
 
     @GET("pedidos/ver-carrito")
-    fun getCarrito(): Call<List<LineaPedidoDto>>
+    suspend fun getCarrito(): Response<List<LineaPedidoDto>>
 
     @POST("pedidos/pagar")
-    fun pagar(@Body createPedido: CreatePedido): Call<PedidoDto>
+    suspend fun pagar(@Body createPedido: CreatePedido): Response<PedidoDto>
 
     @GET("pedidos/ver/mis-pedidos")
-    fun misPedidos(): Call<List<PedidoDto>>
+    suspend fun misPedidos(): Response<List<PedidoDto>>
 
     @GET("pedidos/lineas/{id}")
-    fun lineasPedidoByPedidoId(@Path("id") id: String): Call<List<LineaPedidoDetalle>>
+    suspend fun lineasPedidoByPedidoId(@Path("id") id: String): Response<List<LineaPedidoDetalle>>
 
     @GET("pedidos/{id}")
-    fun getPedidoDetalle(@Path("id") id: String): Call<PedidoDetalleDto>
+    suspend fun getPedidoDetalle(@Path("id") id: String): Response<PedidoDetalleDto>
 
     @PUT("pedidos/{id}")
-    fun editPedidoBoolean(@Path("id") id: String): Call<Boolean>
+    suspend fun editPedidoBoolean(@Path("id") id: String): Response<Boolean>
 }

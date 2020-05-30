@@ -2,17 +2,48 @@ package com.lucasamado.goeatapp.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.lucasamado.goeatapp.common.Resource
 import com.lucasamado.goeatapp.models.pedido.PedidoDetalleDto
 import com.lucasamado.goeatapp.repository.PedidoRepository
+import kotlinx.coroutines.launch
+import retrofit2.Response
 import javax.inject.Inject
 
 class PedidoDetalleViewModel @Inject constructor(
-    pedidoRepository: PedidoRepository
+    var pedidoRepository: PedidoRepository
 ) : ViewModel() {
-    var repo = pedidoRepository
+    var favBoolean: MutableLiveData<Resource<Boolean>> = MutableLiveData()
+    var pedidoSelect: MutableLiveData<Resource<PedidoDetalleDto>> = MutableLiveData()
 
-    fun getPedido(id: String): MutableLiveData<PedidoDetalleDto> = repo.getPedidoDetalle(id)
+    fun getPedido(id: String) = viewModelScope.launch {
+        pedidoSelect.value = Resource.Loading()
+        val response = pedidoRepository.getPedidoDetalle(id)
+        pedidoSelect.value = handleGetPedido(response)
+    }
 
-    fun changePedidoFav(id: String): MutableLiveData<Boolean> = repo.changePedidoFavorito(id)
+    private fun handleGetPedido(response: Response<PedidoDetalleDto>): Resource<PedidoDetalleDto>? {
+        if(response.isSuccessful) {
+            response.body()?.let {
+                return Resource.Success(it)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    fun changePedidoFav(id: String) = viewModelScope.launch { 
+        favBoolean.value = Resource.Loading()
+        val response = pedidoRepository.changePedidoFavorito(id)
+        favBoolean.value = handleChangeFav(response)
+    }
+
+    private fun handleChangeFav(response: Response<Boolean>): Resource<Boolean>? {
+        if(response.isSuccessful) {
+            response.body()?.let {
+                return Resource.Success(it)
+            }
+        }
+        return Resource.Error(response.message())
+    }
 
 }

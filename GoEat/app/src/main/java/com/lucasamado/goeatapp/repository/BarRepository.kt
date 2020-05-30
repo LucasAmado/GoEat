@@ -24,26 +24,6 @@ class BarRepository @Inject constructor(var goEatService: GoEatService) {
 
     suspend fun getBar(id: String) = goEatService.getBarById(id)
 
-    fun consultarHorasRecogida(id: String): MutableLiveData<List<String>>{
-        val call: Call<List<String>> = goEatService.consultarHorariosRecogidaBar(id)
-        call.enqueue(object : Callback<List<String>>{
-            override fun onResponse(
-                call: Call<List<String>>,
-                response: Response<List<String>>
-            ) {
-                if(response.isSuccessful){
-                    horasRecogida.value = response.body()
-                }else{
-                    Toast.makeText(MyApp.instance, "Error al cargar las horas de recogida", Toast.LENGTH_LONG).show()
-                }
-            }
-
-            override fun onFailure(call: Call<List<String>>, t: Throwable) {
-                Toast.makeText(MyApp.instance, "Error en las horas: ${t.message}", Toast.LENGTH_LONG).show()
-            }
-        })
-
-        return horasRecogida
-    }
+    suspend fun consultarHorasRecogida(id: String) = goEatService.consultarHorariosRecogidaBar(id)
 
 }

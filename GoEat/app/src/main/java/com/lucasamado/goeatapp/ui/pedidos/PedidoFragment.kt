@@ -9,18 +9,20 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.MyApp
+import com.lucasamado.goeatapp.common.Resource
 import com.lucasamado.goeatapp.models.pedido.PedidoDto
 import com.lucasamado.goeatapp.viewmodels.PedidoViewModel
+import kotlinx.android.synthetic.main.fragment_bar_list.*
 import javax.inject.Inject
 
 class PedidoFragment : Fragment() {
     @Inject lateinit var pedidoViewModel: PedidoViewModel
 
     private lateinit var pedidoAdapter: MyPedidoRecyclerViewAdapter
-    private var pedidoList: List<PedidoDto> = ArrayList()
 
     private var columnCount = 1
 
@@ -38,22 +40,41 @@ class PedidoFragment : Fragment() {
 
         pedidoAdapter = MyPedidoRecyclerViewAdapter()
 
+        val recyclerView = view.findViewById<RecyclerView>(R.id.list)
         // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
+            with(recyclerView) {
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
                 adapter = pedidoAdapter
-            }
-            pedidoViewModel.loadMisPedidos().observe(this, Observer {
-                if(it!=null){
-                    pedidoList = it
-                    pedidoAdapter.setData(pedidoList)
+
+            pedidoViewModel.loadMisPedidos()
+            pedidoViewModel.misPedidos.observe(viewLifecycleOwner, Observer {response ->
+                when(response){
+                    is Resource.Success -> {
+                        hideProgressBar()
+                        pedidoAdapter.setData(response.data)
+                    }
+
+                    is Resource.Loading -> { showProgressBar()}
+
+                    is Resource.Error ->{
+                        hideProgressBar()
+                        Toast.makeText(activity,"Error ${response.message}", Toast.LENGTH_LONG).show()
+                    }
                 }
             })
+
         }
         return view
+    }
+
+    private fun hideProgressBar() {
+        animation_loading.visibility = View.INVISIBLE
+    }
+
+    private fun showProgressBar() {
+        animation_loading.visibility = View.VISIBLE
     }
 }

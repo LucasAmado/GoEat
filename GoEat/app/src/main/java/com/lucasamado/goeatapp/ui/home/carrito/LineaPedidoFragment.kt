@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.MyApp
+import com.lucasamado.goeatapp.common.Resource
 import com.lucasamado.goeatapp.models.lineasPedido.LineaPedidoDto
 import com.lucasamado.goeatapp.viewmodels.LineaPedidoViewModel
 
@@ -21,7 +23,6 @@ class LineaPedidoFragment : Fragment() {
     @Inject lateinit var lineaPedidoViewModel: LineaPedidoViewModel
 
     private lateinit var lineaPedidoAdapter: MyLineaPedidoRecyclerViewAdapter
-    private var lpList: List<LineaPedidoDto> = ArrayList()
 
     private var columnCount = 1
 
@@ -50,10 +51,19 @@ class LineaPedidoFragment : Fragment() {
             }
         }
 
-        lineaPedidoViewModel.verCarrito().observe(viewLifecycleOwner, Observer {
-            if(it!=null){
-                lpList = it
-                lineaPedidoAdapter.setData(lpList)
+        lineaPedidoViewModel.verCarrito()
+        lineaPedidoViewModel.carrito.observe(viewLifecycleOwner, Observer {response ->
+            when(response){
+                is Resource.Success -> {
+                    lineaPedidoAdapter.setData(response.data!!)
+                }
+
+                is Resource.Loading -> {
+                }
+
+                is Resource.Error ->{
+                    Toast.makeText(activity,"Error, ${response.message}", Toast.LENGTH_LONG).show()
+                }
             }
         })
 

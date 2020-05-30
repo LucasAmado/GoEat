@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -13,6 +14,7 @@ import androidx.lifecycle.Observer
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
+import com.lucasamado.goeatapp.common.Resource
 import com.lucasamado.goeatapp.common.SharedPreferencesManager
 import com.lucasamado.goeatapp.models.pedido.CreatePedido
 import com.lucasamado.goeatapp.ui.pedidos.detalle.DetallePedidoActivity
@@ -56,18 +58,29 @@ class CarritoActivity : AppCompatActivity() {
         comentarios.visibility = View.INVISIBLE
         total.text = "TOTAL: 0€"
 
-        carritoViewModel.totalCarrito().observe(this, Observer {
-            if (it != null && it > 0.0) {
-                btn_pagar.visibility = View.VISIBLE
-                btn_horaRecogida.visibility = View.VISIBLE
-                tituloHoraRecogida.visibility = View.VISIBLE
-                tituloComentarios.visibility = View.VISIBLE
-                comentarios.visibility = View.VISIBLE
-                total.text = "TOTAL: ${df.format(it)}€"
+        carritoViewModel.totalCarrito()
+        carritoViewModel.total.observe(this, Observer {response ->
+            when(response){
+                is Resource.Success -> {
+                    btn_pagar.visibility = View.VISIBLE
+                    btn_horaRecogida.visibility = View.VISIBLE
+                    tituloHoraRecogida.visibility = View.VISIBLE
+                    tituloComentarios.visibility = View.VISIBLE
+                    comentarios.visibility = View.VISIBLE
+                    total.text = "TOTAL: ${df.format(response.data)}€"
 
-                verHorasDisponibles()
+                    verHorasDisponibles()
+                }
+
+                is Resource.Loading -> {
+                }
+
+                is Resource.Error ->{
+                    Toast.makeText(this,"Error, ${response.message}", Toast.LENGTH_LONG).show()
+                }
             }
         })
+
 
         btn_horaRecogida.setOnClickListener {
             val builder = AlertDialog.Builder(this)
@@ -114,16 +127,28 @@ class CarritoActivity : AppCompatActivity() {
                    comentario = comentarios.text.toString(),
                    horaRecogida = horaSelect!!
                )
-               carritoViewModel.pagarPedido(pedidoNuevo).observe(this, Observer {
-                   if(it!=null){
-                       val detalle = Intent(this, DetallePedidoActivity::class.java).apply {
-                           putExtra(Constantes.PEDIDO_ID, it.id)
-                           flags = Intent.FLAG_ACTIVITY_NEW_TASK
+               carritoViewModel.pagarPedido(pedidoNuevo)
+               carritoViewModel.pagar.observe(this, Observer {response ->
+                   Log.e("RESPONSE PAGO", "${response.data}")
+                   when(response){
+                       is Resource.Success -> {
+                           val detalle = Intent(this, DetallePedidoActivity::class.java).apply {
+                               putExtra(Constantes.PEDIDO_ID, response.data?.id)
+                               flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                           }
+                           startActivity(detalle)
+                           finish()
                        }
-                       startActivity(detalle)
-                       finish()
+
+                       is Resource.Loading -> {
+                       }
+
+                       is Resource.Error ->{
+                           Toast.makeText(this,"Error, ${response.message}", Toast.LENGTH_LONG).show()
+                       }
                    }
                })
+
            }else{
                Toast.makeText(this, "Debe elegir primero una hora", Toast.LENGTH_LONG).show()
            }
@@ -133,16 +158,27 @@ class CarritoActivity : AppCompatActivity() {
     private fun verHorasDisponibles() {
         var idBar = SharedPreferencesManager().getSomeStringValue(Constantes.BAR_ID_PEDIDO)
         if (idBar != null) {
-            carritoViewModel.horasRecogida(idBar!!).observe(this, Observer {
-                if (it != null) {
-                    horasList = it
-                    adapterHoras = ArrayAdapter<String>(
-                        this,
-                        android.R.layout.simple_expandable_list_item_1,
-                        horasList
-                    )
+            carritoViewModel.horasRecogida(idBar!!)
+            carritoViewModel.horarios.observe(this, Observer {response ->
+                when(response){
+                    is Resource.Success -> {
+                        horasList = response.data!!
+                        adapterHoras = ArrayAdapter<String>(
+                            this,
+                            android.R.layout.simple_expandable_list_item_1,
+                            horasList
+                        )
+                    }
+
+                    is Resource.Loading -> {
+                    }
+
+                    is Resource.Error ->{
+                        Toast.makeText(this,"Error, ${response.message}", Toast.LENGTH_LONG).show()
+                    }
                 }
             })
+
         }
     }
 }

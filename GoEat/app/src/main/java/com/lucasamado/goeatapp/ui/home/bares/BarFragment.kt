@@ -26,7 +26,6 @@ class BarFragment : Fragment() {
     @Inject lateinit var barViewModel: BarViewModel
 
     private lateinit var barAdapter: MyBarRecyclerViewAdapter
-    private var barList: List<BarDto> = ArrayList()
 
     private var columnCount = 1
 
@@ -53,7 +52,6 @@ class BarFragment : Fragment() {
             }
             adapter = barAdapter
         }
-
 
         barViewModel.listaBares.observe(viewLifecycleOwner, Observer {resp ->
             when(resp){

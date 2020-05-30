@@ -108,6 +108,7 @@ class DetallePlatoActivity : AppCompatActivity() {
                 })
 
             } else {
+                //TODO pasar a corrutinas
                 platoDetailViewModel.deletePlato(idPlato).observe(this, Observer {
                     if (it != null) {
                         val intent = Intent(this, CarritoActivity::class.java).apply {
