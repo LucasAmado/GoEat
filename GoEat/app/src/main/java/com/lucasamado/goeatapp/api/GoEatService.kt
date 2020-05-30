@@ -22,10 +22,10 @@ interface GoEatService {
     //usuarios
 
     @POST("/signup")
-    fun createUser(@Body newUser: SignupRequest): Call<SignupResponse>
+    suspend fun createUser(@Body newUser: SignupRequest): Response<SignupResponse>
 
     @POST("auth/login")
-    fun doLogin(@Body loginRequest: LoginRequest): Call<LoginResponse>
+    suspend fun doLogin(@Body loginRequest: LoginRequest): Response<LoginResponse>
 
     //Bares
 

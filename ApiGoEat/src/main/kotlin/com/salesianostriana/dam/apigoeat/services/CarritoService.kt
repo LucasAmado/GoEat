@@ -22,7 +22,7 @@ class CarritoService {
     /**
      * se recorre la lista de productos, y si se encuentra con una lineaPedido existente entonces actualiza los datos
      * Si por el contrario la LineaPedido no existe se crea la LineaPedido, con los datos correspondientes.
-     * Y si se pide comida a otro bar el carrito se vacía
+     * Y si se pide comida a otro bar el carrito se vacía y se crea una lineaPedido
      */
     fun actualizarCarrito(cantidad: Int, plato: Plato): LineaPedido {
         var lineaExist = false
@@ -56,6 +56,7 @@ class CarritoService {
 
     fun borrarPlato(id: UUID): Boolean {
         var delete = false
+        println("")
         for (lp in lineasCarrito) {
             if (lp.plato?.id == id) {
                 lineasCarrito.remove(lp)

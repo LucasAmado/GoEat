@@ -4,12 +4,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.google.android.material.textfield.TextInputEditText
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.MyApp
+import com.lucasamado.goeatapp.common.Resource
 import com.lucasamado.goeatapp.models.user.SignupRequest
 import com.lucasamado.goeatapp.viewmodels.SignupViewModel
 import java.util.regex.Matcher
@@ -100,13 +103,23 @@ class SignupActivity : AppCompatActivity() {
                     password = tiPassword.text.toString(),
                     password2 = tiPassword2.text.toString()
                 )
-            ).observe(this, Observer {
-                if(it != null){
-                    val login = Intent(MyApp.instance, LoginActivity::class.java).apply {
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            )
+            signupViewModel.usuarioCreado.observe(this, Observer {response ->
+                when (response) {
+                    is Resource.Success -> {
+                        Toast.makeText(this, "Usuario creado correctamente", Toast.LENGTH_LONG).show()
+                        val login = Intent(MyApp.instance, LoginActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        }
+                        startActivity(login)
+                        finish()
                     }
-                    startActivity(login)
-                    finish()
+
+                    is Resource.Loading -> { }
+
+                    is Resource.Error -> {
+                        Toast.makeText(this, "Error, ${response.message}", Toast.LENGTH_LONG).show()
+                    }
                 }
             })
         }
