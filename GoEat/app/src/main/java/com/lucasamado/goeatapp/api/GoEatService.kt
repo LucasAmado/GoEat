@@ -19,14 +19,6 @@ import retrofit2.http.*
 
 interface GoEatService {
 
-    //usuarios
-
-    @POST("/signup")
-    suspend fun createUser(@Body newUser: SignupRequest): Response<SignupResponse>
-
-    @POST("auth/login")
-    suspend fun doLogin(@Body loginRequest: LoginRequest): Response<LoginResponse>
-
     //Bares
 
     @GET("bares/")
@@ -56,7 +48,7 @@ interface GoEatService {
     suspend fun actualizarCarrito(@Path("cantidad") cantidad:Int, @Path("id") id: String): Response<LineaPedidoDto>
 
     @DELETE("pedidos/borrar-plato/{id}")
-    fun borrarPlato(@Path("id") id: String): Call<Boolean>
+    suspend fun borrarPlato(@Path("id") id: String): Response<Boolean>
 
     @GET("pedidos/calcular/total-carrito")
     suspend fun calcularPrcioTotal(): Response<Double>

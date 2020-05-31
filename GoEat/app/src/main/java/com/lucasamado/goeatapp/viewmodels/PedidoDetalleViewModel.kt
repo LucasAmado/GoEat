@@ -3,6 +3,7 @@ package com.lucasamado.goeatapp.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lucasamado.goeatapp.api.APIError
 import com.lucasamado.goeatapp.common.Resource
 import com.lucasamado.goeatapp.models.pedido.PedidoDetalleDto
 import com.lucasamado.goeatapp.repository.PedidoRepository
@@ -28,7 +29,8 @@ class PedidoDetalleViewModel @Inject constructor(
                 return Resource.Success(it)
             }
         }
-        return Resource.Error(response.message())
+        val error: APIError = pedidoRepository.parseError(response)
+        return Resource.Error(error.status_message)
     }
 
     fun changePedidoFav(id: String) = viewModelScope.launch { 
@@ -43,7 +45,8 @@ class PedidoDetalleViewModel @Inject constructor(
                 return Resource.Success(it)
             }
         }
-        return Resource.Error(response.message())
+        val error: APIError = pedidoRepository.parseError(response)
+        return Resource.Error(error.status_message)
     }
 
 }

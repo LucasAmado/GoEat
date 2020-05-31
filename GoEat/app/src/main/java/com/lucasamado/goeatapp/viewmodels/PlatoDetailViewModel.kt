@@ -3,6 +3,7 @@ package com.lucasamado.goeatapp.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lucasamado.goeatapp.api.APIError
 import com.lucasamado.goeatapp.common.Resource
 import com.lucasamado.goeatapp.models.lineasPedido.LineaPedidoDto
 import com.lucasamado.goeatapp.models.plato.PlatoDto
@@ -19,6 +20,7 @@ class PlatoDetailViewModel @Inject constructor(
 
     var platoSelect: MutableLiveData<Resource<PlatoDto>> = MutableLiveData()
     var lineasCarrito: MutableLiveData<Resource<LineaPedidoDto>> = MutableLiveData()
+    var platoDelete: MutableLiveData<Resource<Boolean>> = MutableLiveData()
 
     /**
      * Get plato
@@ -36,7 +38,8 @@ class PlatoDetailViewModel @Inject constructor(
                 return Resource.Success(it)
             }
         }
-        return Resource.Error(response.message())
+        val error: APIError = platoRepository.parseError(response)
+        return Resource.Error(error.status_message)
     }
 
     /**
@@ -54,9 +57,24 @@ class PlatoDetailViewModel @Inject constructor(
                 return Resource.Success(it)
             }
         }
-        return Resource.Error(response.message())
+        val error: APIError = pedidoRepository.parseError(response)
+        return Resource.Error(error.status_message)
     }
 
-    fun deletePlato(id: String): MutableLiveData<Boolean> = pedidoRepository.deletePlato(id)
+    fun deletePlato(id: String) = viewModelScope.launch {
+        platoDelete.value = Resource.Loading()
+        val response = pedidoRepository.deletePlato(id)
+        platoDelete.value = handleDeletePlato(response)
+    }
+
+    private fun handleDeletePlato(response: Response<Boolean>): Resource<Boolean>? {
+        if (response.isSuccessful) {
+            response.body()?.let {
+                return Resource.Success(it)
+            }
+        }
+        val error: APIError = pedidoRepository.parseError(response)
+        return Resource.Error(error.status_message)
+    }
 
 }

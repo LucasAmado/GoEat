@@ -97,9 +97,7 @@ class DetallePlatoActivity : AppCompatActivity() {
                             finish()
                         }
 
-                        is Resource.Loading -> {
-                            //CARGANDO
-                        }
+                        is Resource.Loading -> { }
 
                         is Resource.Error -> {
                             Toast.makeText(MyApp.instance,"Error, ${response.message}", Toast.LENGTH_LONG).show()
@@ -108,16 +106,25 @@ class DetallePlatoActivity : AppCompatActivity() {
                 })
 
             } else {
-                //TODO pasar a corrutinas
-                platoDetailViewModel.deletePlato(idPlato).observe(this, Observer {
-                    if (it != null) {
-                        val intent = Intent(this, CarritoActivity::class.java).apply {
-                            putExtra(Constantes.BAR_ID, idBar)
-                            putExtra(Constantes.TIPO_PLATO, tipoPlato)
-                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                platoDetailViewModel.deletePlato(idPlato)
+                platoDetailViewModel.platoDelete.observe(this, Observer {response ->
+                    when(response) {
+                        is Resource.Success ->  {
+                            Toast.makeText(MyApp.instance,"Plato borrado correctamente", Toast.LENGTH_LONG).show()
+                            val intent = Intent(this, CarritoActivity::class.java).apply {
+                                putExtra(Constantes.BAR_ID, idBar)
+                                putExtra(Constantes.TIPO_PLATO, tipoPlato)
+                                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            }
+                            startActivity(intent)
+                            finish()
                         }
-                        startActivity(intent)
-                        finish()
+
+                        is Resource.Loading -> { }
+
+                        is Resource.Error -> {
+                            Toast.makeText(MyApp.instance,"Error borrando: ${response.message}", Toast.LENGTH_LONG).show()
+                        }
                     }
                 })
             }
@@ -148,12 +155,10 @@ class DetallePlatoActivity : AppCompatActivity() {
                     actualizarDatos()
                 }
 
-                is Resource.Loading -> {
-                    //CARGANDO
-                }
+                is Resource.Loading -> { }
 
                 is Resource.Error -> {
-                    Toast.makeText(MyApp.instance,"Error, ${response.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(MyApp.instance,"Error plato: ${response.message}", Toast.LENGTH_LONG).show()
                 }
             }
         })

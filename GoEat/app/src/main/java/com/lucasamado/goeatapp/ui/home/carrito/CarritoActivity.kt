@@ -62,14 +62,15 @@ class CarritoActivity : AppCompatActivity() {
         carritoViewModel.total.observe(this, Observer {response ->
             when(response){
                 is Resource.Success -> {
-                    btn_pagar.visibility = View.VISIBLE
-                    btn_horaRecogida.visibility = View.VISIBLE
-                    tituloHoraRecogida.visibility = View.VISIBLE
-                    tituloComentarios.visibility = View.VISIBLE
-                    comentarios.visibility = View.VISIBLE
-                    total.text = "TOTAL: ${df.format(response.data)}€"
-
-                    verHorasDisponibles()
+                    if(response.data!! >=0.1){
+                        btn_pagar.visibility = View.VISIBLE
+                        btn_horaRecogida.visibility = View.VISIBLE
+                        tituloHoraRecogida.visibility = View.VISIBLE
+                        tituloComentarios.visibility = View.VISIBLE
+                        comentarios.visibility = View.VISIBLE
+                        total.text = "TOTAL: ${df.format(response.data)}€"
+                        verHorasDisponibles()
+                    }
                 }
 
                 is Resource.Loading -> {
@@ -129,9 +130,9 @@ class CarritoActivity : AppCompatActivity() {
                )
                carritoViewModel.pagarPedido(pedidoNuevo)
                carritoViewModel.pagar.observe(this, Observer {response ->
-                   Log.e("RESPONSE PAGO", "${response.data}")
                    when(response){
                        is Resource.Success -> {
+                           Toast.makeText(this, "Pago realizado con éxito", Toast.LENGTH_LONG).show()
                            val detalle = Intent(this, DetallePedidoActivity::class.java).apply {
                                putExtra(Constantes.PEDIDO_ID, response.data?.id)
                                flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -140,8 +141,7 @@ class CarritoActivity : AppCompatActivity() {
                            finish()
                        }
 
-                       is Resource.Loading -> {
-                       }
+                       is Resource.Loading -> { }
 
                        is Resource.Error ->{
                            Toast.makeText(this,"Error, ${response.message}", Toast.LENGTH_LONG).show()
@@ -170,11 +170,10 @@ class CarritoActivity : AppCompatActivity() {
                         )
                     }
 
-                    is Resource.Loading -> {
-                    }
+                    is Resource.Loading -> { }
 
                     is Resource.Error ->{
-                        Toast.makeText(this,"Error, ${response.message}", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this,"Error horas: ${response.message}", Toast.LENGTH_LONG).show()
                     }
                 }
             })

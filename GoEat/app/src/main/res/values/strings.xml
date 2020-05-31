@@ -2,7 +2,7 @@
     <string name="app_name">GoEatApp</string>
     <string name="title_gestion">Gestión</string>
     <string name="title_bares">Bares</string>
-    <string name="title_pedidos">Mis pedidos</string>
+    <string name="title_pedidos">Pedidos</string>
     <string name="title_perfil">Perfil</string>
     <string name="title_activity_detalle_bar_scrolling">DetalleBarScrollingActivity</string>
     <string name="large_text">

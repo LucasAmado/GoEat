@@ -3,10 +3,12 @@ package com.lucasamado.goeatapp.repository
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import com.lucasamado.goeatapp.api.APIError
 import com.lucasamado.goeatapp.api.GoEatService
 import com.lucasamado.goeatapp.common.MyApp
 import com.lucasamado.goeatapp.models.bar.BarDetailDto
 import com.lucasamado.goeatapp.models.bar.BarDto
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,4 +28,8 @@ class BarRepository @Inject constructor(var goEatService: GoEatService) {
 
     suspend fun consultarHorasRecogida(id: String) = goEatService.consultarHorariosRecogidaBar(id)
 
+    fun parseError(response: Response<*>): APIError {
+        val jsonObject = JSONObject(response.errorBody()!!.string())
+        return APIError(jsonObject.getInt("status_code"), jsonObject.getString("status_message"))
+    }
 }

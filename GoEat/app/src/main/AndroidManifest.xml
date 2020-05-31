@@ -37,6 +37,7 @@
             android:label="@string/title_activity_mapa" />
         <activity android:name=".ui.home.platos.ListaPlatosActivity" />
         <activity android:name=".ui.home.bares.DetalleBarActivity" />
+        <activity android:name=".ui.pedidos.detalle.DetallePedidoActivity" />
         <activity android:name=".ui.SignupActivity" />
         <activity android:name=".ui.LoginActivity">
             <intent-filter>

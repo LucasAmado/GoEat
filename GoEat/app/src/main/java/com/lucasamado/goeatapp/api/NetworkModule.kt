@@ -30,21 +30,26 @@ class NetworkModule {
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .client(
-                OkHttpClient.Builder().
-                    addInterceptor(HttpLoggingInterceptor().apply {
-                        level = HttpLoggingInterceptor.Level.BODY
-                    }).
-                    addInterceptor(InterceptorToken()).build())
+                OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                }).addInterceptor(InterceptorToken()).build()
+            )
             .build()
             .create(GoEatService::class.java)
     }
 
-    /*@Singleton
+    @Singleton
     @Provides
-    fun provideSharedPreferences(): SharedPreferences {
-        val sharedPref = MyApp.instance.getSharedPreferences(
-            Constantes.SHARED_PREFS_FILE, Context.MODE_PRIVATE)
-        return sharedPref
-    }*/
-
+    fun createClientUser(@Named("url") baseUrl: String): GoEatUser {
+        return Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(
+                OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                }).build()
+            )
+            .build()
+            .create(GoEatUser::class.java)
+    }
 }

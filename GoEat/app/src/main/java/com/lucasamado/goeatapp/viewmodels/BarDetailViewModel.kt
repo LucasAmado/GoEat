@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lucasamado.goeatapp.api.APIError
 import com.lucasamado.goeatapp.common.Resource
 import com.lucasamado.goeatapp.models.bar.BarDetailDto
 import com.lucasamado.goeatapp.repository.BarRepository
@@ -32,7 +33,8 @@ class BarDetailViewModel @Inject constructor(
                 return Resource.Success(it)
             }
         }
-        return Resource.Error(response.message())
+        val error: APIError = barRepository.parseError(response)
+        return Resource.Error(error.status_message)
     }
 
     fun getTipos(id: String) = viewModelScope.launch {
@@ -47,7 +49,8 @@ class BarDetailViewModel @Inject constructor(
                 return Resource.Success(it)
             }
         }
-        return Resource.Error(response.message())
+        val error: APIError = platoRepository.parseError(response)
+        return Resource.Error(error.status_message)
     }
 
 }

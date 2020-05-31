@@ -56,13 +56,14 @@ class CarritoService {
 
     fun borrarPlato(id: UUID): Boolean {
         var delete = false
-        println("")
-        for (lp in lineasCarrito) {
+        loop@for (lp in lineasCarrito) {
             if (lp.plato?.id == id) {
                 lineasCarrito.remove(lp)
                 delete = true
+                break@loop
             }
         }
+
         return delete
     }
 }

@@ -2,18 +2,27 @@ package com.lucasamado.goeatapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.lucasamado.goeatapp.common.Constantes
+import com.lucasamado.goeatapp.common.SharedPreferencesManager
 import com.lucasamado.goeatapp.ui.home.carrito.CarritoActivity
 
 
 class MainActivity : AppCompatActivity() {
+    var roles: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,14 +33,18 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(setOf(
                 R.id.navigation_bares, R.id.navigation_pedidos, R.id.navigation_gestion))
-        //TODO descomentar
-        //getCurrentUser(navController)
+        roles = SharedPreferencesManager().getSomeStringValue(Constantes.USER_ROLES)
+        getCurrentUser(navController)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.top_menu, menu)
+        if(roles.equals("ADMIN")){
+            var searchItem: MenuItem = menu.findItem(R.id.carritoIcon)
+            searchItem.isVisible = false
+        }
         return true
     }
 
@@ -54,21 +67,20 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    //TODO descomentar
-    /*fun getCurrentUser(navController: NavController){
-        var roles = SharedPreferencesManager().getSomeStringValue(Constantes.USER_ROLES)
+    fun getCurrentUser(navController: NavController){
+        Log.e("roles:", "$roles")
 
         var navNormal: BottomNavigationView = findViewById(R.id.nav_view)
         var navAdmin: BottomNavigationView = findViewById(R.id.nav_admin)
 
         if(roles.equals("ADMIN")){
-            navAdmin.setVisibility(View.VISIBLE)
-            navNormal.setVisibility(View.INVISIBLE)
+            navAdmin.visibility = VISIBLE
+            navNormal.visibility = INVISIBLE
             setupWithNavController(navAdmin, navController)
         }else{
             navNormal.setVisibility(View.VISIBLE)
             navAdmin.setVisibility(View.INVISIBLE)
             setupWithNavController(navNormal, navController)
         }
-    }*/
+    }
 }

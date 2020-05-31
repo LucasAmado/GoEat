@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.apigoeat.services
 
 import com.salesianostriana.dam.apigoeat.models.Bar
+import com.salesianostriana.dam.apigoeat.models.Pedido
 import com.salesianostriana.dam.apigoeat.repos.BarRepository
 import org.springframework.stereotype.Service
 import java.time.LocalTime
@@ -23,6 +24,26 @@ class BarService: BaseService<Bar, UUID, BarRepository>(){
         }
 
         return bares
+    }
+
+    fun consultarHorario(id: UUID, pedidos: List<Pedido>): List<LocalTime> {
+        var bar:Bar = this.findById(id).get()
+        //var pedidos: List<Pedido> = pedidoService.findByBarAndToday(id)
+        var horas: MutableList<LocalTime> = mutableListOf()
+        horas.addAll(bar.horasDisponibles!!)
+
+        for(h in bar.horasDisponibles!!){
+            for(p in pedidos){
+                if(p.horaRecogida == h || h.isBefore(LocalTime.now().plusMinutes(bar.tiempoPedido))){
+                    horas.remove(h)
+                }
+            }
+        }
+
+        bar.horasDisponibles = horas
+        this.save(bar)
+
+        return horas
     }
 
 }

@@ -8,6 +8,7 @@ import com.salesianostriana.dam.apigoeat.services.BarService
 import com.salesianostriana.dam.apigoeat.services.PedidoService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
@@ -42,25 +43,11 @@ class BarController(val barService: BarService, val pedidoService: PedidoService
     }
 
 
+    @Scheduled(fixedDelay = 3000)
     @GetMapping("/consultar/horarios-recogida/{id}")
-    fun consultarHorarios(@PathVariable id: UUID): List<LocalTime> {
-        var bar:Bar = barService.findById(id).get()
+    fun consultarHorarios(@PathVariable id: UUID): List<LocalTime>{
         var pedidos: List<Pedido> = pedidoService.findByBarAndToday(id)
-        var horas: MutableList<LocalTime> = mutableListOf()
-        horas.addAll(bar.horasDisponibles!!)
-
-        for(h in bar.horasDisponibles!!){
-            for(p in pedidos){
-                if(p.horaRecogida == h || h.isBefore(LocalTime.now().plusMinutes(bar.tiempoPedido))){
-                    horas.remove(h)
-                }
-            }
-        }
-
-        bar.horasDisponibles = horas
-        barService.save(bar)
-
-        return horas
+        return barService.consultarHorario(id, pedidos)
     }
 
 

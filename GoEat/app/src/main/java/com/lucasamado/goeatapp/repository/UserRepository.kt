@@ -1,24 +1,23 @@
 package com.lucasamado.goeatapp.repository
 
-import android.widget.Toast
-import androidx.lifecycle.MutableLiveData
-import com.lucasamado.goeatapp.api.GoEatService
-import com.lucasamado.goeatapp.common.MyApp
+import com.lucasamado.goeatapp.api.APIError
+import com.lucasamado.goeatapp.api.GoEatUser
 import com.lucasamado.goeatapp.models.user.LoginRequest
-import com.lucasamado.goeatapp.models.user.LoginResponse
 import com.lucasamado.goeatapp.models.user.SignupRequest
-import com.lucasamado.goeatapp.models.user.SignupResponse
-import retrofit2.Call
-import retrofit2.Callback
+import org.json.JSONObject
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserRepository @Inject constructor(var goEatService: GoEatService) {
-    var userLogin: MutableLiveData<LoginResponse> = MutableLiveData()
+class UserRepository @Inject constructor(var goEatUser: GoEatUser) {
 
-    suspend fun signupUser(signupRequest: SignupRequest) = goEatService.createUser(signupRequest)
+    suspend fun signupUser(signupRequest: SignupRequest) = goEatUser.createUser(signupRequest)
 
-    suspend fun doLogin(loginRequest: LoginRequest) = goEatService.doLogin(loginRequest)
+    suspend fun doLogin(loginRequest: LoginRequest) = goEatUser.doLogin(loginRequest)
+
+    fun parseError(response: Response<*>): APIError {
+        val jsonObject = JSONObject(response.errorBody()!!.string())
+        return APIError(jsonObject.getInt("status_code"), jsonObject.getString("status_message"))
+    }
 }

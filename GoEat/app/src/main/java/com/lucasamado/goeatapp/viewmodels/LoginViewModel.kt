@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lucasamado.goeatapp.api.APIError
 import com.lucasamado.goeatapp.common.Resource
 import com.lucasamado.goeatapp.models.user.LoginRequest
 import com.lucasamado.goeatapp.models.user.LoginResponse
@@ -30,6 +31,7 @@ class LoginViewModel @Inject constructor(
                 return Resource.Success(it)
             }
         }
-        return Resource.Error(response.message())
+        val error: APIError = userRepository.parseError(response)
+        return Resource.Error(error.status_message)
     }
 }
