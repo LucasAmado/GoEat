@@ -21,7 +21,7 @@ import com.lucasamado.goeatapp.ui.home.carrito.CarritoActivity
 
 
 class MainActivity : AppCompatActivity() {
-    var roles: String? = null
+    lateinit var roles: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(setOf(
                 R.id.navigation_bares, R.id.navigation_mis_pedidos, R.id.navigation_gestion, R.id.navigation_pedidos_bar))
-        roles = SharedPreferencesManager().getSomeStringValue(Constantes.USER_ROLES)
+        roles = SharedPreferencesManager().getSomeStringValue(Constantes.USER_ROLES).toString()
         getCurrentUser(navController)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             finish()
         }else if (id == R.id.perfilIcon) {
             //TODO crear perfil activity
-            /*val perfil = Intent(MyApp.instance, PerfilActivity::class.java).apply{
+            /*val perfil = Intent(this, PerfilActivity::class.java).apply{
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
             startActivity(perfil)

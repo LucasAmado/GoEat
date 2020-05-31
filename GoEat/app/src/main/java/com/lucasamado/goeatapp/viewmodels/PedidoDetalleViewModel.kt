@@ -16,6 +16,7 @@ class PedidoDetalleViewModel @Inject constructor(
 ) : ViewModel() {
     var favBoolean: MutableLiveData<Resource<Boolean>> = MutableLiveData()
     var pedidoSelect: MutableLiveData<Resource<PedidoDetalleDto>> = MutableLiveData()
+    var cambioEstado: MutableLiveData<Resource<String>> = MutableLiveData()
 
     fun getPedido(id: String) = viewModelScope.launch {
         pedidoSelect.value = Resource.Loading()
@@ -40,6 +41,22 @@ class PedidoDetalleViewModel @Inject constructor(
     }
 
     private fun handleChangeFav(response: Response<Boolean>): Resource<Boolean>? {
+        if(response.isSuccessful) {
+            response.body()?.let {
+                return Resource.Success(it)
+            }
+        }
+        val error: APIError = pedidoRepository.parseError(response)
+        return Resource.Error(error.status_message)
+    }
+
+    fun changeEstado(id: String) = viewModelScope.launch {
+        cambioEstado.value = Resource.Loading()
+        val response = pedidoRepository.cambiarEstado(id)
+        cambioEstado.value = handleChangeEstado(response)
+    }
+
+    private fun handleChangeEstado(response: Response<String>): Resource<String>? {
         if(response.isSuccessful) {
             response.body()?.let {
                 return Resource.Success(it)

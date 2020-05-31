@@ -10,7 +10,6 @@ import coil.api.load
 import coil.transform.CircleCropTransformation
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.models.lineasPedido.LineaPedidoDetalle
-import com.lucasamado.goeatapp.models.lineasPedido.LineaPedidoDto
 import kotlinx.android.synthetic.main.fragment_linea_pedido.view.*
 import java.text.DecimalFormat
 
@@ -60,7 +59,7 @@ class MyLineaPedidoDetalleRecyclerViewAdapter() : RecyclerView.Adapter<MyLineaPe
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val tvNombre: TextView = mView.textViewNombre
-        val tvPrecio: TextView = mView.textViewPrecio
+        val tvPrecio: TextView = mView.textViewHora
         val tvCantidad: TextView = mView.textViewCantidad
         val ivFoto: ImageView = mView.imageViewFoto
     }

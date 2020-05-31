@@ -46,7 +46,7 @@
                 android:text="Nombre"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/textViewPrecio"
+                app:layout_constraintEnd_toStartOf="@+id/textViewHora"
                 app:layout_constraintStart_toEndOf="@+id/imageViewFoto"
                 app:layout_constraintTop_toTopOf="@+id/imageViewFoto" />
 
@@ -65,13 +65,13 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewNombre"
-                app:layout_constraintEnd_toEndOf="@+id/textViewPrecio"
-                app:layout_constraintStart_toStartOf="@+id/textViewPrecio"
+                app:layout_constraintEnd_toEndOf="@+id/textViewHora"
+                app:layout_constraintStart_toStartOf="@+id/textViewHora"
                 app:layout_constraintTop_toTopOf="@+id/textViewNombre"
                 app:srcCompat="@drawable/ic_nofav" />
 
             <TextView
-                android:id="@+id/textViewPrecio"
+                android:id="@+id/textViewHora"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"

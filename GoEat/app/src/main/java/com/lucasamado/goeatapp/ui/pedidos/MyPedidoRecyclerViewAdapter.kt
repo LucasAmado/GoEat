@@ -13,7 +13,6 @@ import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
 import com.lucasamado.goeatapp.models.pedido.PedidoDto
-import com.lucasamado.goeatapp.ui.home.bares.DetalleBarActivity
 import com.lucasamado.goeatapp.ui.pedidos.detalle.DetallePedidoActivity
 
 import kotlinx.android.synthetic.main.fragment_pedido.view.*
@@ -82,7 +81,7 @@ class MyPedidoRecyclerViewAdapter() : RecyclerView.Adapter<MyPedidoRecyclerViewA
         val ivFoto: ImageView = mView.imageViewFoto
         val ivFav: ImageView = mView.imageViewFav
         val tvNombre: TextView = mView.textViewNombre
-        val tvPrecio: TextView = mView.textViewPrecio
+        val tvPrecio: TextView = mView.textViewHora
         val tvFecha: TextView = mView.textViewFecha
     }
 }

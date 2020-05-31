@@ -26,6 +26,6 @@
     <fragment
         android:id="@+id/navigation_pedidos_bar"
         android:name="com.lucasamado.goeatapp.ui.pedidosBar.PedidosBarFragment"
-        android:label="fragment_linea_pedido_detalle_list"
+        android:label="@string/title_pedidos"
         tools:layout="@layout/fragment_pedidos_bar_list" />
 </navigation>

@@ -39,6 +39,7 @@ class PedidoViewModel @Inject constructor(
 
     fun loadPedidosBarHoy() = viewModelScope.launch {
         pedidosMiBarHoy.value = Resource.Loading()
+        delay(1500)
         val response = pedidoRepository.pedidosMiBar()
         pedidosMiBarHoy.value = handleLoadPedidosBarHoy(response)
     }

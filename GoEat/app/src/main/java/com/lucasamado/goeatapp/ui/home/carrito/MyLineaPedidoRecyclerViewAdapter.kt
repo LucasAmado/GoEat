@@ -71,7 +71,7 @@ class MyLineaPedidoRecyclerViewAdapter() : RecyclerView.Adapter<MyLineaPedidoRec
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val tvNombre: TextView = mView.textViewNombre
-        val tvPrecio: TextView = mView.textViewPrecio
+        val tvPrecio: TextView = mView.textViewHora
         val tvCantidad: TextView = mView.textViewCantidad
         val ivFoto: ImageView = mView.imageViewFoto
     }

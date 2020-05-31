@@ -1,13 +1,16 @@
 package com.lucasamado.goeatapp.ui
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import coil.api.load
 import com.google.android.material.textfield.TextInputEditText
 import com.lucasamado.goeatapp.MainActivity
 import com.lucasamado.goeatapp.R
@@ -26,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var etPassword: TextInputEditText
     lateinit var signUp: TextView
     lateinit var button_login: Button
-    var idBar: String? = null
+    lateinit var ivLogo: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +41,11 @@ class LoginActivity : AppCompatActivity() {
         etUsername = findViewById(R.id.textInputUsername)
         etPassword = findViewById(R.id.textInputPassword)
         button_login = findViewById(R.id.buttonLogin)
+        ivLogo = findViewById(R.id.imageViewLogo)
+
+        ivLogo.load(
+            Uri.parse("file:///android_asset/logo.png")
+        )
 
         signUp.setOnClickListener {v ->
             val intent = Intent(MyApp.instance, SignupActivity::class.java).apply{

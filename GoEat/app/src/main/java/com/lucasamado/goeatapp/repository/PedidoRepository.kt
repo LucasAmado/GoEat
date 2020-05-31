@@ -31,6 +31,8 @@ class PedidoRepository @Inject constructor(var goEatService: GoEatService) {
 
     suspend fun pedidosMiBar() = goEatService.loadPedidosMyBar()
 
+    suspend fun cambiarEstado(id: String) = goEatService.cambiarEstado(id)
+
     fun parseError(response: Response<*>): APIError {
         val jsonObject = JSONObject(response.errorBody()!!.string())
         return APIError(jsonObject.getInt("status_code"), jsonObject.getString("status_message"))

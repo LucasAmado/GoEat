@@ -111,13 +111,10 @@ class DetalleBarActivity : AppCompatActivity() {
                     horarios.text = barDetail?.horaApertura + " - " + barDetail?.horaCierre
                 }
 
-                is Resource.Loading -> {
-                    //CARGANDO
-                }
+                is Resource.Loading -> { }
 
                 is Resource.Error -> {
-                    Toast.makeText(MyApp.instance, "Error, ${response.message}", Toast.LENGTH_LONG)
-                        .show()
+                    Toast.makeText(this, "Error, ${response.message}", Toast.LENGTH_LONG).show()
                 }
             }
         })

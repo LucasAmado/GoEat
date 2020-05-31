@@ -13,17 +13,15 @@ import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
 import com.lucasamado.goeatapp.models.pedido.PedidoDto
 import com.lucasamado.goeatapp.ui.pedidos.detalle.DetallePedidoActivity
-import kotlinx.android.synthetic.main.fragment_pedido.view.*
 import kotlinx.android.synthetic.main.fragment_pedidos_bar.view.*
 import kotlinx.android.synthetic.main.fragment_pedidos_bar.view.textViewFecha
 import kotlinx.android.synthetic.main.fragment_pedidos_bar.view.textViewNombre
-import kotlinx.android.synthetic.main.fragment_pedidos_bar.view.textViewPrecio
+import kotlinx.android.synthetic.main.fragment_pedidos_bar.view.textViewHora
 
 import java.text.DecimalFormat
 
 
 class MyPedidosBarRecyclerViewAdapter() : RecyclerView.Adapter<MyPedidosBarRecyclerViewAdapter.ViewHolder>() {
-
 
     private val mOnClickListener: View.OnClickListener
     private var pedidosList: List<PedidoDto> = ArrayList()
@@ -49,19 +47,23 @@ class MyPedidosBarRecyclerViewAdapter() : RecyclerView.Adapter<MyPedidosBarRecyc
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = pedidosList[position]
         holder.tvNombre.text = item.user.username
-        holder.tvPrecio.text = "${df.format(item.totalPedido)} €"
+        holder.tvHora.text = item.horaRecogida
         holder.tvFecha.text = reverseOrderOfWords(item.fechaPedido)
 
-        var estado = 0
 
-        if(item.estado.equals("SOLICITADO")){
-            estado = R.drawable.ic_solicitado
-        }else if(item.estado.equals("COCINA")){
-            estado = R.drawable.ic_cocina
-        }else if(item.estado.equals("PREPARADO")){
-            estado = R.drawable.ic_preparado
-        }else{
-            estado = R.drawable.ic_entregado
+        var estado = when {
+            item.estado.equals("SOLICITADO") -> {
+                R.drawable.ic_solicitado
+            }
+            item.estado.equals("COCINA") -> {
+                R.drawable.ic_cocina
+            }
+            item.estado.equals("PREPARADO") -> {
+                R.drawable.ic_preparado
+            }
+            else -> {
+                R.drawable.ic_entregado
+            }
         }
 
         holder.ivEstado.load(estado) {
@@ -86,7 +88,7 @@ class MyPedidosBarRecyclerViewAdapter() : RecyclerView.Adapter<MyPedidosBarRecyc
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val ivEstado: ImageView = mView.imageViewEstado
         val tvNombre: TextView = mView.textViewNombre
-        val tvPrecio: TextView = mView.textViewPrecio
+        val tvHora: TextView = mView.textViewHora
         val tvFecha: TextView = mView.textViewFecha
     }
 }

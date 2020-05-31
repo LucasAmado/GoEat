@@ -71,6 +71,11 @@ interface GoEatService {
     @PUT("pedidos/{id}")
     suspend fun editPedidoFav(@Path("id") id: String): Response<Boolean>
 
-    @GET("pedidos/hoy-bar")
+    //ADMIN
+
+    @GET("admin/pedidos/hoy-bar")
     suspend fun loadPedidosMyBar(): Response<List<PedidoDto>>
+
+    @PUT("admin/estado-pedido/{id}")
+    suspend fun cambiarEstado(@Path("id") id: String): Response<String>
 }

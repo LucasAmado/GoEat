@@ -98,6 +98,7 @@
     <string name="title_activity_mapa">Map</string>
     <string name="continuar">Continuar</string>
     <string name="cancel">Cancelar</string>
+    <string name="confirmar">Confirmar</string>
     <string name="caja_comentarios">ej: Sin pepinillos por favor</string>
     <string name="carrito">Carrito</string>
     <string name="title_mis_pedidos">Mis pedidos</string>
