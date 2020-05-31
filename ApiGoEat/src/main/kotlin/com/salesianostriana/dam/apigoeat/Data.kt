@@ -29,7 +29,7 @@ class Data(
                 ),
                 Bar(
                         "No Piqui", "Hamburguesas", "https://cenados.com/wp-content/uploads/2017/05/fachada-no-piqui-min.jpg",
-                        37.400541, -5.993118, LocalTime.of(6, 0), LocalTime.of(23, 30), 15
+                        37.400541, -5.993118, LocalTime.of(10, 0), LocalTime.of(23, 30), 15
                 ),
                 Bar(
                         "Masakali", "Pizzas", "https://www.srperro.com/media/negocio/7d6cc913-3aa5-47fb-a2b2-f25359f96903.original.jpeg",
@@ -116,14 +116,14 @@ class Data(
         userRepository.saveAll(usuarios)
 
         val pedidos = listOf(
-                Pedido(LocalDate.of(2020, 3, 5), 35.10, true, LocalTime.of(20,10), usuarios[1], bares[0]),
-                Pedido(LocalDate.of(2020, 5, 27), 12.50, false, LocalTime.of(20,10), usuarios[2], bares[0]),
-                Pedido(LocalDate.of(2020, 5, 23), 24.90, false, LocalTime.of(11,30), usuarios[3], bares[1]),
-                Pedido(LocalDate.of(2020, 3, 14), 45.50, true, LocalTime.of(17,40), usuarios[0], bares[2]),
-                Pedido(LocalDate.of(2020, 5, 23), 12.50, false, LocalTime.of(20,40), usuarios[0], bares[1]),
-                Pedido(LocalDate.now(), 20.55, false, LocalTime.of(14,30), usuarios[3], bares[0]),
-                Pedido(LocalDate.now(), 12.50, false, LocalTime.of(12, 10), usuarios[2], bares[0]),
-                Pedido(LocalDate.now(), 24.90, false, LocalTime.of(13,50), usuarios[3], bares[1])
+                Pedido(LocalDate.of(2020, 3, 5), 35.10, Estado.ENTREGADO,true, LocalTime.of(20,10), usuarios[1], bares[0]),
+                Pedido(LocalDate.of(2020, 5, 27), 12.50, Estado.ENTREGADO,false, LocalTime.of(20,10), usuarios[2], bares[0]),
+                Pedido(LocalDate.of(2020, 5, 23), 24.90, Estado.ENTREGADO,false, LocalTime.of(11,30), usuarios[3], bares[1]),
+                Pedido(LocalDate.of(2020, 3, 14), 45.50, Estado.ENTREGADO,true, LocalTime.of(17,40), usuarios[0], bares[2]),
+                Pedido(LocalDate.of(2020, 5, 23), 12.50, Estado.ENTREGADO,false, LocalTime.of(20,40), usuarios[0], bares[1]),
+                Pedido(LocalDate.now(), 20.55, Estado.PREPARADO,false, LocalTime.of(14,30), usuarios[3], bares[0]),
+                Pedido(LocalDate.now(), 12.50, Estado.COCINA,false, LocalTime.of(12, 10), usuarios[2], bares[0]),
+                Pedido(LocalDate.now(), 24.90, Estado.SOLICITADO,false, LocalTime.of(20,50), usuarios[3], bares[0])
 
         )
         pedidoRepository.saveAll(pedidos)

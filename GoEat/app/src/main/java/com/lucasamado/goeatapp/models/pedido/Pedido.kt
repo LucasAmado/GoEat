@@ -7,6 +7,7 @@ data class Pedido(
     val favorito: Boolean,
     val fechaPedido: String,
     val horaRecogida: String,
+    val estado: String,
     val id: String,
     val lineasPedido: List<LineaPedido>,
     val totalPedido: Double,

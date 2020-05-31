@@ -42,8 +42,6 @@ class BarController(val barService: BarService, val pedidoService: PedidoService
         return result
     }
 
-
-    @Scheduled(fixedDelay = 3000)
     @GetMapping("/consultar/horarios-recogida/{id}")
     fun consultarHorarios(@PathVariable id: UUID): List<LocalTime>{
         var pedidos: List<Pedido> = pedidoService.findByBarAndToday(id)

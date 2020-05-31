@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_pedidos"
-        android:icon="@drawable/ic_pedidos"
-        android:title="@string/title_pedidos" />
-
-    <item
         android:id="@+id/navigation_bares"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_bares" />
+
+    <item
+        android:id="@+id/navigation_mis_pedidos"
+        android:icon="@drawable/ic_pedidos"
+        android:title="@string/title_pedidos" />
 
 </menu>

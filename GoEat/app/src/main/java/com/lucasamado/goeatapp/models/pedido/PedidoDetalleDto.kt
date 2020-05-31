@@ -9,6 +9,7 @@ data class PedidoDetalleDto(
     val favorito: Boolean,
     val fechaPedido: String,
     val horaRecogida: String,
+    val estado: String,
     val id: String,
     val totalPedido: Double,
     val user: User

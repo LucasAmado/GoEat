@@ -1,4 +1,4 @@
-package com.lucasamado.goeatapp.ui.pedidos
+package com.lucasamado.goeatapp.ui.pedidosBar
 
 import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView
@@ -8,21 +8,22 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import coil.api.load
-import coil.transform.CircleCropTransformation
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
 import com.lucasamado.goeatapp.models.pedido.PedidoDto
-import com.lucasamado.goeatapp.ui.home.bares.DetalleBarActivity
 import com.lucasamado.goeatapp.ui.pedidos.detalle.DetallePedidoActivity
-
 import kotlinx.android.synthetic.main.fragment_pedido.view.*
-import kotlinx.android.synthetic.main.fragment_pedido.view.imageViewFoto
-import kotlinx.android.synthetic.main.fragment_pedido.view.textViewNombre
+import kotlinx.android.synthetic.main.fragment_pedidos_bar.view.*
+import kotlinx.android.synthetic.main.fragment_pedidos_bar.view.textViewFecha
+import kotlinx.android.synthetic.main.fragment_pedidos_bar.view.textViewNombre
+import kotlinx.android.synthetic.main.fragment_pedidos_bar.view.textViewPrecio
+
 import java.text.DecimalFormat
 
 
-class MyPedidoRecyclerViewAdapter() : RecyclerView.Adapter<MyPedidoRecyclerViewAdapter.ViewHolder>() {
+class MyPedidosBarRecyclerViewAdapter() : RecyclerView.Adapter<MyPedidosBarRecyclerViewAdapter.ViewHolder>() {
+
 
     private val mOnClickListener: View.OnClickListener
     private var pedidosList: List<PedidoDto> = ArrayList()
@@ -41,26 +42,30 @@ class MyPedidoRecyclerViewAdapter() : RecyclerView.Adapter<MyPedidoRecyclerViewA
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_pedido, parent, false)
+            .inflate(R.layout.fragment_pedidos_bar, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = pedidosList[position]
-        holder.tvNombre.text = item.bar.nombre
+        holder.tvNombre.text = item.user.username
         holder.tvPrecio.text = "${df.format(item.totalPedido)} €"
         holder.tvFecha.text = reverseOrderOfWords(item.fechaPedido)
 
-        holder.ivFoto.load(item.bar.foto) {
-            crossfade(true)
-            placeholder(R.drawable.ic_food)
-            transformations(CircleCropTransformation())
+        var estado = 0
+
+        if(item.estado.equals("SOLICITADO")){
+            estado = R.drawable.ic_solicitado
+        }else if(item.estado.equals("COCINA")){
+            estado = R.drawable.ic_cocina
+        }else if(item.estado.equals("PREPARADO")){
+            estado = R.drawable.ic_preparado
+        }else{
+            estado = R.drawable.ic_entregado
         }
 
-        if(item.favorito){
-            holder.ivFav.load(R.drawable.ic_fav) {
-                crossfade(true)
-            }
+        holder.ivEstado.load(estado) {
+            crossfade(true)
         }
 
         with(holder.mView) {
@@ -79,8 +84,7 @@ class MyPedidoRecyclerViewAdapter() : RecyclerView.Adapter<MyPedidoRecyclerViewA
     fun reverseOrderOfWords(s: String) = s.split("-").reversed().joinToString("/")
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val ivFoto: ImageView = mView.imageViewFoto
-        val ivFav: ImageView = mView.imageViewFav
+        val ivEstado: ImageView = mView.imageViewEstado
         val tvNombre: TextView = mView.textViewNombre
         val tvPrecio: TextView = mView.textViewPrecio
         val tvFecha: TextView = mView.textViewFecha

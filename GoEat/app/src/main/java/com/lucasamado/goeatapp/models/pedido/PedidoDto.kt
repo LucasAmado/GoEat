@@ -7,6 +7,7 @@ import com.lucasamado.goeatapp.models.user.User
 data class PedidoDto(
     val bar: BarDto,
     val favorito: Boolean,
+    val estado: String,
     val fechaPedido: String,
     val horaRecogida: String,
     val id: String,

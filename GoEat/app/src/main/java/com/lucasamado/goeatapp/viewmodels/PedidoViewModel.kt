@@ -17,6 +17,7 @@ class PedidoViewModel @Inject constructor(
 ) : ViewModel() {
 
     var misPedidos: MutableLiveData<Resource<List<PedidoDto>>> = MutableLiveData()
+    var pedidosMiBarHoy: MutableLiveData<Resource<List<PedidoDto>>> = MutableLiveData()
 
 
     fun loadMisPedidos() = viewModelScope.launch { 
@@ -35,4 +36,21 @@ class PedidoViewModel @Inject constructor(
         val error: APIError = pedidoRepository.parseError(response)
         return Resource.Error(error.status_message)
     }
+
+    fun loadPedidosBarHoy() = viewModelScope.launch {
+        pedidosMiBarHoy.value = Resource.Loading()
+        val response = pedidoRepository.pedidosMiBar()
+        pedidosMiBarHoy.value = handleLoadPedidosBarHoy(response)
+    }
+
+    private fun handleLoadPedidosBarHoy(response: Response<List<PedidoDto>>): Resource<List<PedidoDto>>? {
+        if(response.isSuccessful) {
+            response.body()?.let {
+                return Resource.Success(it)
+            }
+        }
+        val error: APIError = pedidoRepository.parseError(response)
+        return Resource.Error(error.status_message)
+    }
+
 }

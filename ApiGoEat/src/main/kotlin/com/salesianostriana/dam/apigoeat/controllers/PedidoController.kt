@@ -1,9 +1,6 @@
 package com.salesianostriana.dam.apigoeat.controllers
 
-import com.salesianostriana.dam.apigoeat.models.Bar
-import com.salesianostriana.dam.apigoeat.models.LineaPedido
-import com.salesianostriana.dam.apigoeat.models.Pedido
-import com.salesianostriana.dam.apigoeat.models.User
+import com.salesianostriana.dam.apigoeat.models.*
 import com.salesianostriana.dam.apigoeat.models.dtos.*
 import com.salesianostriana.dam.apigoeat.services.*
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -44,7 +41,7 @@ class PedidoController(val pedidoService: PedidoService, val platoService: Plato
             var barId: UUID = carrito[0].plato?.bar!!.id!!
             var barFind: Bar = barService.findById(barId).get()
 
-            pedidoNuevo = Pedido(LocalDate.now(), carritoService.calcularTotalCompra(), false, createPedidoDTO.horaRecogida, usuario, barFind, createPedidoDTO.comentario)
+            pedidoNuevo = Pedido(LocalDate.now(), carritoService.calcularTotalCompra(), Estado.SOLICITADO,false, createPedidoDTO.horaRecogida, usuario, barFind, createPedidoDTO.comentario)
             for (lp in carrito) {
                 lp.pedido = pedidoNuevo
             }
@@ -69,4 +66,10 @@ class PedidoController(val pedidoService: PedidoService, val platoService: Plato
 
     @PutMapping("/{id}")
     fun editarPedido(@PathVariable("id") id: UUID): Boolean = pedidoService.editFavorito(id)
+
+    @GetMapping("/hoy-bar")
+    fun pedidosBar(@AuthenticationPrincipal user: User): List<PedidoDetalleDTO> {
+        var idBar: UUID = user.bar?.id!!
+        return pedidoService.findByBarAndToday(idBar).map { it.toPedidoDetalleDTO() }
+    }
 }

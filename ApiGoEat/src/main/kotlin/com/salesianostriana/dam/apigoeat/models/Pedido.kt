@@ -7,12 +7,20 @@ import java.time.LocalTime
 import java.util.*
 import javax.persistence.*
 
+enum class Estado {
+    SOLICITADO, COCINA, PREPARADO, ENTREGADO
+}
+
+
 @Entity
 data class Pedido(
 
         var fechaPedido: LocalDate,
 
         var totalPedido: Double,
+
+        @Enumerated(EnumType.STRING)
+        var estado: Estado,
 
         var favorito: Boolean = false,
 
@@ -32,6 +40,6 @@ data class Pedido(
         var lineasPedido: MutableList<LineaPedido>? = ArrayList(),
 
         @Id @GeneratedValue
-        val id : UUID? = null
+        val id: UUID? = null
 ) {
 }

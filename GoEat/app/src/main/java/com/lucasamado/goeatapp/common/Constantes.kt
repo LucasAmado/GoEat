@@ -15,5 +15,6 @@ class Constantes {
         const val CANTIDAD: String = "CANTIDAD"
         const val BAR_ID_PEDIDO: String = "BAR_ID_PEDIDO"
         const val PEDIDO_ID = "PEDIDO_ID"
+        const val BAR_ADMIN_ID = "BAR_ADMIN"
     }
 }

@@ -2,7 +2,6 @@ package com.lucasamado.goeatapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -32,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_bares, R.id.navigation_pedidos, R.id.navigation_gestion))
+                R.id.navigation_bares, R.id.navigation_mis_pedidos, R.id.navigation_gestion, R.id.navigation_pedidos_bar))
         roles = SharedPreferencesManager().getSomeStringValue(Constantes.USER_ROLES)
         getCurrentUser(navController)
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -68,8 +67,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getCurrentUser(navController: NavController){
-        Log.e("roles:", "$roles")
-
         var navNormal: BottomNavigationView = findViewById(R.id.nav_view)
         var navAdmin: BottomNavigationView = findViewById(R.id.nav_admin)
 

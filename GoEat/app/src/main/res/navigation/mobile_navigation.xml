@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/navigation_pedidos">
+    app:startDestination="@id/navigation_bares">
 
 
     <fragment
@@ -13,9 +13,9 @@
         tools:layout="@layout/fragment_bar_list" />
 
     <fragment
-        android:id="@+id/navigation_pedidos"
+        android:id="@+id/navigation_mis_pedidos"
         android:name="com.lucasamado.goeatapp.ui.pedidos.PedidoFragment"
-        android:label="@string/title_pedidos"
+        android:label="@string/title_mis_pedidos"
         tools:layout="@layout/fragment_pedido_list" />
 
     <fragment
@@ -23,4 +23,9 @@
         android:name="com.lucasamado.goeatapp.ui.notifications.NotificationsFragment"
         android:label="@string/title_gestion"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/navigation_pedidos_bar"
+        android:name="com.lucasamado.goeatapp.ui.pedidosBar.PedidosBarFragment"
+        android:label="fragment_linea_pedido_detalle_list"
+        tools:layout="@layout/fragment_pedidos_bar_list" />
 </navigation>

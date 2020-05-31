@@ -1,19 +1,9 @@
 package com.lucasamado.goeatapp.repository
 
-import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.MutableLiveData
 import com.lucasamado.goeatapp.api.APIError
 import com.lucasamado.goeatapp.api.GoEatService
-import com.lucasamado.goeatapp.common.MyApp
-import com.lucasamado.goeatapp.models.lineasPedido.LineaPedidoDetalle
 import com.lucasamado.goeatapp.models.pedido.CreatePedido
-import com.lucasamado.goeatapp.models.lineasPedido.LineaPedidoDto
-import com.lucasamado.goeatapp.models.pedido.PedidoDetalleDto
-import com.lucasamado.goeatapp.models.pedido.PedidoDto
 import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -37,7 +27,9 @@ class PedidoRepository @Inject constructor(var goEatService: GoEatService) {
 
     suspend fun getPedidoDetalle(id: String) = goEatService.getPedidoDetalle(id)
 
-    suspend fun changePedidoFavorito(id: String) = goEatService.editPedidoBoolean(id)
+    suspend fun changePedidoFavorito(id: String) = goEatService.editPedidoFav(id)
+
+    suspend fun pedidosMiBar() = goEatService.loadPedidosMyBar()
 
     fun parseError(response: Response<*>): APIError {
         val jsonObject = JSONObject(response.errorBody()!!.string())

@@ -11,4 +11,7 @@ interface BarRepository: JpaRepository<Bar, UUID> {
     @Query("select distinct tipoComida from Bar b")
     fun findTiposComida(): List<String>
 
+    /*@Query("select b from Bar b where CURRENT_TIME between b.horaApertura and b.horaCierre")
+    fun findAbiertos(): List<Bar>*/
+
 }

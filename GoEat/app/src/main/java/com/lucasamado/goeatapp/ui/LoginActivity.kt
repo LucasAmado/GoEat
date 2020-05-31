@@ -2,6 +2,7 @@ package com.lucasamado.goeatapp.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -25,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var etPassword: TextInputEditText
     lateinit var signUp: TextView
     lateinit var button_login: Button
+    var idBar: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

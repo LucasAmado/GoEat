@@ -69,5 +69,8 @@ interface GoEatService {
     suspend fun getPedidoDetalle(@Path("id") id: String): Response<PedidoDetalleDto>
 
     @PUT("pedidos/{id}")
-    suspend fun editPedidoBoolean(@Path("id") id: String): Response<Boolean>
+    suspend fun editPedidoFav(@Path("id") id: String): Response<Boolean>
+
+    @GET("pedidos/hoy-bar")
+    suspend fun loadPedidosMyBar(): Response<List<PedidoDto>>
 }
