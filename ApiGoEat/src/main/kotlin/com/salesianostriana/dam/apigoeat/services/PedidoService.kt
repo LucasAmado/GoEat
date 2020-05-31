@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.apigoeat.services
 
+import com.salesianostriana.dam.apigoeat.models.Estado
 import com.salesianostriana.dam.apigoeat.models.Pedido
 import com.salesianostriana.dam.apigoeat.models.User
 import com.salesianostriana.dam.apigoeat.repos.PedidoRepository
@@ -22,5 +23,23 @@ class PedidoService : BaseService<Pedido, UUID, PedidoRepository>() {
         }
 
         return pedido.favorito
+    }
+
+    fun cambiarEstado(id: UUID): Estado{
+        var pedido: Pedido = this.findById(id).get()
+        with(pedido){
+            var state = when{
+                estado.equals(Estado.SOLICITADO) -> {
+                    Estado.COCINA
+                }
+                estado.equals(Estado.COCINA) -> {
+                    Estado.PREPARADO
+                }
+                else -> Estado.ENTREGADO
+            }
+            estado = state
+            repository.save(this)
+        }
+        return pedido.estado
     }
 }

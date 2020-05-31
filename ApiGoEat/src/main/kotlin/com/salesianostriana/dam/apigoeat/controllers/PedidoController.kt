@@ -66,10 +66,4 @@ class PedidoController(val pedidoService: PedidoService, val platoService: Plato
 
     @PutMapping("/{id}")
     fun editarPedido(@PathVariable("id") id: UUID): Boolean = pedidoService.editFavorito(id)
-
-    @GetMapping("/hoy-bar")
-    fun pedidosBar(@AuthenticationPrincipal user: User): List<PedidoDetalleDTO> {
-        var idBar: UUID = user.bar?.id!!
-        return pedidoService.findByBarAndToday(idBar).map { it.toPedidoDetalleDTO() }
-    }
 }

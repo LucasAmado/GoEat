@@ -33,7 +33,7 @@ data class Pedido(
         @ManyToOne
         var bar: Bar? = null,
 
-        var comentario: String? = null,
+        var comentario: String? = "",
 
         @JsonManagedReference
         @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER, cascade = [CascadeType.REMOVE])

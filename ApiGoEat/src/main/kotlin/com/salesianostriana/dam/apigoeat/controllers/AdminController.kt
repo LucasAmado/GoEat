@@ -1,19 +1,21 @@
 package com.salesianostriana.dam.apigoeat.controllers
 
+import com.salesianostriana.dam.apigoeat.models.Estado
 import com.salesianostriana.dam.apigoeat.models.User
-import com.salesianostriana.dam.apigoeat.models.dtos.toUserDTO
+import com.salesianostriana.dam.apigoeat.models.dtos.*
 import com.salesianostriana.dam.apigoeat.services.BarService
+import com.salesianostriana.dam.apigoeat.services.LineaPedidoService
+import com.salesianostriana.dam.apigoeat.services.PedidoService
 import com.salesianostriana.dam.apigoeat.services.UserService
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import java.util.*
 
 @RestController
 @RequestMapping("/admin")
-class AdminController(val userService: UserService, val barService: BarService){
+class AdminController(val userService: UserService, val pedidoService: PedidoService){
     private fun allUsers() : List<User> {
         var result: List<User> = userService.findAll()
 
@@ -33,4 +35,13 @@ class AdminController(val userService: UserService, val barService: BarService){
     fun listarUsuarios() = allUsers().map {
         it.toUserDTO()
     }
+
+    @GetMapping("/pedidos/hoy-bar")
+    fun pedidosBar(@AuthenticationPrincipal user: User): List<PedidoDetalleDTO> {
+        var idBar: UUID = user.bar?.id!!
+        return pedidoService.findByBarAndToday(idBar).map { it.toPedidoDetalleDTO() }
+    }
+
+    @PutMapping("/estado-pedido/{id}")
+    fun cambiarEstado(@PathVariable("id") id: UUID): Estado = pedidoService.cambiarEstado(id)
 }

@@ -28,7 +28,6 @@ class BarService: BaseService<Bar, UUID, BarRepository>(){
 
     fun consultarHorario(id: UUID, pedidos: List<Pedido>): List<LocalTime> {
         var bar:Bar = this.findById(id).get()
-        //var pedidos: List<Pedido> = pedidoService.findByBarAndToday(id)
         var horas: MutableList<LocalTime> = mutableListOf()
         horas.addAll(bar.horasDisponibles!!)
 
@@ -44,6 +43,31 @@ class BarService: BaseService<Bar, UUID, BarRepository>(){
         this.save(bar)
 
         return horas
+    }
+
+    fun cargarHorarios(){
+        var hourMin: LocalTime? = null
+        var horas: MutableList<LocalTime>? = null
+
+        for (bar in this.findAll()) {
+            horas = java.util.ArrayList()
+            if (hourMin == null) {
+                hourMin = bar.horaApertura
+            }
+            while (hourMin?.isBefore(bar.horaCierre)!!) {
+                if (hourMin.isBefore(bar.horaCierre.minusMinutes(bar.tiempoPedido))) {
+                    hourMin = hourMin.plusMinutes(bar.tiempoPedido)
+                    horas.add(hourMin)
+                } else {
+                    hourMin = bar.horaCierre
+                }
+            }
+
+            bar.horasDisponibles = horas
+            this.save(bar)
+            hourMin = null
+            println("horas disponibles: ${bar.horasDisponibles}")
+        }
     }
 
 }

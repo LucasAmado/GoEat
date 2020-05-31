@@ -64,4 +64,7 @@ class BarController(val barService: BarService, val pedidoService: PedidoService
     fun detailBar(@PathVariable id: UUID) = oneBar(id)
 
 
+    fun disponibilidad() = barService.cargarHorarios()
+
+
 }

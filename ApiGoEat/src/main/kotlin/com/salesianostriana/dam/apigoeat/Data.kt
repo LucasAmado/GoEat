@@ -16,6 +16,7 @@ class Data(
         val platoRepository: PlatoRepository,
         val pedidoRepository: PedidoRepository,
         val lineaPedidoRepository: LineaPedidoRepository,
+        val barService: BarService,
         private val encoder: PasswordEncoder
 ) {
     @PostConstruct
@@ -25,7 +26,7 @@ class Data(
         val bares = listOf(
                 Bar(
                         "Goiko Grill", "Hamburguesas", "https://www.goiko.com/wp-content/uploads/2017/12/JL171223GOIKO-7.jpg",
-                        37.389670, -5.995405, LocalTime.of(8,10), LocalTime.of(23, 50), 20
+                        37.389670, -5.995405, LocalTime.of(8, 10), LocalTime.of(23, 50), 20
                 ),
                 Bar(
                         "No Piqui", "Hamburguesas", "https://cenados.com/wp-content/uploads/2017/05/fachada-no-piqui-min.jpg",
@@ -38,8 +39,9 @@ class Data(
         )
         barRepository.saveAll(bares)
 
-        val platos = listOf(
-                //Goiko
+        barService.cargarHorarios()
+
+        val platosGoiko = listOf(
                 Plato("Classic Burger", "https://www.goiko.com/wp-content/uploads/2017/03/Yankee_Web_Desktop-340x340.jpg", 11.9, "Clasic: salsa 50, queso cheddar, bacon crujiente, tomate, lechuga batavia", "Hamburguesas", bares[0]),
                 Plato("Chiken Tenders", "https://www.goiko.com/wp-content/uploads/2017/02/Tenders_Web_Desktop-1.jpg", 9.90, "Hay cosas que nunca fallan. Tiras de pollo empanadas, acompañadas de tu salsa favorita de la casa.", "Entrante", bares[0]),
                 Plato("Aros de Cebolla", "https://www.goiko.com/wp-content/uploads/2017/02/Aros_Web_Desktop.jpg", 6.90, "Acompañados de salsa Barbacoa Goiko.", "Entrante", bares[0]),
@@ -50,6 +52,7 @@ class Data(
                 Plato("La Montesa", "https://www.goiko.com/wp-content/uploads/2019/11/MADBO_Web_Desktop-340x340.jpg", 12.50, "Queso Gouda, chunks de pollo frito, salsa César, queso parmesano y lechuga iceberg.", "Hamburguesas Especiales", bares[0]),
                 Plato("Chiliraptor", "https://www.goiko.com/wp-content/uploads/2018/06/Chiliraptor_Web_Desktop-340x340.jpg", 10.90, "Para esos días de hambre jurásica. Carne mezclada con chili (sin picante), queso americano, queso Monterey Jack y guacamole. Te recomendamos que la pruebes con bacon bits o chips de nachos, ¡qué rica!", "Hamburguesas Especiales", bares[0]),
                 Plato("LA SAN MATEO", "https://www.goiko.com/wp-content/uploads/2019/09/LOGPO_Web_Desktop.jpg", 12.50, "Mayo vino, tuétano, queso Gouda, cebolla grill, chips de vegetales y espinaca", "Hamburguesas Especiales", bares[0]),
+                //10 abajo
                 Plato("LA TORITA", "https://www.goiko.com/wp-content/uploads/2020/01/MATRI_LaTorita.jpg", 12.50, "Queso gouda, rabo de toro, tiras de piquillo, cebolla crunchy y lechuga batavia.", "Hamburguesas Especiales", bares[0]),
                 Plato("LA MISS", "https://www.goiko.com/wp-content/uploads/2020/01/MADNI_LaMiss-1.jpg", 12.50, "Croqueta de queso crema, cebolleta y alcachofa empanada, dos tiras de bacon, brotes de lombarda y canónigos.", "Hamburguesas Especiales", bares[0]),
                 Plato("LA AGUR", "https://www.goiko.com/wp-content/uploads/2018/11/VITOZ_Web_Desktop.jpg", 12.50, "Queso Ardiona, bacon, setas salteadas, lechuga morada, huevo y mayo Goiko", "Hamburguesas Especiales", bares[0]),
@@ -61,9 +64,10 @@ class Data(
                 Plato("CARROT CAKE", "https://www.goiko.com/wp-content/uploads/2017/02/Carrot_Web.jpg", 5.50, "Deliciosa tarta de zanahoria casera ahora con mucho frosting. Porque… ¿quién quiere una vida sin frosting?", "Postres", bares[0]),
                 Plato("CREMOSO", "https://www.goiko.com/wp-content/uploads/2019/06/Cremoso_Web.jpg", 6.50, "Coulis de frutos rojos con crema de queso. ¡Simple y delicioso!", "Postres", bares[0]),
                 Plato("FROZEN GOIKO®", "https://www.goiko.com/wp-content/uploads/2019/06/Cremoso_Web.jpg", 4.90, "Exquisito secreto de Goiko a base de galleta de chocolate. Como es secreto, lo único que te contaremos es que una vez que lo pruebas… no puedes dejar de pensar en él.", "Postres", bares[0]),
-                Plato("CHUNKY DOUGHY® 2.0", "https://www.goiko.com/wp-content/uploads/2017/02/Chunky_Web.jpg", 6.50, "SPOILER: No has probado nada como esto. Chunks de brownie, helado de vainilla, sirope de salted caramel y black cookie dough.", "Postres", bares[0]),
+                Plato("CHUNKY DOUGHY® 2.0", "https://www.goiko.com/wp-content/uploads/2017/02/Chunky_Web.jpg", 6.50, "SPOILER: No has probado nada como esto. Chunks de brownie, helado de vainilla, sirope de salted caramel y black cookie dough.", "Postres", bares[0])
+        )
 
-                //No Piki
+        val platosNoPiqui = listOf(
                 Plato("IBÉRICA", "https://res.cloudinary.com/glovoapp/w_680,h_240,c_fit,f_auto,q_auto/Products/kysjzwln89sadgcqfhfk", 9.95, "Hamburguesa de buey (200g) en pan brioche, cubierta con delicioso queso y acompañada con auténtica salsa al whisky, jamón y confitura de tomate", "Hamburguesas", bares[1]),
                 Plato("AMERICAN BOURBON", "https://res.cloudinary.com/glovoapp/w_680,h_240,c_fit,f_auto,q_auto/Products/cguiqmcirelz8c9bfc3k", 9.95, "200 g de hamburguesa de buey en pan brioche, sobre una cama de tomate y rúcula, cubierta con quso fundido, beicon, aritos de cebolla y coronada con la genuina salsa Bourbon\"> 200 g de hamburguesa de buey en pan brioche, sobre una cama de tomate y rúcu…", "Hamburguesas", bares[1]),
                 Plato("CABRITA", "https://res.cloudinary.com/glovoapp/w_680,h_240,c_fit,f_auto,q_auto/Products/w6sun5mncgfevbpnyn9b", 9.95, "200 gramos de carne de vacuno en pan brioche sobre frescas hojas de rucula, y rematados la hamburguesa con medallones de queso de cabra y sabrosa cebolla caramelizada.", "Hamburguesas", bares[1]),
@@ -81,9 +85,10 @@ class Data(
                 Plato("RED BULL AÇAÍ", "http://euw1.posios.com/posimages/ggmmls@goikogrill.com_36172/images/products/008c9f09b3e546b99d5f6cd13cbdd99b.jpg", 3.00, "", "BEBIDAS", bares[1]),
                 Plato("ENSALADA QUINOA", "", 10.90, "Mix verde, pollo plancha, manzana, quinoa, piñones, aguacate y mango y vinagreta balsámica", "ENSALADAS", bares[1]),
                 Plato("ENSALADA NO PIQUI", "https://media-cdn.tripadvisor.com/media/photo-s/13/d0/1a/7a/ensalada-en-no-piqui.jpg", 10.90, "Canónigos, mix de lechuga, pollo empanado, parmesano, manzana, aguacate, nueces, vinagreta de mostaza y miel", "ENSALADAS", bares[1]),
-                Plato("ENSALADA CAPRESE BURRATTA", "https://res.cloudinary.com/glovoapp/w_680,h_240,c_fit,f_auto,q_auto/Products/fmqwpmlc1m15zf5umdfg", 10.90, "Selección de tomates de temporada, rúcula, burrata de búfala, reducción de vinagre de módena", "ENSALADAS", bares[1]),
+                Plato("ENSALADA CAPRESE BURRATTA", "https://res.cloudinary.com/glovoapp/w_680,h_240,c_fit,f_auto,q_auto/Products/fmqwpmlc1m15zf5umdfg", 10.90, "Selección de tomates de temporada, rúcula, burrata de búfala, reducción de vinagre de módena", "ENSALADAS", bares[1])
+        )
 
-                //Masakali
+        val platosMasakali = listOf(
                 Plato("Pizza Duquesa", "https://d1ralsognjng37.cloudfront.net/a9d6be96-cc5c-441d-a4cf-dede85607806.jpeg", 9.00, "Pollo, calabacín, cebolla morada y orégano. Base de tomate y mozzarella. Nuestras pizzas están hechas con masa madre y aceite de oliva virgen extra. Contiene: Gluten.", "Pizzas Especiales", bares[2]),
                 Plato("Pizza York", "https://d1ralsognjng37.cloudfront.net/b405ec58-7b3a-4bb3-8ef2-7935d65c3b5f.jpeg", 8.00, "Base de tomate y mozzarella. Nuestras pizzas están hechas con masa madre y aceite de oliva virgen extra. Contiene: Gluten.", "Pizzas Tradicionales", bares[2]),
                 Plato("Pizza Margarita con Orégano", "https://d1ralsognjng37.cloudfront.net/186504f9-f4bc-4715-9bd1-5ab7fc8c67f3.jpeg", 8.00, "Base de tomate y mozzarella. Nuestras pizzas están hechas con masa madre y aceite de oliva virgen extra. Contiene: Gluten.", "Pizzas Tradicionales", bares[2]),
@@ -101,57 +106,77 @@ class Data(
                 Plato("Postre de galleta con chocolate blanco", "https://d1ralsognjng37.cloudfront.net/f8a8906a-877a-4b83-afc4-f89990204884.jpeg", 4.50, "Tarta de chocolate blanco con galleta", "Postres", bares[2]),
                 Plato("Postre de Kinder", "https://d1ralsognjng37.cloudfront.net/256b12cf-e13a-4131-98cf-09d122e295b0.jpeg", 8.00, "Tarta de galleta kinder", "Postres", bares[2]),
                 Plato("Postre de 3 Chocolates Belgas", "https://d1ralsognjng37.cloudfront.net/4a744281-ed8c-44eb-8dfa-a5e20087a95b.jpeg", 4.50, "Tarta casera", "Postres", bares[2])
-
         )
 
-        platoRepository.saveAll(platos)
+        platoRepository.saveAll(platosGoiko)
+        platoRepository.saveAll(platosNoPiqui)
+        platoRepository.saveAll(platosMasakali)
 
         //Usuarios
         val usuarios = listOf(
                 User("goiko", "goiko@gmail.com", encoder.encode("123456"), "", mutableSetOf("ADMIN"), bares[0]),
-                User("user", "user@gmail.com", encoder.encode("123456"), "", mutableSetOf("USER")),
+                User("Paco", "paco@gmail.com", encoder.encode("123456"), "", mutableSetOf("USER")),
                 User("Juan", "juanito@gmail.com", encoder.encode("123456"), "", mutableSetOf("USER")),
                 User("Bosquito", "bosco@gmail.com", encoder.encode("123456"), "", mutableSetOf("USER"))
         )
         userRepository.saveAll(usuarios)
 
         val pedidos = listOf(
-                Pedido(LocalDate.of(2020, 3, 5), 35.10, Estado.ENTREGADO,true, LocalTime.of(20,10), usuarios[1], bares[0]),
-                Pedido(LocalDate.of(2020, 5, 27), 12.50, Estado.ENTREGADO,false, LocalTime.of(20,10), usuarios[2], bares[0]),
-                Pedido(LocalDate.of(2020, 5, 23), 24.90, Estado.ENTREGADO,false, LocalTime.of(11,30), usuarios[3], bares[1]),
-                Pedido(LocalDate.of(2020, 3, 14), 45.50, Estado.ENTREGADO,true, LocalTime.of(17,40), usuarios[0], bares[2]),
-                Pedido(LocalDate.of(2020, 5, 23), 12.50, Estado.ENTREGADO,false, LocalTime.of(20,40), usuarios[0], bares[1]),
-                Pedido(LocalDate.now(), 20.55, Estado.PREPARADO,false, LocalTime.of(14,30), usuarios[3], bares[0]),
-                Pedido(LocalDate.now(), 12.50, Estado.COCINA,false, LocalTime.of(12, 10), usuarios[2], bares[0]),
-                Pedido(LocalDate.now(), 24.90, Estado.SOLICITADO,false, LocalTime.of(20,50), usuarios[3], bares[0])
+                Pedido(LocalDate.of(2020, 3, 5), 79.5, Estado.ENTREGADO, true, LocalTime.of(20, 10), usuarios[1], bares[0]),
+                Pedido(LocalDate.of(2020, 5, 27), 26.0, Estado.ENTREGADO, false, LocalTime.of(20, 55), usuarios[2], bares[2]),
+                Pedido(LocalDate.of(2020, 5, 23), 29.85, Estado.ENTREGADO, false, LocalTime.of(18, 15), usuarios[3], bares[1]),
+                Pedido(LocalDate.of(2020, 3, 14), 19.8, Estado.ENTREGADO, true, LocalTime.of(19, 5), usuarios[0], bares[2]),
+                Pedido(LocalDate.of(2020, 5, 23), 34.75, Estado.ENTREGADO, false, LocalTime.of(20, 45), usuarios[0], bares[1]),
+                Pedido(LocalDate.now(), 48.1, Estado.PREPARADO, false, LocalTime.of(14, 30), usuarios[1], bares[0], "La hamburguesa muy hecha por favor"),
+                Pedido(LocalDate.now(), 48.4, Estado.COCINA, false, LocalTime.of(12, 10), usuarios[2], bares[0]),
+                Pedido(LocalDate.now(), 50.0, Estado.SOLICITADO, false, LocalTime.of(20, 50), usuarios[3], bares[0])
 
         )
         pedidoRepository.saveAll(pedidos)
-    }
 
-    @PostConstruct
-    fun disponibilidad() {
-        var hourMin: LocalTime? = null
-        var horas: MutableList<LocalTime>? = null
+        val lineas = listOf(
+                //Pedido 0
+                LineaPedido(3, 37.5, platosGoiko[7], pedidos[0]),
+                LineaPedido(3, 22.5, platosGoiko[13], pedidos[0]),
+                LineaPedido(3, 19.5, platosGoiko[17], pedidos[0]),
 
-        for (bar in barRepository.findAll()) {
-            horas = ArrayList()
-            if (hourMin == null) {
-                hourMin = bar.horaApertura
-            }
-            while (hourMin?.isBefore(bar.horaCierre)!!) {
-                if (hourMin.isBefore(bar.horaCierre.minusMinutes(bar.tiempoPedido))) {
-                    hourMin = hourMin.plusMinutes(bar.tiempoPedido)
-                    horas.add(hourMin)
-                } else {
-                    hourMin = bar.horaCierre
-                }
-            }
+                //Pedido 1
+                LineaPedido(1,8.0, platosMasakali[2], pedidos[1]),
+                LineaPedido(2,18.0, platosMasakali[4], pedidos[1]),
 
-            bar.horasDisponibles = horas
-            barRepository.save(bar)
-            hourMin = null
-            println("horas disponibles: ${bar.horasDisponibles}")
-        }
+                //Pedido 2
+                LineaPedido(1,9.95, platosNoPiqui[2], pedidos[2]),
+                LineaPedido(2,19.9, platosNoPiqui[4], pedidos[2]),
+
+                //Pedido 3
+                LineaPedido(1,8.0, platosMasakali[1], pedidos[3]),
+                LineaPedido(1,9.0, platosMasakali[5], pedidos[3]),
+                LineaPedido(2,2.8, platosMasakali[6], pedidos[3]),
+
+                //Pedido 4
+                LineaPedido(1,9.95, platosNoPiqui[6], pedidos[4]),
+                LineaPedido(2,21.8, platosNoPiqui[16], pedidos[4]),
+                LineaPedido(2,3.0, platosNoPiqui[8], pedidos[4]),
+
+                //Pedido 5
+                LineaPedido(2, 23.8, platosGoiko[0], pedidos[5]),
+                LineaPedido(1, 6.9, platosGoiko[2], pedidos[5]),
+                LineaPedido(1, 9.9, platosGoiko[1], pedidos[5]),
+                LineaPedido(1, 7.5, platosGoiko[19], pedidos[5]),
+
+                //Pedido 6
+                LineaPedido(1, 7.5, platosGoiko[15], pedidos[6]),
+                LineaPedido(1, 12.5, platosGoiko[6], pedidos[6]),
+                LineaPedido(1, 10.9, platosGoiko[8], pedidos[6]),
+                LineaPedido(1, 6.5, platosGoiko[17], pedidos[6]),
+                LineaPedido(2, 11.0, platosGoiko[18], pedidos[6]),
+
+                //Pedido 7
+                LineaPedido(2, 25.0, platosGoiko[11], pedidos[7]),
+                LineaPedido(1, 5.5, platosGoiko[14], pedidos[7]),
+                LineaPedido(3, 19.5, platosGoiko[19], pedidos[7])
+        )
+
+        lineaPedidoRepository.saveAll(lineas)
     }
 }
