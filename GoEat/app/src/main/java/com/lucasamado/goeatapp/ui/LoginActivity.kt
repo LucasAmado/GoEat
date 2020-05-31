@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.android.material.textfield.TextInputEditText
@@ -11,6 +12,7 @@ import com.lucasamado.goeatapp.MainActivity
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
+import com.lucasamado.goeatapp.common.Resource
 import com.lucasamado.goeatapp.common.SharedPreferencesManager
 import com.lucasamado.goeatapp.models.user.LoginRequest
 import com.lucasamado.goeatapp.viewmodels.LoginViewModel
@@ -49,16 +51,28 @@ class LoginActivity : AppCompatActivity() {
                     password = etPassword.text.toString(),
                     username = etUsername.text.toString()
                 )
-            ).observe(this, Observer {
-                if(it != null){
-                    SharedPreferencesManager().setSomeStringValue(Constantes.TOKEN, it.token)
-                    SharedPreferencesManager().setSomeStringValue(Constantes.USER_ROLES, it.user.roles)
+            )
+            loginViewModel.userLogin.observe(this, Observer {response ->
 
-                    val intent = Intent(MyApp.instance, MainActivity::class.java).apply{
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                when (response) {
+                    is Resource.Success -> {
+                        var it = response.data!!
+                        Toast.makeText(this, "Login correcto", Toast.LENGTH_LONG).show()
+                        SharedPreferencesManager().setSomeStringValue(Constantes.TOKEN, it.token)
+                        SharedPreferencesManager().setSomeStringValue(Constantes.USER_ROLES, it.user.roles)
+
+                        val main = Intent(this, MainActivity::class.java).apply{
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        }
+                        startActivity(main)
+                        finish()
                     }
-                    startActivity(intent)
-                    finish()
+
+                    is Resource.Loading -> { }
+
+                    is Resource.Error -> {
+                        Toast.makeText(this, "Error login: ${response.message}", Toast.LENGTH_LONG).show()
+                    }
                 }
             })
         }

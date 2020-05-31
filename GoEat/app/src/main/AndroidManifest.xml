@@ -18,8 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.pedidos.detalle.DetallePedidoActivity"></activity>
-        <activity android:name=".ui.home.carrito.CarritoActivity" />
+        <activity android:name=".ui.home.carrito.CarritoActivity"></activity>
         <activity android:name=".ui.home.platos.DetallePlatoActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -38,17 +37,18 @@
             android:label="@string/title_activity_mapa" />
         <activity android:name=".ui.home.platos.ListaPlatosActivity" />
         <activity android:name=".ui.home.bares.DetalleBarActivity" />
+        <activity android:name=".ui.pedidos.detalle.DetallePedidoActivity" />
         <activity android:name=".ui.SignupActivity" />
         <activity android:name=".ui.LoginActivity">
-        </activity>
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
         </activity>
     </application>
 

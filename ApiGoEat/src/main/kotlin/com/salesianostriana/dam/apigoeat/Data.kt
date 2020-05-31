@@ -2,6 +2,7 @@ package com.salesianostriana.dam.apigoeat
 
 import com.salesianostriana.dam.apigoeat.models.*
 import com.salesianostriana.dam.apigoeat.repos.*
+import com.salesianostriana.dam.apigoeat.services.BarService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
 import java.time.LocalDate
@@ -24,15 +25,15 @@ class Data(
         val bares = listOf(
                 Bar(
                         "Goiko Grill", "Hamburguesas", "https://www.goiko.com/wp-content/uploads/2017/12/JL171223GOIKO-7.jpg",
-                        37.389670, -5.995405, LocalTime.of(15, 0), LocalTime.of(23, 50), 20
+                        37.389670, -5.995405, LocalTime.of(8,10), LocalTime.of(23, 50), 20
                 ),
                 Bar(
                         "No Piqui", "Hamburguesas", "https://cenados.com/wp-content/uploads/2017/05/fachada-no-piqui-min.jpg",
-                        37.400541, -5.993118, LocalTime.of(12, 0), LocalTime.of(20, 30), 15
+                        37.400541, -5.993118, LocalTime.of(6, 0), LocalTime.of(23, 30), 15
                 ),
                 Bar(
                         "Masakali", "Pizzas", "https://www.srperro.com/media/negocio/7d6cc913-3aa5-47fb-a2b2-f25359f96903.original.jpeg",
-                        37.392726, -5.989546, LocalTime.of(9, 30), LocalTime.of(18, 45), 11
+                        37.392726, -5.989546, LocalTime.of(9, 0), LocalTime.of(23, 45), 11
                 )
         )
         barRepository.saveAll(bares)
@@ -115,14 +116,14 @@ class Data(
         userRepository.saveAll(usuarios)
 
         val pedidos = listOf(
-                Pedido(LocalDate.of(2020, 3, 5), 35.10, true, LocalTime.of(20,0), usuarios[1], bares[0]),
+                Pedido(LocalDate.of(2020, 3, 5), 35.10, true, LocalTime.of(20,10), usuarios[1], bares[0]),
                 Pedido(LocalDate.of(2020, 5, 27), 12.50, false, LocalTime.of(20,10), usuarios[2], bares[0]),
                 Pedido(LocalDate.of(2020, 5, 23), 24.90, false, LocalTime.of(11,30), usuarios[3], bares[1]),
-                Pedido(LocalDate.of(2020, 3, 14), 45.50, true, LocalTime.of(17,40), usuarios[1], bares[2]),
-                Pedido(LocalDate.of(2020, 5, 23), 12.50, false, LocalTime.of(20,40), usuarios[1], bares[1]),
+                Pedido(LocalDate.of(2020, 3, 14), 45.50, true, LocalTime.of(17,40), usuarios[0], bares[2]),
+                Pedido(LocalDate.of(2020, 5, 23), 12.50, false, LocalTime.of(20,40), usuarios[0], bares[1]),
                 Pedido(LocalDate.now(), 20.55, false, LocalTime.of(14,30), usuarios[3], bares[0]),
                 Pedido(LocalDate.now(), 12.50, false, LocalTime.of(12, 10), usuarios[2], bares[0]),
-                Pedido(LocalDate.now(), 24.90, false, LocalTime.of(13,15), usuarios[3], bares[1])
+                Pedido(LocalDate.now(), 24.90, false, LocalTime.of(13,50), usuarios[3], bares[1])
 
         )
         pedidoRepository.saveAll(pedidos)
@@ -150,6 +151,7 @@ class Data(
             bar.horasDisponibles = horas
             barRepository.save(bar)
             hourMin = null
+            println("horas disponibles: ${bar.horasDisponibles}")
         }
     }
 }

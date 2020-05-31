@@ -40,9 +40,6 @@ class PedidoController(val pedidoService: PedidoService, val platoService: Plato
         val carrito: List<LineaPedido> = carritoService.lineasCarrito
         var pedidoNuevo: Pedido? = null
 
-        println("hora: ${createPedidoDTO.horaRecogida}")
-        println("comentario: ${createPedidoDTO.comentario}")
-
         if (carrito.isNotEmpty()) {
             var barId: UUID = carrito[0].plato?.bar!!.id!!
             var barFind: Bar = barService.findById(barId).get()

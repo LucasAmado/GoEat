@@ -11,6 +11,7 @@ import coil.api.load
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
+import com.lucasamado.goeatapp.common.Resource
 import com.lucasamado.goeatapp.ui.home.carrito.CarritoActivity
 import com.lucasamado.goeatapp.ui.home.mapa.MapaActivity
 import com.lucasamado.goeatapp.ui.home.platos.ListaPlatosActivity
@@ -78,12 +79,12 @@ class DetalleBarActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id: Int = item.getItemId()
         if (id == R.id.carritoIcon) {
-            val carrito = Intent(this, CarritoActivity::class.java).apply{
+            val carrito = Intent(this, CarritoActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
             startActivity(carrito)
             finish()
-        }else if (id == R.id.perfilIcon) {
+        } else if (id == R.id.perfilIcon) {
             //TODO crear perfil activity
             /*val perfil = Intent(MyApp.instance, PerfilActivity::class.java).apply{
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -96,26 +97,56 @@ class DetalleBarActivity : AppCompatActivity() {
 
 
     private fun loadBarDetail(idBar: String) {
-        barDetailViewModel.getDetailBar(idBar).observe(this, Observer {
-            if(it != null){
-                image.load(it.foto){
-                    crossfade(true)
-                    placeholder(R.drawable.ic_food)
+        barDetailViewModel.getDetailBar(idBar)
+        barDetailViewModel.barSelect.observe(this, Observer { response ->
+            when (response) {
+                is Resource.Success -> {
+                    var barDetail = response.data
+                    image.load(barDetail?.foto) {
+                        crossfade(true)
+                        placeholder(R.drawable.ic_food)
+                    }
+                    nombre.text = barDetail?.nombre
+                    tipoComida.text = barDetail?.tipoComida
+                    horarios.text = barDetail?.horaApertura + " - " + barDetail?.horaCierre
                 }
-                nombre.text = it.nombre
-                tipoComida.text = it.tipoComida
-                horarios.text = it.horaApertura+" - "+it.horaCierre
+
+                is Resource.Loading -> {
+                    //CARGANDO
+                }
+
+                is Resource.Error -> {
+                    Toast.makeText(MyApp.instance, "Error, ${response.message}", Toast.LENGTH_LONG)
+                        .show()
+                }
             }
         })
     }
 
     private fun loadTiposPlatos(idBar: String) {
-       barDetailViewModel.getTipos(idBar).observe(this, Observer {
-           if(it!=null){
-               tiposList.addAll(it)
-               adapterTipos = ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tiposList)
-               lvTipoPlatos.adapter = adapterTipos
-           }
-       })
+        barDetailViewModel.getTipos(idBar)
+        barDetailViewModel.tiposPlato.observe(this, Observer {response ->
+            when (response) {
+                is Resource.Success -> {
+                    var it = response.data!!
+                    tiposList.addAll(it)
+                    adapterTipos = ArrayAdapter<String>(
+                        this,
+                        android.R.layout.simple_expandable_list_item_1,
+                        tiposList
+                    )
+                    lvTipoPlatos.adapter = adapterTipos
+                }
+
+                is Resource.Loading -> {
+                    //CARGANDO
+                }
+
+                is Resource.Error -> {
+                    Toast.makeText(MyApp.instance, "Error, ${response.message}", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+        })
     }
 }

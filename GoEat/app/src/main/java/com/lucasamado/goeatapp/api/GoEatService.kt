@@ -14,67 +14,60 @@ import com.lucasamado.goeatapp.models.user.LoginResponse
 import com.lucasamado.goeatapp.models.user.SignupRequest
 import com.lucasamado.goeatapp.models.user.SignupResponse
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 interface GoEatService {
 
-    //usuarios
-
-    @POST("/signup")
-    fun createUser(@Body newUser: SignupRequest): Call<SignupResponse>
-
-    @POST("auth/login")
-    fun doLogin(@Body loginRequest: LoginRequest): Call<LoginResponse>
-
     //Bares
 
     @GET("bares/")
-    fun getBaresList(): Call<List<BarDto>>
+    suspend fun getBaresList(): Response<List<BarDto>>
 
     @GET("bares/{id}")
-    fun getBarById(@Path("id") id: String): Call<BarDetailDto>
+    suspend fun getBarById(@Path("id") id: String): Response<BarDetailDto>
 
     @GET("bares/consultar/horarios-recogida/{id}")
-    fun consultarHorariosRecogidaBar(@Path("id") id: String): Call<List<String>>
+    suspend fun consultarHorariosRecogidaBar(@Path("id") id: String): Response<List<String>>
 
     //Platos
 
     @GET("platos/tipos/{id}")
-    fun getTiposPlatosByBar(@Path("id") id: String): Call<List<String>>
+    suspend fun getTiposPlatosByBar(@Path("id") id: String): Response<List<String>>
 
     @GET("platos/tipo/{tipo}/bar/{id}")
-    fun getPlatosByBarAndTipo(@Path("tipo") tipo: String, @Path("id") id: String): Call<List<Plato>>
+    suspend fun getPlatosByBarAndTipo(@Path("tipo") tipo: String, @Path("id") id: String): Response<List<Plato>>
 
     @GET("platos/{id}")
-    fun getPlato(@Path("id") id: String): Call<PlatoDto>
+    suspend fun getPlato(@Path("id") id: String): Response<PlatoDto>
 
 
     //Pedidos
 
     @POST("pedidos/actualizar-carrito/{cantidad}/{id}")
-    fun actualizarCarrito(@Path("cantidad") cantidad:Int, @Path("id") id: String): Call<LineaPedidoDto>
+    suspend fun actualizarCarrito(@Path("cantidad") cantidad:Int, @Path("id") id: String): Response<LineaPedidoDto>
 
     @DELETE("pedidos/borrar-plato/{id}")
-    fun borrarPlato(@Path("id") id: String): Call<Boolean>
+    suspend fun borrarPlato(@Path("id") id: String): Response<Boolean>
 
     @GET("pedidos/calcular/total-carrito")
-    fun calcularPrcioTotal(): Call<Double>
+    suspend fun calcularPrcioTotal(): Response<Double>
 
     @GET("pedidos/ver-carrito")
-    fun getCarrito(): Call<List<LineaPedidoDto>>
+    suspend fun getCarrito(): Response<List<LineaPedidoDto>>
 
     @POST("pedidos/pagar")
-    fun pagar(@Body createPedido: CreatePedido): Call<PedidoDto>
+    suspend fun pagar(@Body createPedido: CreatePedido): Response<PedidoDto>
 
     @GET("pedidos/ver/mis-pedidos")
-    fun misPedidos(): Call<List<PedidoDto>>
+    suspend fun misPedidos(): Response<List<PedidoDto>>
 
     @GET("pedidos/lineas/{id}")
-    fun lineasPedidoByPedidoId(@Path("id") id: String): Call<List<LineaPedidoDetalle>>
+    suspend fun lineasPedidoByPedidoId(@Path("id") id: String): Response<List<LineaPedidoDetalle>>
 
     @GET("pedidos/{id}")
-    fun getPedidoDetalle(@Path("id") id: String): Call<PedidoDetalleDto>
+    suspend fun getPedidoDetalle(@Path("id") id: String): Response<PedidoDetalleDto>
 
     @PUT("pedidos/{id}")
-    fun editPedidoBoolean(@Path("id") id: String): Call<Boolean>
+    suspend fun editPedidoBoolean(@Path("id") id: String): Response<Boolean>
 }

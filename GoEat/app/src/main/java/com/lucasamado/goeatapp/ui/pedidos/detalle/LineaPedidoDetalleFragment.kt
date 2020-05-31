@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
+import com.lucasamado.goeatapp.common.Resource
 import com.lucasamado.goeatapp.models.lineasPedido.LineaPedidoDetalle
 
 import com.lucasamado.goeatapp.viewmodels.LineaPedidoViewModel
@@ -24,7 +26,6 @@ class LineaPedidoDetalleFragment : Fragment() {
     lateinit var lineaPedidoViewModel: LineaPedidoViewModel
 
     private lateinit var lineaPedidoAdapter: MyLineaPedidoDetalleRecyclerViewAdapter
-    private var lpList: List<LineaPedidoDetalle> = ArrayList()
     var idPedido: String? = null
 
     private var columnCount = 1
@@ -56,13 +57,23 @@ class LineaPedidoDetalleFragment : Fragment() {
             }
         }
 
-        lineaPedidoViewModel.lineasPedidoByIdPedido(idPedido!!).observe(viewLifecycleOwner, Observer {
-            if(it!=null){
-                lpList = it
-                lineaPedidoAdapter.setData(lpList)
+        lineaPedidoViewModel.lineasPedidoByIdPedido(idPedido!!)
+        lineaPedidoViewModel.lineasPedido.observe(viewLifecycleOwner, Observer {response ->
+            when(response){
+                is Resource.Success -> {
+                    lineaPedidoAdapter.setData(response.data!!)
+                }
+
+                is Resource.Loading -> {
+                }
+
+                is Resource.Error ->{
+                    Toast.makeText(activity,"Error, ${response.message}", Toast.LENGTH_LONG).show()
+                }
             }
         })
 
         return view
     }
+
 }

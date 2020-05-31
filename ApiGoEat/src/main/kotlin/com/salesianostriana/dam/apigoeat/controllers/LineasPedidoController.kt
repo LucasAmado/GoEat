@@ -16,7 +16,4 @@ class LineasPedidoController(val lineaPedidoService: LineaPedidoService) {
     fun getLineas(): List<LineaPedidoDTO> = lineaPedidoService.findAll().map {
         it.toLineaPedidoDto()
     }
-
-    /*@GetMapping("pedido/{id}")
-    fun getByPedido(@PathVariable("id") id:UUID): List<LineaPedidoDetalleDTO> = lineaPedidoService.findByPedidoId(id).map { it.toLineaPedidoDetalleDTO() }*/
 }
