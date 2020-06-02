@@ -3,11 +3,13 @@ package com.lucasamado.goeatapp.ui.gestion
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.lucasamado.goeatapp.MainActivity
@@ -17,6 +19,7 @@ import com.lucasamado.goeatapp.common.Resource
 import com.lucasamado.goeatapp.models.bar.EditarBar
 import com.lucasamado.goeatapp.viewmodels.EditarBarViewModel
 import java.text.SimpleDateFormat
+import java.time.LocalTime
 import java.util.*
 import javax.inject.Inject
 
@@ -33,6 +36,7 @@ class EditarBarActivity : AppCompatActivity() {
     lateinit var btnSave: Button
     lateinit var btnCancel: Button
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_editar_bar)
@@ -92,34 +96,42 @@ class EditarBarActivity : AppCompatActivity() {
         }
 
         btnSave.setOnClickListener {
-            editarBarViewModel.editarBar(
-                EditarBar(
-                    horaApertura = tvHoraApertura.text.toString(),
-                    horaCierre = tvHoraCierre.text.toString(),
-                    nombre = etNombre.text.toString(),
-                    tiempoPedido = etTiempoPedido.text.toString(),
-                    tipoComida = etTipoComida.text.toString()
+            if (etNombre.text.isEmpty() || etTipoComida.text.isEmpty() || etTiempoPedido.text.isEmpty()) {
+                Toast.makeText(this, "No puede haber ningún campo vacío", Toast.LENGTH_LONG).show()
+            }else if(LocalTime.parse(tvHoraCierre.text.toString()).isBefore(LocalTime.parse(tvHoraApertura.text.toString()))){
+                Toast.makeText(this, "La hora de cierre no puede ser antes que la de apertura", Toast.LENGTH_LONG).show()
+            }else {
+                editarBarViewModel.editarBar(
+                    EditarBar(
+                        horaApertura = tvHoraApertura.text.toString(),
+                        horaCierre = tvHoraCierre.text.toString(),
+                        nombre = etNombre.text.toString(),
+                        tiempoPedido = etTiempoPedido.text.toString(),
+                        tipoComida = etTipoComida.text.toString()
+                    )
                 )
-            )
-            editarBarViewModel.miBar.observe(this, Observer { response ->
-                when (response) {
-                    is Resource.Success -> {
-                        Toast.makeText(this, "Bar editado correctamente", Toast.LENGTH_LONG).show()
-                        val main = Intent(this, MainActivity::class.java).apply {
-                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                editarBarViewModel.miBar.observe(this, Observer { response ->
+                    when (response) {
+                        is Resource.Success -> {
+                            Toast.makeText(this, "Bar editado correctamente", Toast.LENGTH_LONG)
+                                .show()
+                            val main = Intent(this, MainActivity::class.java).apply {
+                                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            }
+                            startActivity(main)
+                            finish()
                         }
-                        startActivity(main)
-                        finish()
-                    }
 
-                    is Resource.Loading -> {
-                    }
+                        is Resource.Loading -> {
+                        }
 
-                    is Resource.Error -> {
-                        Toast.makeText(this, "Error, ${response.message}", Toast.LENGTH_LONG).show()
+                        is Resource.Error -> {
+                            Toast.makeText(this, "Error, ${response.message}", Toast.LENGTH_LONG)
+                                .show()
+                        }
                     }
-                }
-            })
+                })
+            }
         }
     }
 
