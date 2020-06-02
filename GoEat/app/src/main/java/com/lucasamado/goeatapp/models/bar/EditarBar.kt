@@ -1,11 +1,9 @@
 package com.lucasamado.goeatapp.models.bar
 
-data class BarDto(
-    val foto: String,
+data class EditarBar(
     val horaApertura: String,
     val horaCierre: String,
-    val id: String,
     val nombre: String,
-    val tiempoPedido: Int,
+    val tiempoPedido: String,
     val tipoComida: String
 )

@@ -15,7 +15,7 @@ import java.util.*
 
 @RestController
 @RequestMapping("/admin")
-class AdminController(val userService: UserService, val pedidoService: PedidoService){
+class AdminController(val userService: UserService, val pedidoService: PedidoService, val barService: BarService){
     private fun allUsers() : List<User> {
         var result: List<User> = userService.findAll()
 
@@ -44,4 +44,11 @@ class AdminController(val userService: UserService, val pedidoService: PedidoSer
 
     @PutMapping("/estado-pedido/{id}")
     fun cambiarEstado(@PathVariable("id") id: UUID): Estado = pedidoService.cambiarEstado(id)
+
+    @GetMapping("/mi-bar")
+    fun getMyBar(@AuthenticationPrincipal user: User): BarDTO = user.bar!!.toBarDTO()
+
+    @PutMapping("/editar/mi-bar")
+    fun editarBar(@AuthenticationPrincipal user: User, @RequestBody editarBarDTO: EditarBarDTO): BarDTO =
+            barService.editarBar(user, editarBarDTO).toBarDTO()
 }

@@ -3,6 +3,8 @@ package com.lucasamado.goeatapp.common
 import com.lucasamado.goeatapp.api.NetworkModule
 import com.lucasamado.goeatapp.ui.LoginActivity
 import com.lucasamado.goeatapp.ui.SignupActivity
+import com.lucasamado.goeatapp.ui.gestion.BarGestionFragment
+import com.lucasamado.goeatapp.ui.gestion.EditarBarActivity
 import com.lucasamado.goeatapp.ui.home.bares.BarFragment
 import com.lucasamado.goeatapp.ui.home.bares.DetalleBarActivity
 import com.lucasamado.goeatapp.ui.home.carrito.CarritoActivity
@@ -34,4 +36,6 @@ interface ApplicationComponent {
     fun inject(lineaPedidoDetalleFragment: LineaPedidoDetalleFragment)
     fun inject(detallePedidoActivity: DetallePedidoActivity)
     fun inject(pedidosBarFragment: PedidosBarFragment)
+    fun inject(barGestionFragment: BarGestionFragment)
+    fun inject(editarBarActivity: EditarBarActivity)
 }

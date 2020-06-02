@@ -66,5 +66,4 @@ class BarController(val barService: BarService, val pedidoService: PedidoService
 
     fun disponibilidad() = barService.cargarHorarios()
 
-
 }

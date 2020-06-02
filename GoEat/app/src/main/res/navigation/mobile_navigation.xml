@@ -20,9 +20,9 @@
 
     <fragment
         android:id="@+id/navigation_gestion"
-        android:name="com.lucasamado.goeatapp.ui.notifications.NotificationsFragment"
+        android:name="com.lucasamado.goeatapp.ui.gestion.BarGestionFragment"
         android:label="@string/title_gestion"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_bar_gestion_list" />
     <fragment
         android:id="@+id/navigation_pedidos_bar"
         android:name="com.lucasamado.goeatapp.ui.pedidosBar.PedidosBarFragment"

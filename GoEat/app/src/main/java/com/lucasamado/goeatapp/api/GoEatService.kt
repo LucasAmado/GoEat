@@ -2,6 +2,7 @@ package com.lucasamado.goeatapp.api
 
 import com.lucasamado.goeatapp.models.bar.BarDetailDto
 import com.lucasamado.goeatapp.models.bar.BarDto
+import com.lucasamado.goeatapp.models.bar.EditarBar
 import com.lucasamado.goeatapp.models.lineasPedido.LineaPedidoDetalle
 import com.lucasamado.goeatapp.models.pedido.CreatePedido
 import com.lucasamado.goeatapp.models.lineasPedido.LineaPedidoDto
@@ -78,4 +79,10 @@ interface GoEatService {
 
     @PUT("admin/estado-pedido/{id}")
     suspend fun cambiarEstado(@Path("id") id: String): Response<String>
+
+    @GET("admin/mi-bar")
+    suspend fun getMiBar(): Response<BarDto>
+
+    @PUT("admin/editar/mi-bar")
+    suspend fun editarBar(@Body editarBar: EditarBar): Response<BarDto>
 }

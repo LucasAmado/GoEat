@@ -10,11 +10,14 @@ data class BarDTO(
         var nombre : String,
         var tipoComida: String,
         var foto: String,
+        var horaApertura: LocalTime,
+        var horaCierre: LocalTime,
+        var tiempoPedido: Long,
         val id: UUID? = null
 )
 
 
-fun Bar.toBarDTO() = BarDTO(nombre, tipoComida, foto, id)
+fun Bar.toBarDTO() = BarDTO(nombre, tipoComida, foto, horaApertura, horaCierre, tiempoPedido, id)
 
 data class CreateBarDTO(
         var nombre : String,
@@ -43,3 +46,11 @@ data class BarDetailDTO(
 )
 
 fun Bar.toBarDetailDTO() = BarDetailDTO(nombre, tipoComida, foto, latitud, longitud, horaApertura, horaCierre,platos, horasDisponibles, id)
+
+data class EditarBarDTO(
+        var nombre : String,
+        var tipoComida: String,
+        var horaApertura: LocalTime,
+        var horaCierre: LocalTime,
+        var tiempoPedido: Long
+)
