@@ -11,7 +11,6 @@ import com.lucasamado.goeatapp.ui.home.carrito.CarritoActivity
 import com.lucasamado.goeatapp.ui.home.carrito.LineaPedidoFragment
 import com.lucasamado.goeatapp.ui.home.mapa.MapaActivity
 import com.lucasamado.goeatapp.ui.home.platos.DetallePlatoActivity
-import com.lucasamado.goeatapp.ui.home.platos.ListaPlatosActivity
 import com.lucasamado.goeatapp.ui.home.platos.PlatoFragment
 import com.lucasamado.goeatapp.ui.pedidos.PedidoFragment
 import com.lucasamado.goeatapp.ui.pedidos.detalle.DetallePedidoActivity

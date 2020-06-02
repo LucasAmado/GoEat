@@ -3,7 +3,6 @@ package com.salesianostriana.dam.apigoeat.services
 import com.salesianostriana.dam.apigoeat.models.Bar
 import com.salesianostriana.dam.apigoeat.models.Pedido
 import com.salesianostriana.dam.apigoeat.models.User
-import com.salesianostriana.dam.apigoeat.models.dtos.BarDetailDTO
 import com.salesianostriana.dam.apigoeat.models.dtos.EditarBarDTO
 import com.salesianostriana.dam.apigoeat.repos.BarRepository
 import org.springframework.stereotype.Service
@@ -28,6 +27,8 @@ class BarService : BaseService<Bar, UUID, BarRepository>() {
 
         return bares
     }
+
+    fun findByTipoComida(tipoComida: String) = this.repository.findBaresByTipoComida(tipoComida)
 
     fun consultarHorario(id: UUID, pedidos: List<Pedido>): List<LocalTime> {
         var bar: Bar = this.findById(id).get()

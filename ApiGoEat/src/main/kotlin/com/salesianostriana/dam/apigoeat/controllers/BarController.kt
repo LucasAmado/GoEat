@@ -8,7 +8,6 @@ import com.salesianostriana.dam.apigoeat.services.BarService
 import com.salesianostriana.dam.apigoeat.services.PedidoService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
@@ -65,5 +64,8 @@ class BarController(val barService: BarService, val pedidoService: PedidoService
 
 
     fun disponibilidad() = barService.cargarHorarios()
+
+    @GetMapping("/tipo-comida/{tipoComida}")
+    fun getBresByTipoComida(@PathVariable("tipoComida") tipoComida: String): List<Bar> = barService.findByTipoComida(tipoComida)
 
 }

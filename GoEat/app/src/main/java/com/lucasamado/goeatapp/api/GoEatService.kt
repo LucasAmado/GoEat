@@ -31,6 +31,13 @@ interface GoEatService {
     @GET("bares/consultar/horarios-recogida/{id}")
     suspend fun consultarHorariosRecogidaBar(@Path("id") id: String): Response<List<String>>
 
+    @GET("bares/tipos")
+    suspend fun tiposComida(): Response<List<String>>
+
+    @GET("bares/tipo-comida/{tipo}")
+    suspend fun getBaresByTipoComida(@Path("tipo") tipo: String): Response<List<BarDto>>
+
+
     //Platos
 
     @GET("platos/tipos/{id}")

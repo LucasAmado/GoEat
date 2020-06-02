@@ -18,10 +18,7 @@ class BarViewModel @Inject constructor(
 
     var listaBares: MutableLiveData<Resource<List<BarDto>>> = MutableLiveData()
     var miBar: MutableLiveData<Resource<BarDto>> = MutableLiveData()
-
-    init {
-        getBares()
-    }
+    var tiposComida: MutableLiveData<Resource<List<String>>> = MutableLiveData()
 
     /**
      * Crgar la lista de bares
@@ -39,8 +36,7 @@ class BarViewModel @Inject constructor(
                 return Resource.Success(it)
             }
         }
-        val error: APIError = barRepository.parseError(response)
-        return Resource.Error(error.status_message)
+        return Resource.Error(response.message())
     }
 
     /**
@@ -61,5 +57,27 @@ class BarViewModel @Inject constructor(
         }
         val error: APIError = barRepository.parseError(response)
         return Resource.Error(error.status_message)
+    }
+
+    fun getTiposComida() = viewModelScope.launch {
+        tiposComida.value = Resource.Loading()
+        val response = barRepository.getTiposComida()
+        tiposComida.value = handleLoadTiposComida(response)
+    }
+
+    private fun handleLoadTiposComida(response: Response<List<String>>): Resource<List<String>>? {
+        if (response.isSuccessful) {
+            response.body()?.let {
+                return Resource.Success(it)
+            }
+        }
+        val error: APIError = barRepository.parseError(response)
+        return Resource.Error(error.status_message)
+    }
+
+    fun getBaresByTipo(tipo: String) = viewModelScope.launch {
+        listaBares.value = Resource.Loading()
+        val response = barRepository.getBaresByTipoComida(tipo)
+        listaBares.value = handleGetListaBares(response)
     }
 }

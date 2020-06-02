@@ -21,6 +21,10 @@ class BarRepository @Inject constructor(var goEatService: GoEatService) {
 
     suspend fun editarBar(editarBar: EditarBar) = goEatService.editarBar(editarBar)
 
+    suspend fun getTiposComida() = goEatService.tiposComida()
+
+    suspend fun getBaresByTipoComida(tipo: String) = goEatService.getBaresByTipoComida(tipo)
+
     fun parseError(response: Response<*>): APIError {
         val jsonObject = JSONObject(response.errorBody()!!.string())
         return APIError(jsonObject.getInt("status_code"), jsonObject.getString("status_message"))
