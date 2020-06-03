@@ -3,6 +3,7 @@ package com.salesianostriana.dam.apigoeat.security
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing
+import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
@@ -71,6 +72,19 @@ class WebSecurityConfiguration(
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/user/**", "/bares/**", "/platos/**", "/pedidos/**").authenticated()
                 .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers(
+                        HttpMethod.GET,
+                        "/",
+                        "/v2/api-docs",           // swagger
+                        "/webjars/**",            // swagger-ui webjars
+                        "/swagger-resources/**",  // swagger-ui resources
+                        "/configuration/**",      // swagger configuration
+                        "/*.html",
+                        "/favicon.ico",
+                        "/*/.html",
+                        "/*/.css",
+                        "/*/.js"
+                ).permitAll()
                 .anyRequest().hasRole("ADMIN")
 
         http.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter::class.java)

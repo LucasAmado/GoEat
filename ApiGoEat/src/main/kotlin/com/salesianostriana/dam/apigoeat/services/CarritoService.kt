@@ -54,10 +54,10 @@ class CarritoService {
     }
 
 
-    fun borrarPlato(id: UUID): Boolean {
+    fun borrarPlato(plato: Plato): Boolean {
         var delete = false
         loop@for (lp in lineasCarrito) {
-            if (lp.plato?.id == id) {
+            if (lp.plato?.id == plato.id) {
                 lineasCarrito.remove(lp)
                 delete = true
                 break@loop

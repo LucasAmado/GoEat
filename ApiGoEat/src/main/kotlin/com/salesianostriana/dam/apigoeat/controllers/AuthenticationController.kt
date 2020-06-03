@@ -7,6 +7,8 @@ import com.salesianostriana.dam.apigoeat.models.dtos.toUser
 import com.salesianostriana.dam.apigoeat.models.dtos.toUserDTO
 import com.salesianostriana.dam.apigoeat.services.UserService
 import com.salesianostriana.dam.apigoeat.security.JwtTokenProvider
+import io.swagger.annotations.ApiOperation
+import io.swagger.annotations.ApiParam
 import org.springframework.http.HttpStatus
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.authentication.AuthenticationManager
@@ -30,8 +32,10 @@ class AuthenticationController(
         private val bCryptPasswordEncoder: BCryptPasswordEncoder
 ) {
 
+    @ApiOperation(value = "Login", notes = "Se hace el login a partir de los datos enviados")
     @PostMapping("/auth/login")
-    fun login(@Valid @RequestBody loginRequest: LoginRequest): JwtUserResponse {
+    fun login(@ApiParam(value = "datos del usuario", required = true, type = "LoginRequest", example = "username: user, password: 123456")
+              @Valid @RequestBody loginRequest: LoginRequest): JwtUserResponse {
         val authentication = authenticationManager.authenticate(
                 UsernamePasswordAuthenticationToken(
                         loginRequest.username, loginRequest.password
@@ -47,12 +51,16 @@ class AuthenticationController(
 
     }
 
+    @ApiOperation(value = "Obtener mis datos", notes = "Se devuelven los datos del usuario logeado")
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/user/me")
-    fun me(@AuthenticationPrincipal user: User) = user.toUserDTO()
+    fun me(@ApiParam(value = "usuario loegado", required = true, type = "User")
+           @AuthenticationPrincipal user: User) = user.toUserDTO()
 
+    @ApiOperation(value = "Signup", notes = "creación de un nuevo usuario")
     @PostMapping("/signup")
-    fun signup(@RequestBody createUserDTO: CreateUserDTO): UserDTO{
+    fun signup(@ApiParam(value = "datos del nuevo usuario", type = "createUserDTO", required = true)
+            @RequestBody createUserDTO: CreateUserDTO): UserDTO{
         val result = userService.findByUsername(createUserDTO.username)
         if(result!=null){
             createUserDTO.password= bCryptPasswordEncoder.encode(createUserDTO.password)

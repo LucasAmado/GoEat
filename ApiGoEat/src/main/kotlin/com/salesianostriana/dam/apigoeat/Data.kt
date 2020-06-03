@@ -122,12 +122,12 @@ class Data(
         userRepository.saveAll(usuarios)
 
         val pedidos = listOf(
-                Pedido(LocalDate.of(2020, 3, 5), 79.5, Estado.ENTREGADO, true, LocalTime.of(20, 10), usuarios[1], bares[0]),
+                Pedido(LocalDate.of(2020, 3, 5), 79.5, Estado.ENTREGADO, true, LocalTime.of(20, 10), usuarios[0], bares[0]),
                 Pedido(LocalDate.of(2020, 5, 27), 26.0, Estado.ENTREGADO, false, LocalTime.of(20, 55), usuarios[2], bares[2]),
                 Pedido(LocalDate.of(2020, 5, 23), 29.85, Estado.ENTREGADO, false, LocalTime.of(18, 15), usuarios[3], bares[1]),
-                Pedido(LocalDate.of(2020, 3, 14), 19.8, Estado.ENTREGADO, true, LocalTime.of(19, 5), usuarios[0], bares[2]),
-                Pedido(LocalDate.of(2020, 5, 23), 34.75, Estado.ENTREGADO, false, LocalTime.of(20, 45), usuarios[0], bares[1]),
-                Pedido(LocalDate.now(), 48.1, Estado.PREPARADO, false, LocalTime.of(14, 30), usuarios[1], bares[0], "La hamburguesa muy hecha por favor"),
+                Pedido(LocalDate.of(2020, 3, 14), 19.8, Estado.ENTREGADO, true, LocalTime.of(19, 5), usuarios[3], bares[2]),
+                Pedido(LocalDate.of(2020, 5, 23), 34.75, Estado.ENTREGADO, false, LocalTime.of(20, 45), usuarios[2], bares[1]),
+                Pedido(LocalDate.now(), 48.1, Estado.PREPARADO, false, LocalTime.of(14, 30), usuarios[0], bares[0], "La hamburguesa muy hecha por favor"),
                 Pedido(LocalDate.now(), 48.4, Estado.COCINA, false, LocalTime.of(12, 10), usuarios[2], bares[0]),
                 Pedido(LocalDate.now(), 50.0, Estado.SOLICITADO, false, LocalTime.of(20, 50), usuarios[3], bares[0])
 

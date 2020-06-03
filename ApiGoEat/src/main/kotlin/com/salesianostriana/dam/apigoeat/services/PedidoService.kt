@@ -25,9 +25,9 @@ class PedidoService : BaseService<Pedido, UUID, PedidoRepository>() {
         return pedido.favorito
     }
 
-    fun cambiarEstado(id: UUID): Estado{
-        var pedido: Pedido = this.findById(id).get()
-        with(pedido){
+    fun cambiarEstado(id: UUID): Estado {
+        var pedido: Optional<Pedido> = this.findById(id)
+        with(pedido.get()){
             var state = when{
                 estado.equals(Estado.SOLICITADO) -> {
                     Estado.COCINA
@@ -40,6 +40,6 @@ class PedidoService : BaseService<Pedido, UUID, PedidoRepository>() {
             estado = state
             repository.save(this)
         }
-        return pedido.estado
+        return pedido.get().estado
     }
 }

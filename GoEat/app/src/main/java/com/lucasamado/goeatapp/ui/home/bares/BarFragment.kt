@@ -48,7 +48,7 @@ class BarFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_tipos_comida -> {
-                val builder = AlertDialog.Builder(context)s
+                val builder = AlertDialog.Builder(context)
                 val title = TextView(context)
                 title.text = "Tipos de comida"
                 title.setPadding(20, 30, 20, 30)
