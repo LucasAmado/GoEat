@@ -92,7 +92,7 @@ class EditarBarActivity : AppCompatActivity() {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
             startActivity(main)
-            finish()
+
         }
 
         btnSave.setOnClickListener {

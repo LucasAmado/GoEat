@@ -12,6 +12,8 @@ class PedidoService : BaseService<Pedido, UUID, PedidoRepository>() {
 
     fun findByUser(user: User) = this.repository.findByUserOrderByFechaPedidoDesc(user)
 
+    fun findByUserAndFavorito(user: User) = this.repository.findByUserAndFavorito(user)
+
     fun findByBarAndToday(id: UUID) = this.repository.findByBarAndToday(id)
 
     fun editFavorito(id: UUID): Boolean{

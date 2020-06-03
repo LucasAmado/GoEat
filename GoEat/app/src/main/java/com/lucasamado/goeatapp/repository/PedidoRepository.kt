@@ -23,6 +23,8 @@ class PedidoRepository @Inject constructor(var goEatService: GoEatService) {
 
     suspend fun loadMisPedidos() = goEatService.misPedidos()
 
+    suspend fun loadMisPedidosFavoritos() = goEatService.misPedidosFav()
+
     suspend fun getLineasPedido(id: String) = goEatService.lineasPedidoByPedidoId(id)
 
     suspend fun getPedidoDetalle(id: String) = goEatService.getPedidoDetalle(id)

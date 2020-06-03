@@ -54,4 +54,11 @@ class PedidoViewModel @Inject constructor(
         return Resource.Error(error.status_message)
     }
 
+    fun loadMisPedidosFav() = viewModelScope.launch {
+        misPedidos.value = Resource.Loading()
+        delay(1500)
+        val response = pedidoRepository.loadMisPedidosFavoritos()
+        misPedidos.value = handleLoadMisPedidos(response)
+    }
+
 }

@@ -107,6 +107,11 @@ class PedidoController(val pedidoService: PedidoService, val platoService: Plato
     fun misPedidos(@ApiParam(value = "usuario logeado", required = true, type = "User")
                    @AuthenticationPrincipal user: User): List<PedidoDetalleDTO> = pedidoService.findByUser(user).map { it.toPedidoDetalleDTO() }
 
+    @ApiOperation(value = "Mis pedidos favoritos", notes = "Lista de los pedidos favoritos del usuario logeado")
+    @GetMapping("/mis-pedidos/favoritos")
+    fun misPedidosFavoritos(@ApiParam(value = "usuario logeado", required = true, type = "User")
+                            @AuthenticationPrincipal user: User): List<PedidoDetalleDTO> = pedidoService.findByUserAndFavorito(user).map { it.toPedidoDetalleDTO() }
+
     @ApiOperation(value = "Encontrar pedido", notes = "Se devuelve el pedido buscado a partir de su id")
     @GetMapping("/{id}")
     fun getPedido(@ApiParam(value = "id del pedido", required = true, type = "UUID")

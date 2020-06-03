@@ -1,12 +1,15 @@
 package com.lucasamado.goeatapp
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -48,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id: Int = item.getItemId()
+        val id: Int = item.itemId
         if (id == R.id.carritoIcon) {
             val carrito = Intent(this, CarritoActivity::class.java).apply{
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -75,8 +78,8 @@ class MainActivity : AppCompatActivity() {
             navNormal.visibility = INVISIBLE
             setupWithNavController(navAdmin, navController)
         }else{
-            navNormal.setVisibility(View.VISIBLE)
-            navAdmin.setVisibility(View.INVISIBLE)
+            navNormal.visibility = VISIBLE
+            navAdmin.visibility = INVISIBLE
             setupWithNavController(navNormal, navController)
         }
     }

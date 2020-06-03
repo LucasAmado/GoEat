@@ -1,7 +1,6 @@
 package com.lucasamado.goeatapp.ui.home.bares
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import android.view.View.INVISIBLE
@@ -32,6 +31,7 @@ class BarFragment : Fragment() {
     lateinit var adapterTipos: ArrayAdapter<String>
     lateinit var tipoSelect: String
     lateinit var reload: MenuItem
+    lateinit var tipoComida: MenuItem
 
     override fun onActivityCreated(@Nullable savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -41,6 +41,7 @@ class BarFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_bar_fragment, menu)
         reload = menu.findItem(R.id.action_reload)
+        tipoComida = menu.findItem(R.id.action_tipos_comida)
         reload.isVisible = false
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -68,6 +69,7 @@ class BarFragment : Fragment() {
                     tipoSelect = tiposList[position]
                     barViewModel.getBaresByTipo(tipoSelect)
                     reload.isVisible = true
+                    tipoComida.isVisible = false
                     dialog.dismiss()
                 }
 
@@ -76,6 +78,7 @@ class BarFragment : Fragment() {
             R.id.action_reload -> {
                 barViewModel.getBares()
                 reload.isVisible = false
+                tipoComida.isVisible = true
             }
         }
         return super.onOptionsItemSelected(item)

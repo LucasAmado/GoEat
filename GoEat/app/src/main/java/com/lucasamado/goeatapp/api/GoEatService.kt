@@ -70,6 +70,9 @@ interface GoEatService {
     @GET("pedidos/ver/mis-pedidos")
     suspend fun misPedidos(): Response<List<PedidoDto>>
 
+    @GET("pedidos/mis-pedidos/favoritos")
+    suspend fun misPedidosFav(): Response<List<PedidoDto>>
+
     @GET("pedidos/lineas/{id}")
     suspend fun lineasPedidoByPedidoId(@Path("id") id: String): Response<List<LineaPedidoDetalle>>
 

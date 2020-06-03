@@ -12,4 +12,9 @@ interface PedidoRepository: JpaRepository<Pedido, UUID> {
 
     @Query("select p from Pedido p where p.bar.id = :idBar and p.fechaPedido = CURRENT_DATE")
     fun findByBarAndToday(idBar: UUID): List<Pedido>
+
+
+    @Query("select p from Pedido p where p.user = :usuario and p.favorito!=false")
+    fun findByUserAndFavorito(usuario: User): List<Pedido>
+
 }
