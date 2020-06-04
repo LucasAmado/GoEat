@@ -2,7 +2,7 @@
     <string name="app_name">GoEatApp</string>
     <string name="title_gestion">Gestión</string>
     <string name="title_bares">Bares</string>
-    <string name="title_pedidos">Pedidos</string>
+    <string name="title_pedidos">Pedidos Bar</string>
     <string name="title_perfil">Perfil</string>
     <string name="title_activity_detalle_bar_scrolling">DetalleBarScrollingActivity</string>
     <string name="large_text">
@@ -102,4 +102,18 @@
     <string name="caja_comentarios">ej: Sin pepinillos por favor</string>
     <string name="carrito">Carrito</string>
     <string name="title_mis_pedidos">Mis pedidos</string>
+    <string name="title_activity_perfil">PerfilActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="nombreCompleto">Nombre Completo</string>
+    <string name="guardar">Guardar</string>
+    <string name="nickname">NickName</string>
+    <string name="email">Email</string>
+    <string name="logout">Cerrar sesión</string>
 </resources>

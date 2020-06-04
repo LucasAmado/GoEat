@@ -7,8 +7,13 @@
         android:title="@string/title_bares" />
 
     <item
-        android:id="@+id/navigation_pedidos_bar"
+        android:id="@+id/navigation_mis_pedidos"
         android:icon="@drawable/ic_pedidos"
+        android:title="@string/title_mis_pedidos" />
+
+    <item
+        android:id="@+id/navigation_pedidos_bar"
+        android:icon="@drawable/ic_take_away"
         android:title="@string/title_pedidos" />
 
     <item

@@ -1,9 +1,6 @@
 package com.lucasamado.goeatapp.ui.pedidos.detalle
 
-import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.INVISIBLE
 import android.widget.Button
@@ -15,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import coil.api.load
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.lucasamado.goeatapp.MainActivity
 import com.lucasamado.goeatapp.R
 import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.MyApp
@@ -54,7 +50,7 @@ class DetallePedidoActivity : AppCompatActivity() {
         var role = SharedPreferencesManager().getSomeStringValue(Constantes.USER_ROLES)
 
         tvNombre = findViewById(R.id.textViewNombre)
-        tvTipoComida = findViewById(R.id.textViewTipoComida)
+        tvTipoComida = findViewById(R.id.textViewNickName)
         tvFecha = findViewById(R.id.textViewFecha)
         tvHora = findViewById(R.id.textViewHora)
         tvComentario = findViewById(R.id.textViewComentario)

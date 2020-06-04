@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageViewFoto" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
@@ -39,7 +39,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTipoComida" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewNickName" />
 
     <TextView
         android:id="@+id/textViewHora"
@@ -49,12 +49,12 @@
         android:text="TextView"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/textView2"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="@+id/textView2" />
+        app:layout_constraintBottom_toBottomOf="@+id/textView3"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toTopOf="@+id/textView3" />
 
     <TextView
-        android:id="@+id/textViewTipoComida"
+        android:id="@+id/textViewNickName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tipo de comida"
@@ -73,10 +73,10 @@
         android:text="UBICACIÓN"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -93,8 +93,8 @@
         android:layout_marginTop="4dp"
         android:fillViewport="true"
         app:layout_constraintEnd_toEndOf="@+id/buttonInformacion"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <LinearLayout
             android:layout_width="match_parent"

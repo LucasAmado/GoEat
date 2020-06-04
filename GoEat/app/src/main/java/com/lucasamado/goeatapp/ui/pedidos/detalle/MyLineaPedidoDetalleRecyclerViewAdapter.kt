@@ -22,7 +22,6 @@ class MyLineaPedidoDetalleRecyclerViewAdapter() : RecyclerView.Adapter<MyLineaPe
     init {
         mOnClickListener = View.OnClickListener { v ->
             val item = v.tag as LineaPedidoDetalle
-            //TODO intent al detalle del plato? (pasando false)
         }
     }
 

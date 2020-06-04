@@ -10,6 +10,9 @@ data class User(
     val enabled: Boolean,
     val id: String,
     val password: String,
+    val fechaCreacion: String,
+    val fechaCambio: String,
+    val nombreCompleto: String,
     val roles: List<String>,
-    val username: String
+    val nickName: String
 )

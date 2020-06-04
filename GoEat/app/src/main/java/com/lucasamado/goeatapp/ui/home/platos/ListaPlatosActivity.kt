@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.lucasamado.goeatapp.R
+import com.lucasamado.goeatapp.common.MyApp
 import com.lucasamado.goeatapp.ui.home.carrito.CarritoActivity
+import com.lucasamado.goeatapp.ui.perfil.PerfilActivity
 
 class ListaPlatosActivity : AppCompatActivity() {
 
@@ -29,12 +31,11 @@ class ListaPlatosActivity : AppCompatActivity() {
             startActivity(carrito)
             finish()
         }else if (id == R.id.perfilIcon) {
-            //TODO crear perfil activity
-            /*val perfil = Intent(MyApp.instance, PerfilActivity::class.java).apply{
+            val perfil = Intent(MyApp.instance, PerfilActivity::class.java).apply{
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
             startActivity(perfil)
-            finish()*/
+            finish()
         }
         return super.onOptionsItemSelected(item)
     }

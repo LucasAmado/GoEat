@@ -46,7 +46,7 @@ class MyPedidosBarRecyclerViewAdapter() : RecyclerView.Adapter<MyPedidosBarRecyc
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = pedidosList[position]
-        holder.tvNombre.text = item.user.username
+        holder.tvNombre.text = item.user.nickName
         holder.tvHora.text = item.horaRecogida
         holder.tvFecha.text = reverseOrderOfWords(item.fechaPedido)
 

@@ -25,4 +25,10 @@ open class SharedPreferencesManager {
         return getSharedPreferences().getString(label, null)
     }
 
+    fun deleteStringValue(label: String) {
+        var editor: SharedPreferences.Editor = getSharedPreferences().edit()
+        editor.remove(label)
+        editor.commit()
+    }
+
 }

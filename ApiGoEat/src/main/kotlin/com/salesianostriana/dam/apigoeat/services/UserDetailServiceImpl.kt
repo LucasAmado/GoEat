@@ -12,7 +12,7 @@ class UserDetailServiceImpl(
 
 
     override fun loadUserByUsername(username: String): UserDetails =
-            userService.findByUsername(username).orElseThrow {
+            userService.findByEmail(username).orElseThrow {
                 UsernameNotFoundException("Usuario $username no encontrado")
             }
 }

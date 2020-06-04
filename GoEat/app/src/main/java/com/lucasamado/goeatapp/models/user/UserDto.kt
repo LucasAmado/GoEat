@@ -7,7 +7,9 @@ data class UserDto(
     val bar: Bar,
     val email: String,
     val id: String,
-    val pedidos: List<Any>,
+    val fechaCreacion: String,
+    val fechaCambio: String,
+    val nombreCompleto: String,
     val roles: String,
-    val username: String
+    val nickName: String
 )

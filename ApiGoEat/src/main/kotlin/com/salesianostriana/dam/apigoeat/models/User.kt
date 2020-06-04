@@ -1,30 +1,34 @@
 package com.salesianostriana.dam.apigoeat.models
 
-import com.fasterxml.jackson.annotation.JsonBackReference
-import com.fasterxml.jackson.annotation.JsonManagedReference
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
+import java.time.LocalDate
 import java.util.*
 import javax.persistence.*
-import kotlin.collections.ArrayList
 
 @Entity
+@Table(name = "Usuario")
 data class User(
-        @Column(nullable = false, unique = true)
-        private var username: String,
 
         @Column(nullable = false, unique = true)
         var email: String,
 
+        var nickName: String,
+
+        var nombreCompleto: String,
+
         private var password: String,
 
-        var avatar: String = "",
+        var avatar: String? = "",
 
         @ElementCollection(fetch = FetchType.EAGER)
         var roles: MutableSet<String> = HashSet(),
 
-        @JsonBackReference
+        var fechaCreacion: LocalDate? = null,
+
+        var fechaCambio: LocalDate? = null,
+
         @ManyToOne
         var bar: Bar? = null,
 
@@ -42,14 +46,14 @@ data class User(
 
 ): UserDetails {
 
-        constructor(username: String, email: String, password: String, avatar: String, role: String, bar: Bar?):
-                this(username, email, password, avatar, mutableSetOf(role), bar, true, true, true, true)
+        constructor(email: String, username: String, nombreCompleto: String, password: String, avatar: String, role: String, fechaCreacion: LocalDate?, fechaCambio: LocalDate?, bar: Bar?):
+                this(email, username, nombreCompleto, password, avatar, mutableSetOf(role), fechaCreacion, fechaCambio, bar, true, true, true, true)
 
         override fun getAuthorities(): MutableCollection<out GrantedAuthority> =
                 roles.map { SimpleGrantedAuthority("ROLE_$it") }.toMutableList()
 
         override fun isEnabled() = enabled
-        override fun getUsername() = username
+        override fun getUsername() = email
         override fun isCredentialsNonExpired() = credentialsNonExpired
         override fun getPassword() = password
         override fun isAccountNonExpired() = nonExpired

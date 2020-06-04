@@ -2,6 +2,7 @@ package com.lucasamado.goeatapp.common
 
 import com.lucasamado.goeatapp.api.NetworkModule
 import com.lucasamado.goeatapp.ui.LoginActivity
+import com.lucasamado.goeatapp.ui.perfil.PerfilActivity
 import com.lucasamado.goeatapp.ui.SignupActivity
 import com.lucasamado.goeatapp.ui.gestion.BarGestionFragment
 import com.lucasamado.goeatapp.ui.gestion.EditarBarActivity
@@ -16,6 +17,7 @@ import com.lucasamado.goeatapp.ui.pedidos.PedidoFragment
 import com.lucasamado.goeatapp.ui.pedidos.detalle.DetallePedidoActivity
 import com.lucasamado.goeatapp.ui.pedidos.detalle.LineaPedidoDetalleFragment
 import com.lucasamado.goeatapp.ui.pedidosBar.PedidosBarFragment
+import com.lucasamado.goeatapp.ui.perfil.EditarPerfilDialogFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -37,4 +39,6 @@ interface ApplicationComponent {
     fun inject(pedidosBarFragment: PedidosBarFragment)
     fun inject(barGestionFragment: BarGestionFragment)
     fun inject(editarBarActivity: EditarBarActivity)
+    fun inject(perfilActivity: PerfilActivity)
+    fun inject(editarPerfilDialogFragment: EditarPerfilDialogFragment)
 }

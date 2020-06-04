@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -46,7 +45,7 @@ class CarritoActivity : AppCompatActivity() {
 
         btn_pagar = findViewById(R.id.buttonPagar)
         btn_horaRecogida = findViewById(R.id.buttonHoraRecogida)
-        tituloHoraRecogida = findViewById(R.id.textView2)
+        tituloHoraRecogida = findViewById(R.id.textView3)
         tituloComentarios = findViewById(R.id.textView3)
         comentarios = findViewById(R.id.textViewComentario)
         total = findViewById(R.id.textViewTotal)

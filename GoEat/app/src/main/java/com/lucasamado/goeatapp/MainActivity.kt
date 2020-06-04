@@ -1,15 +1,11 @@
 package com.lucasamado.goeatapp
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -20,6 +16,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lucasamado.goeatapp.common.Constantes
 import com.lucasamado.goeatapp.common.SharedPreferencesManager
+import com.lucasamado.goeatapp.ui.LoginActivity
+import com.lucasamado.goeatapp.ui.perfil.PerfilActivity
 import com.lucasamado.goeatapp.ui.home.carrito.CarritoActivity
 
 
@@ -43,10 +41,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.top_menu, menu)
-        if(roles.equals("ADMIN")){
-            var searchItem: MenuItem = menu.findItem(R.id.carritoIcon)
-            searchItem.isVisible = false
-        }
         return true
     }
 
@@ -59,13 +53,20 @@ class MainActivity : AppCompatActivity() {
             startActivity(carrito)
             finish()
         }else if (id == R.id.perfilIcon) {
-            //TODO crear perfil activity
-            /*val perfil = Intent(this, PerfilActivity::class.java).apply{
+            val perfil = Intent(this, PerfilActivity::class.java).apply{
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
             startActivity(perfil)
-            finish()*/
+            finish()
+        }else if(id == R.id.logoutIcon){
+            SharedPreferencesManager().deleteStringValue(Constantes.TOKEN)
+            val login = Intent(this, LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+            startActivity(login)
+            finish()
         }
+
         return super.onOptionsItemSelected(item)
     }
 
@@ -73,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         var navNormal: BottomNavigationView = findViewById(R.id.nav_view)
         var navAdmin: BottomNavigationView = findViewById(R.id.nav_admin)
 
-        if(roles.equals("ADMIN")){
+        if(roles == "ADMIN"){
             navAdmin.visibility = VISIBLE
             navNormal.visibility = INVISIBLE
             setupWithNavController(navAdmin, navController)

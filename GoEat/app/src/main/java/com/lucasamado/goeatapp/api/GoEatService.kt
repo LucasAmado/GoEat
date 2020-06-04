@@ -10,15 +10,19 @@ import com.lucasamado.goeatapp.models.pedido.PedidoDetalleDto
 import com.lucasamado.goeatapp.models.pedido.PedidoDto
 import com.lucasamado.goeatapp.models.plato.Plato
 import com.lucasamado.goeatapp.models.plato.PlatoDto
-import com.lucasamado.goeatapp.models.user.LoginRequest
-import com.lucasamado.goeatapp.models.user.LoginResponse
-import com.lucasamado.goeatapp.models.user.SignupRequest
-import com.lucasamado.goeatapp.models.user.SignupResponse
-import retrofit2.Call
+import com.lucasamado.goeatapp.models.user.EditarUser
+import com.lucasamado.goeatapp.models.user.UserDto
 import retrofit2.Response
 import retrofit2.http.*
 
 interface GoEatService {
+
+    //User
+    @GET("/user/me")
+    suspend fun findMe(): Response<UserDto>
+
+    @PUT("/user/me/edit")
+    suspend fun editarMiPerfil(@Body editarUser: EditarUser): Response<UserDto>
 
     //Bares
 

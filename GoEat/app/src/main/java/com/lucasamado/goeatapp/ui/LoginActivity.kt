@@ -3,7 +3,6 @@ package com.lucasamado.goeatapp.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -25,7 +24,7 @@ import javax.inject.Inject
 class LoginActivity : AppCompatActivity() {
     @Inject lateinit var loginViewModel: LoginViewModel
 
-    lateinit var etUsername: TextInputEditText
+    lateinit var etEmail: TextInputEditText
     lateinit var etPassword: TextInputEditText
     lateinit var signUp: TextView
     lateinit var button_login: Button
@@ -38,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
         (applicationContext as MyApp).appComponent.inject(this)
 
         signUp = findViewById(R.id.textViewSignUp)
-        etUsername = findViewById(R.id.textInputUsername)
+        etEmail = findViewById(R.id.textInputUsername)
         etPassword = findViewById(R.id.textInputPassword)
         button_login = findViewById(R.id.buttonLogin)
         ivLogo = findViewById(R.id.imageViewLogo)
@@ -59,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
             loginViewModel.doLogin(
                 LoginRequest(
                     password = etPassword.text.toString(),
-                    username = etUsername.text.toString()
+                    username = etEmail.text.toString()
                 )
             )
             loginViewModel.userLogin.observe(this, Observer {response ->

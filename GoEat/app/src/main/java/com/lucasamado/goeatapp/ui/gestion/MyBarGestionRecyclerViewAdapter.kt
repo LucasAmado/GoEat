@@ -1,21 +1,13 @@
 package com.lucasamado.goeatapp.ui.gestion
 
-import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivities
-import androidx.core.content.ContextCompat.startActivity
 import coil.api.load
-import coil.transform.CircleCropTransformation
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.lucasamado.goeatapp.R
-import com.lucasamado.goeatapp.common.Constantes
-import com.lucasamado.goeatapp.common.MyApp
 import com.lucasamado.goeatapp.models.bar.BarDto
 
 import kotlinx.android.synthetic.main.fragment_bar_gestion.view.*
@@ -67,8 +59,8 @@ class MyBarGestionRecyclerViewAdapter() : RecyclerView.Adapter<MyBarGestionRecyc
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val ivFoto: ImageView = mView.imageViewFoto
         val tvNombre: TextView = mView.textViewNombre
-        val tvTipoComida: TextView = mView.textViewTipoComida
-        val tvHorarios: TextView = mView.textViewHorarios
+        val tvTipoComida: TextView = mView.textViewNickName
+        val tvHorarios: TextView = mView.textViewEmail
         val tvTiempoPreparacion: TextView = mView.textViewTiempoPreparacion
     }
 }

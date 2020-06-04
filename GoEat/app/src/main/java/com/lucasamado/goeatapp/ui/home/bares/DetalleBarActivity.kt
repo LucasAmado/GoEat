@@ -15,6 +15,7 @@ import com.lucasamado.goeatapp.common.Resource
 import com.lucasamado.goeatapp.ui.home.carrito.CarritoActivity
 import com.lucasamado.goeatapp.ui.home.mapa.MapaActivity
 import com.lucasamado.goeatapp.ui.home.platos.ListaPlatosActivity
+import com.lucasamado.goeatapp.ui.perfil.PerfilActivity
 import com.lucasamado.goeatapp.viewmodels.BarDetailViewModel
 import javax.inject.Inject
 
@@ -43,7 +44,7 @@ class DetalleBarActivity : AppCompatActivity() {
         image = findViewById(R.id.imageViewFoto)
         nombre = findViewById(R.id.textViewNombre)
         horarios = findViewById(R.id.textViewHora)
-        tipoComida = findViewById(R.id.textViewTipoComida)
+        tipoComida = findViewById(R.id.textViewNickName)
         btn_informacion = findViewById(R.id.buttonInformacion)
         lvTipoPlatos = findViewById(R.id.lvTipoPlatos)
 
@@ -85,12 +86,11 @@ class DetalleBarActivity : AppCompatActivity() {
             startActivity(carrito)
             finish()
         } else if (id == R.id.perfilIcon) {
-            //TODO crear perfil activity
-            /*val perfil = Intent(MyApp.instance, PerfilActivity::class.java).apply{
+            val perfil = Intent(MyApp.instance, PerfilActivity::class.java).apply{
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
             startActivity(perfil)
-            finish()*/
+            finish()
         }
         return super.onOptionsItemSelected(item)
     }

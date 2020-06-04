@@ -10,17 +10,15 @@ import com.salesianostriana.dam.apigoeat.security.JwtTokenProvider
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
 import org.springframework.http.HttpStatus
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
+import java.time.LocalDate
 import javax.validation.Valid
 import javax.validation.constraints.NotBlank
 
@@ -51,26 +49,22 @@ class AuthenticationController(
 
     }
 
-    @ApiOperation(value = "Obtener mis datos", notes = "Se devuelven los datos del usuario logeado")
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/user/me")
-    fun me(@ApiParam(value = "usuario loegado", required = true, type = "User")
-           @AuthenticationPrincipal user: User) = user.toUserDTO()
 
     @ApiOperation(value = "Signup", notes = "creación de un nuevo usuario")
     @PostMapping("/signup")
     fun signup(@ApiParam(value = "datos del nuevo usuario", type = "createUserDTO", required = true)
             @RequestBody createUserDTO: CreateUserDTO): UserDTO{
-        val result = userService.findByUsername(createUserDTO.username)
+        val result = userService.findByEmail(createUserDTO.email)
         if(result!=null){
             createUserDTO.password= bCryptPasswordEncoder.encode(createUserDTO.password)
             var newUser = createUserDTO.toUser()
+            newUser.fechaCreacion = LocalDate.now()
             if(newUser.roles.isEmpty()){
                 newUser.roles = mutableSetOf("USER")
             }
             return userService.save(newUser).toUserDTO()
         } else {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "El nombre de usuario ${createUserDTO.username} ya existe. Pruebe otro.")
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "El email ${createUserDTO.email} ya existe. Pruebe otro.")
         }
     }
 }
