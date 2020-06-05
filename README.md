@@ -67,7 +67,10 @@ Se contará con la opción de filtrar por "mis pedidos favoritos"
  
     * ## Gestión del bar
         Desde el segundo botón de navegación se podrán modificar los datos del bar que se deseen como pueden ser las horas de apertura y cierre, el tiempo necesario en elaborar cada encargo o el nombre.
-
+        
+        
+## Postgres
+docker run --name goeat-proyect -p 5434:5432 -e POSTGRES_DB=goeat-proyect -e POSTGRES_PASSWORD=goeat -d postgres
 
 
 Adjunto [colección de postman](https://www.getpostman.com/collections/7eada23f41faaa658c2b) por si os pudiera facilitar las pruebas
