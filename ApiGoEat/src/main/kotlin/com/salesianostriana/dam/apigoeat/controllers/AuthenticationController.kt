@@ -7,11 +7,13 @@ import com.salesianostriana.dam.apigoeat.models.dtos.toUser
 import com.salesianostriana.dam.apigoeat.models.dtos.toUserDTO
 import com.salesianostriana.dam.apigoeat.services.UserService
 import com.salesianostriana.dam.apigoeat.security.JwtTokenProvider
+import com.salesianostriana.dam.apigoeat.services.CarritoService
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
 import org.springframework.http.HttpStatus
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.web.bind.annotation.PostMapping
@@ -27,7 +29,8 @@ class AuthenticationController(
         private val authenticationManager: AuthenticationManager,
         private val jwtTokenProvider: JwtTokenProvider,
         private val userService: UserService,
-        private val bCryptPasswordEncoder: BCryptPasswordEncoder
+        private val bCryptPasswordEncoder: BCryptPasswordEncoder,
+        private val carritoService: CarritoService
 ) {
 
     @ApiOperation(value = "Login", notes = "Se hace el login a partir de los datos enviados")
@@ -53,13 +56,13 @@ class AuthenticationController(
     @ApiOperation(value = "Signup", notes = "creación de un nuevo usuario")
     @PostMapping("/signup")
     fun signup(@ApiParam(value = "datos del nuevo usuario", type = "createUserDTO", required = true)
-            @RequestBody createUserDTO: CreateUserDTO): UserDTO{
+               @RequestBody createUserDTO: CreateUserDTO): UserDTO {
         val result = userService.findByEmail(createUserDTO.email)
-        if(result!=null){
-            createUserDTO.password= bCryptPasswordEncoder.encode(createUserDTO.password)
+        if (result != null) {
+            createUserDTO.password = bCryptPasswordEncoder.encode(createUserDTO.password)
             var newUser = createUserDTO.toUser()
             newUser.fechaCreacion = LocalDate.now()
-            if(newUser.roles.isEmpty()){
+            if (newUser.roles.isEmpty()) {
                 newUser.roles = mutableSetOf("USER")
             }
             return userService.save(newUser).toUserDTO()

@@ -21,8 +21,6 @@ class PedidoController(val pedidoService: PedidoService, val platoService: Plato
 
         if (!plato.isPresent)
             throw ResponseStatusException(HttpStatus.NOT_FOUND, "No se ha encontrado el plato con id $id")
-        else if (carritoService.lineasCarrito.isEmpty())
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "El carrito está vacío")
         else
             return carritoService.actualizarCarrito(cantidad, plato.get()).toLineaPedidoDto()
     }
@@ -31,8 +29,6 @@ class PedidoController(val pedidoService: PedidoService, val platoService: Plato
         var plato: Optional<Plato> = platoService.findById(id)
         if (!plato.isPresent)
             throw ResponseStatusException(HttpStatus.NOT_FOUND, "No se ha encontrado el plato con id $id y no se ha podido borrar")
-        else if (carritoService.lineasCarrito.isEmpty())
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "El carrito está vacío")
         else
             return carritoService.borrarPlato(plato.get())
     }

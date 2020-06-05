@@ -37,9 +37,12 @@ class BarService : BaseService<Bar, UUID, BarRepository>() {
 
         for (h in bar.horasDisponibles!!) {
             for (p in pedidos) {
-                if (p.horaRecogida == h || h.isBefore(LocalTime.now().plusMinutes(bar.tiempoPedido))) {
+                if (p.horaRecogida == h) {
                     horas.remove(h)
                 }
+            }
+            if(h.isBefore(LocalTime.now().plusMinutes(bar.tiempoPedido))){
+                horas.remove(h)
             }
         }
 

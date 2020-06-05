@@ -4,6 +4,7 @@ class Constantes {
 
     companion object{
         const val API_BASE_URL = "http://10.0.2.2:9000/"
+        //const val API_BASE_URL = "https://stark-hamlet-53025.herokuapp.com/"
         const val BAR_ID = "BAR_ID"
         const val USER_ID = "USER_ID"
         const val USER_ROLES = "USER_ROLES"

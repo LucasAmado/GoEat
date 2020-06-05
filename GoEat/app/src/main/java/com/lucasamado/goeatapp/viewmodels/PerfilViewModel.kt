@@ -11,7 +11,9 @@ import com.lucasamado.goeatapp.repository.UserRepository
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class PerfilViewModel  @Inject constructor(
     var userRepository: UserRepository
 ): ViewModel() {
